@@ -1,0 +1,103 @@
+[gd_scene load_steps=55 format=2]
+
+[ext_resource path="res://Adventurer/png/Idle (10).png" type="Texture" id=1]
+[ext_resource path="res://Adventurer/png/Idle (4).png" type="Texture" id=2]
+[ext_resource path="res://Adventurer/png/Idle (2).png" type="Texture" id=3]
+[ext_resource path="res://Adventurer/png/Idle (6).png" type="Texture" id=4]
+[ext_resource path="res://Adventurer/png/Idle (9).png" type="Texture" id=5]
+[ext_resource path="res://Adventurer/png/Idle (5).png" type="Texture" id=6]
+[ext_resource path="res://Adventurer/png/Idle (7).png" type="Texture" id=7]
+[ext_resource path="res://Adventurer/png/Idle (1).png" type="Texture" id=8]
+[ext_resource path="res://Adventurer/png/Idle (3).png" type="Texture" id=9]
+[ext_resource path="res://Adventurer/png/Idle (8).png" type="Texture" id=10]
+[ext_resource path="res://Adventurer/png/Run (7).png" type="Texture" id=11]
+[ext_resource path="res://Adventurer/png/Melee (1).png" type="Texture" id=12]
+[ext_resource path="res://Adventurer/png/Melee (2).png" type="Texture" id=13]
+[ext_resource path="res://Adventurer/png/Jump (10).png" type="Texture" id=14]
+[ext_resource path="res://Adventurer/png/Melee (3).png" type="Texture" id=15]
+[ext_resource path="res://Adventurer/png/Jump (9).png" type="Texture" id=16]
+[ext_resource path="res://Adventurer/png/Melee (7).png" type="Texture" id=17]
+[ext_resource path="res://Adventurer/png/Melee (5).png" type="Texture" id=18]
+[ext_resource path="res://Adventurer/png/Jump (8).png" type="Texture" id=19]
+[ext_resource path="res://Adventurer/png/Melee (6).png" type="Texture" id=20]
+[ext_resource path="res://Adventurer/png/Run (1).png" type="Texture" id=21]
+[ext_resource path="res://Adventurer/png/Run (2).png" type="Texture" id=22]
+[ext_resource path="res://Adventurer/png/Run (3).png" type="Texture" id=23]
+[ext_resource path="res://Adventurer/png/Run (4).png" type="Texture" id=24]
+[ext_resource path="res://Adventurer/png/Run (5).png" type="Texture" id=25]
+[ext_resource path="res://Adventurer/png/Melee (4).png" type="Texture" id=26]
+[ext_resource path="res://Adventurer/png/Run (6).png" type="Texture" id=27]
+[ext_resource path="res://Adventurer/png/Jump (1).png" type="Texture" id=28]
+[ext_resource path="res://Adventurer/png/Jump (2).png" type="Texture" id=29]
+[ext_resource path="res://Adventurer/png/Jump (5).png" type="Texture" id=30]
+[ext_resource path="res://Adventurer/png/Jump (3).png" type="Texture" id=31]
+[ext_resource path="res://Adventurer/png/Dead (6).png" type="Texture" id=32]
+[ext_resource path="res://Adventurer/png/Dead (10).png" type="Texture" id=33]
+[ext_resource path="res://Adventurer/png/Dead (1).png" type="Texture" id=34]
+[ext_resource path="res://Adventurer/png/Dead (7).png" type="Texture" id=35]
+[ext_resource path="res://Adventurer/png/Jump (6).png" type="Texture" id=36]
+[ext_resource path="res://Adventurer/png/Jump (4).png" type="Texture" id=37]
+[ext_resource path="res://Adventurer/png/Jump (7).png" type="Texture" id=38]
+[ext_resource path="res://Adventurer/png/Dead (2).png" type="Texture" id=39]
+[ext_resource path="res://Adventurer/png/Dead (3).png" type="Texture" id=40]
+[ext_resource path="res://Adventurer/png/Dead (5).png" type="Texture" id=41]
+[ext_resource path="res://Adventurer/png/Dead (8).png" type="Texture" id=42]
+[ext_resource path="res://Adventurer/png/Dead (4).png" type="Texture" id=43]
+[ext_resource path="res://Adventurer/png/Dead (9).png" type="Texture" id=44]
+[ext_resource path="res://Adventurer/png/Slide (2).png" type="Texture" id=45]
+[ext_resource path="res://Adventurer/png/Shoot (2).png" type="Texture" id=46]
+[ext_resource path="res://Adventurer/png/Slide (5).png" type="Texture" id=47]
+[ext_resource path="res://Adventurer/png/Slide (1).png" type="Texture" id=48]
+[ext_resource path="res://Adventurer/png/Run (8).png" type="Texture" id=49]
+[ext_resource path="res://Adventurer/png/Slide (3).png" type="Texture" id=50]
+[ext_resource path="res://Adventurer/png/Slide (4).png" type="Texture" id=51]
+[ext_resource path="res://Adventurer/png/Shoot (1).png" type="Texture" id=52]
+[ext_resource path="res://Adventurer/png/Shoot (3).png" type="Texture" id=53]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 34 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 43 ), ExtResource( 41 ), ExtResource( 32 ), ExtResource( 35 ), ExtResource( 42 ), ExtResource( 44 ), ExtResource( 33 ) ],
+"loop": true,
+"name": "Dead",
+"speed": 14.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 28 ), ExtResource( 29 ), ExtResource( 31 ), ExtResource( 37 ), ExtResource( 30 ), ExtResource( 36 ), ExtResource( 38 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 26 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "Melee",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 11 ), ExtResource( 49 ) ],
+"loop": true,
+"name": "Run",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 52 ), ExtResource( 46 ), ExtResource( 53 ) ],
+"loop": true,
+"name": "Shoot",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 48 ), ExtResource( 45 ), ExtResource( 50 ), ExtResource( 51 ), ExtResource( 47 ) ],
+"loop": true,
+"name": "Slide",
+"speed": 9.0
+} ]
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "Idle"
+frame = 3
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
