@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/left horistontal.png-ce5283cc2d8866165e54c7992414f285.stex"
+path="res://.import/flat tile.cut.png-bec3bdc7a16b012279fdc0f8ecf4558e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Platforms/left horistontal.png"
-dest_files=[ "res://.import/left horistontal.png-ce5283cc2d8866165e54c7992414f285.stex" ]
+source_file="res://Platforms/flat tile.cut.png"
+dest_files=[ "res://.import/flat tile.cut.png-bec3bdc7a16b012279fdc0f8ecf4558e.stex" ]
 
 [params]
 

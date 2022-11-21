@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/long platform.png-5205ca3b6632fe3805ac91eb6741d698.stex"
+path="res://.import/flat tile.64.png-e0b470d982187d44e85b81844cb61ae7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Platforms/long platform.png"
-dest_files=[ "res://.import/long platform.png-5205ca3b6632fe3805ac91eb6741d698.stex" ]
+source_file="res://Platforms/flat tile.64.png"
+dest_files=[ "res://.import/flat tile.64.png-e0b470d982187d44e85b81844cb61ae7.stex" ]
 
 [params]
 
