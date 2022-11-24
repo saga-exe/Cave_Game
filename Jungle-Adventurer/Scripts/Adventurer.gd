@@ -17,6 +17,11 @@ var can_jump = true
 
 onready var animationplayer = $AnimationPlayer
 
+
+func _ready() -> void:
+	global_position = Vector2(200,400)
+
+
 func _physics_process(delta: float) -> void:
 	match state:
 		IDLE:
@@ -27,7 +32,7 @@ func _physics_process(delta: float) -> void:
 			_air_state(delta)
 
 
-func _apply_basic_movement(delta) -> void:
+func _left_right_movement(delta) -> void:
 	if direction.x != 0:
 		velocity = velocity.move_toward(direction*MAX_SPEED, ACCELERATION*delta)
 	else:
@@ -36,13 +41,15 @@ func _apply_basic_movement(delta) -> void:
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+
 func _get_input_x_update_direction() -> float:
 	var input_x = Input.get_axis("move_left", "move_right")
+	print(input_x)
 	if input_x > 0:
 		direction_x = "RIGHT"
 	elif input_x < 0:
 		direction_x = "LEFT"
-	#$Sprite.flip_h = direction_x != "RIGHT"
+	$Sprite.flip_h = direction_x != "RIGHT"
 	return input_x
 
 
@@ -55,7 +62,7 @@ func _idle_state(delta) -> void:
 		animationplayer.play("Jump")
 		return
 		
-	_apply_basic_movement(delta)
+	_left_right_movement(delta)
 	
 	if velocity.x != 0:
 		state = RUN
@@ -73,7 +80,7 @@ func _run_state(delta) -> void:
 		return
 	
 
-	_apply_basic_movement(delta)
+	_left_right_movement(delta)
 	
 	if not is_on_floor():
 		state = AIR
@@ -95,12 +102,6 @@ func _air_state(delta) -> void:
 		animationplayer.play("Idle")
 		can_jump = true
 		return
-
-
-
-
-
-
 
 
 
