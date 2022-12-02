@@ -2,14 +2,16 @@ extends KinematicBody2D
 
 enum {IDLE, RUN, AIR}
 
-const MAX_SPEED = 300
 const ACCELERATION = 1500
 const GRAVITY = 1000
 const JUMP_STRENGHT = -410
 
+
+var MAX_SPEED = 300
 var direction_x = "RIGHT"
 var velocity := Vector2.ZERO
 var direction := Vector2.ZERO
+var sprint = false
 
 var state = IDLE
 
@@ -34,6 +36,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _left_right_movement(delta) -> void:
+	if Input.is_action_pressed("sprint"):
+		MAX_SPEED = 500
+	else:
+		MAX_SPEED = 300
+
 	if direction.x != 0:
 		velocity = velocity.move_toward(direction*MAX_SPEED, ACCELERATION*delta)
 	else:

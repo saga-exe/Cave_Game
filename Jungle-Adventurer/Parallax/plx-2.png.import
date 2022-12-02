@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/plx-1.png-fa5f527f20ccd2f0bc3d6d058119ee31.stex"
+path="res://.import/plx-2.png-2202ac99ad4f595f9d395a92faf1095c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Parallax background/plx-1.png"
-dest_files=[ "res://.import/plx-1.png-fa5f527f20ccd2f0bc3d6d058119ee31.stex" ]
+source_file="res://Parallax/plx-2.png"
+dest_files=[ "res://.import/plx-2.png-2202ac99ad4f595f9d395a92faf1095c.stex" ]
 
 [params]
 
