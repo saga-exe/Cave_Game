@@ -1,10 +1,10 @@
 extends KinematicBody2D
-
+#next time fix so player follows most recently pressed key
 enum {IDLE, RUN, AIR}
 
 const ACCELERATION = 1500
 const GRAVITY = 1000
-const JUMP_STRENGHT = -410
+const JUMP_STRENGHT = -500
 
 
 var MAX_SPEED = 300
