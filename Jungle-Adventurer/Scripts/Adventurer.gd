@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 enum {IDLE, RUN, AIR}
 
-const MAX_SPEED = 200
-const ACCELERATION = 1000
+const MAX_SPEED = 300
+const ACCELERATION = 1500
 const GRAVITY = 1000
 const JUMP_STRENGHT = -410
 
@@ -15,11 +15,12 @@ var state = IDLE
 
 var can_jump = true
 
-onready var animationplayer = $AnimationPlayer
+onready var sprite = $AnimatedSprite
 
 
 func _ready() -> void:
 	global_position = Vector2(200,400)
+
 
 
 func _physics_process(delta: float) -> void:
@@ -44,12 +45,11 @@ func _left_right_movement(delta) -> void:
 
 func _get_input_x_update_direction() -> float:
 	var input_x = Input.get_axis("move_left", "move_right")
-	print(input_x)
 	if input_x > 0:
 		direction_x = "RIGHT"
 	elif input_x < 0:
 		direction_x = "LEFT"
-	$Sprite.flip_h = direction_x != "RIGHT"
+	sprite.flip_h = direction_x != "RIGHT"
 	return input_x
 
 
@@ -59,14 +59,17 @@ func _idle_state(delta) -> void:
 		velocity.y = JUMP_STRENGHT
 		can_jump = false
 		state = AIR
-		animationplayer.play("Jump")
+		sprite.play("Jump")
 		return
 		
 	_left_right_movement(delta)
 	
 	if velocity.x != 0:
 		state = RUN
-		animationplayer.play("Run")
+		sprite.play("Run")
+		return
+	else:
+		sprite.play("Idle")
 		return
 
 
@@ -76,7 +79,7 @@ func _run_state(delta) -> void:
 		velocity.y = JUMP_STRENGHT
 		can_jump = false
 		state = AIR
-		animationplayer.play("Jump")
+		sprite.play("Jump")
 		return
 	
 
@@ -85,7 +88,12 @@ func _run_state(delta) -> void:
 	if not is_on_floor():
 		state = AIR
 		can_jump = false
-		animationplayer.play("Jump")
+		sprite.play("Jump")
+	
+	if is_on_floor() and velocity == Vector2.ZERO:
+		state = IDLE
+		sprite.play("Idle")
+		return
 
 
 func _air_state(delta) -> void:
@@ -99,7 +107,7 @@ func _air_state(delta) -> void:
 	
 	if is_on_floor():
 		state = IDLE
-		animationplayer.play("Idle")
+		sprite.play("Idle")
 		can_jump = true
 		return
 
