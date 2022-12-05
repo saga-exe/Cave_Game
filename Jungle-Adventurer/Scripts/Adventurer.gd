@@ -1,5 +1,5 @@
 extends KinematicBody2D
-#next time fix so player follows most recently pressed key
+
 enum {IDLE, RUN, AIR}
 
 const ACCELERATION = 1500
@@ -54,12 +54,10 @@ func _left_right_movement(delta) -> void:
 
 func _get_input_x_update_direction() -> float:
 	if Input.is_action_just_pressed("move_right"):
-		direction_x = "RIGHT"
 		last_action_pressed = "right"
 	elif Input.is_action_just_pressed("move_left"):
-		direction_x = "LEFT"
 		last_action_pressed = "left"
-	sprite.flip_h = direction_x != "RIGHT"
+	sprite.flip_h = last_action_pressed != "right"
 	if last_action_pressed == "left" and Input.is_action_pressed("move_left"):
 		input_x = -1
 	elif last_action_pressed == "right" and Input.is_action_pressed("move_right"):
