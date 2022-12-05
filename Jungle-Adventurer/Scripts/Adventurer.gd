@@ -12,6 +12,8 @@ var direction_x = "RIGHT"
 var velocity := Vector2.ZERO
 var direction := Vector2.ZERO
 var sprint = false
+var last_action_pressed = "right"
+var input_x = 0
 
 var state = IDLE
 
@@ -51,12 +53,19 @@ func _left_right_movement(delta) -> void:
 
 
 func _get_input_x_update_direction() -> float:
-	var input_x = Input.get_axis("move_left", "move_right")
-	if input_x > 0:
+	if Input.is_action_just_pressed("move_right"):
 		direction_x = "RIGHT"
-	elif input_x < 0:
+		last_action_pressed = "right"
+	elif Input.is_action_just_pressed("move_left"):
 		direction_x = "LEFT"
+		last_action_pressed = "left"
 	sprite.flip_h = direction_x != "RIGHT"
+	if last_action_pressed == "left" and Input.is_action_pressed("move_left"):
+		input_x = -1
+	elif last_action_pressed == "right" and Input.is_action_pressed("move_right"):
+		input_x = 1
+	else:
+		input_x = 0
 	return input_x
 
 
