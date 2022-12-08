@@ -17,10 +17,14 @@ var input_x = 0
 
 var state = IDLE
 
-var can_jump = true
+var can_jump := true
+var can_shoot := true
+var is_shooting := false
+
+var bullet_scene = preload("res://Scenes/Bullet.tscn")
 
 onready var sprite = $AnimatedSprite
-
+onready var gunpoint = $GunPoint
 
 func _ready() -> void:
 	global_position = Vector2(200,400)
@@ -78,6 +82,10 @@ func _idle_state(delta) -> void:
 		
 	_left_right_movement(delta)
 	
+	if Input.is_action_just_pressed("shoot") and can_shoot:
+		_shoot(delta)
+		return
+	
 	if velocity.x != 0:
 		state = RUN
 		sprite.play("Run")
@@ -85,7 +93,8 @@ func _idle_state(delta) -> void:
 	else:
 		sprite.play("Idle")
 		return
-
+	
+	
 
 func _run_state(delta) -> void:
 	direction.x = _get_input_x_update_direction()
@@ -108,7 +117,10 @@ func _run_state(delta) -> void:
 		state = IDLE
 		sprite.play("Idle")
 		return
-
+	
+	if Input.is_action_just_pressed("shoot") and can_shoot:
+		_shoot(delta)
+		return
 
 func _air_state(delta) -> void:
 	velocity.y = velocity.y + GRAVITY * delta if velocity.y + GRAVITY * delta < 500 else 500 
@@ -124,8 +136,41 @@ func _air_state(delta) -> void:
 		sprite.play("Idle")
 		can_jump = true
 		return
+	
+	if Input.is_action_just_pressed("shoot") and can_shoot:
+		_shoot(delta)
+		return
+		
 
 
+func _shoot(delta) -> void:
+	var flip := false
+	$ShootTimer.start()
+	
+	var bullet_instance = bullet_scene.instance()
+	bullet_instance.global_position = gunpoint.global_position
+	bullet_instance.set_direction(gunpoint.global_position,
+	get_global_mouse_position() + direction.rotated(rotation) * 1000)
+	
+	get_tree().get_root().add_child(bullet_instance)
+	sprite.play("Shoot")
+	yield(sprite,"animation_finished")
+	if is_on_floor() and velocity == Vector2.ZERO:
+		state = IDLE
+		sprite.play("Idle")
+		can_jump = true
+		return
+	elif is_on_floor():
+		state = RUN
+		sprite.play("Run")
+		return
+	elif not is_on_floor():
+		state = AIR
+		can_jump = false
+		sprite.play("Jump")
+		return
 
 
-
+func _on_ShootTimer_timeout() -> void:
+	can_shoot = true
+	return
