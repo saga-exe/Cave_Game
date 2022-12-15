@@ -15,6 +15,8 @@ var sprint = false
 var last_action_pressed = "right"
 var input_x = 0
 
+var bullet_direction = Vector2.ZERO
+
 var state = IDLE
 
 var can_jump := true
@@ -82,19 +84,16 @@ func _idle_state(delta) -> void:
 		
 	_left_right_movement(delta)
 	
-	if Input.is_action_just_pressed("shoot") and can_shoot:
-		_shoot(delta)
-		return
-	
+		
 	if velocity.x != 0:
 		state = RUN
 		sprite.play("Run")
 		return
-	else:
-		sprite.play("Idle")
+		
+	if Input.is_action_just_pressed("shoot") and can_shoot:
+		_shoot(delta)
 		return
-	
-	
+
 
 func _run_state(delta) -> void:
 	direction.x = _get_input_x_update_direction()
@@ -146,23 +145,39 @@ func _air_state(delta) -> void:
 func _shoot(delta) -> void:
 	var flip := false
 	$ShootTimer.start()
+	var bullet_target = Vector2.ZERO
 	
+	
+	
+	#gör så att det inte går att skjuta överallt med villkor
+	if last_action_pressed == "right" and get_global_mouse_position().x - gunpoint.global_position.x < 0:
+		bullet_target.x = get_global_mouse_position().x + 2*(get_global_mouse_position().x - gunpoint.global_position.x)
+	elif last_action_pressed == "left" and get_global_mouse_position().x - gunpoint.global_position.x > 0:
+		bullet_target.x = get_global_mouse_position().x - 2*(get_global_mouse_position().x - gunpoint.global_position.x)
+	else:
+		bullet_target.x = get_global_mouse_position().x
+	
+	bullet_target.y = get_global_mouse_position().y
+	print(bullet_target)
+		
+		
 	var bullet_instance = bullet_scene.instance()
 	bullet_instance.global_position = gunpoint.global_position
 	bullet_instance.set_direction(gunpoint.global_position,
-	get_global_mouse_position() + direction.rotated(rotation) * 1000)
+	bullet_target)
 	
 	get_tree().get_root().add_child(bullet_instance)
 	sprite.play("Shoot")
 	yield(sprite,"animation_finished")
-	if is_on_floor() and velocity == Vector2.ZERO:
-		state = IDLE
-		sprite.play("Idle")
+	if is_on_floor() and velocity != Vector2.ZERO:
+		state = RUN
+		sprite.play("Run")
 		can_jump = true
 		return
 	elif is_on_floor():
-		state = RUN
-		sprite.play("Run")
+		state = IDLE
+		sprite.play("Idle")
+		can_jump = true
 		return
 	elif not is_on_floor():
 		state = AIR
