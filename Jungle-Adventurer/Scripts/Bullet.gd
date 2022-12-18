@@ -10,11 +10,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if direction == Vector2.ZERO:
-		return
+	#if direction == Vector2.ZERO:
+		#return
 	
-	else:
-		global_position += direction * VELOCITY * delta
+	#else:
+	global_position += VELOCITY * delta * direction
 
 
 func set_direction(pos1: Vector2, pos2: Vector2) -> void:
