@@ -149,50 +149,31 @@ func _air_state(delta) -> void:
 func _shoot(delta) -> void:
 	$ShootTimer.start()
 	var bullet_target = Vector2.ZERO
-	#gunpoint x = 610
-	#går från 0-180 och sedan -180 till 0
-	#if last_action_pressed == "right":
+
 	if gunpoint.global_position.x - get_global_mouse_position().x <= 0:
 		bullet_target.x =  get_global_mouse_position().x - gunpoint.global_position.x
 	else:
 		bullet_target.x = gunpoint.global_position.x - get_global_mouse_position().x
-	#else:
-		#if get_global_mouse_position().x - gunpoint.global_position.x <= 0:
-			#bullet_target.x = gunpoint.global_position.x - get_global_mouse_position().x
-		#else:
-			#bullet_target.x = get_global_mouse_position().x - gunpoint.global_position.x
 
 	
 	var angle = (get_global_mouse_position() - gunpoint.global_position).angle()
-	if last_action_pressed == "right":
-		if angle >= deg2rad(30) and angle <= deg2rad(150):
-			angle = deg2rad(30)
-		elif angle >= deg2rad(-150) and angle <= deg2rad(-30):
-			angle = deg2rad(-30)
-		elif angle <= deg2rad(180) and angle >= deg2rad(150):
-			angle = deg2rad(180 - rad2deg(angle))
-		elif angle <= deg2rad(-150) and angle >= deg2rad(-180):
-			angle = deg2rad(-180 - rad2deg(angle))
-	else:
-		if angle >= deg2rad(30) and angle <= deg2rad(150):
-			angle = deg2rad(150)
-		elif angle >= deg2rad(-150) and angle <= deg2rad(-30):
-			angle = deg2rad(-150)
-		elif angle <= deg2rad(30) and angle >= deg2rad(0):
-			angle = deg2rad(150 + rad2deg(angle))
-		elif angle <= deg2rad(0) and angle >= deg2rad(-30):
-			angle = deg2rad(-150 + rad2deg(angle))
-
-	bullet_target.y = bullet_target.x*tan(angle)
-	print("bull: ", bullet_target)
-	bullet_target += gunpoint.global_position
-
-	#print("y: ", bullet_target.y)
-	print("player: ", sprite.global_position)
-	print("gunpoint: ", gunpoint.global_position)
-	print("deg: ", rad2deg(angle), "  bullet: ", bullet_target)
-	print(" ")
+	if angle >= deg2rad(30) and angle <= deg2rad(150):
+		angle = deg2rad(30)
+	elif angle >= deg2rad(-150) and angle <= deg2rad(-30):
+		angle = deg2rad(-30)
+	elif angle <= deg2rad(180) and angle >= deg2rad(150):
+		angle = deg2rad(180 - rad2deg(angle))
+	elif angle <= deg2rad(-150) and angle >= deg2rad(-180):
+		angle = deg2rad(-180 - rad2deg(angle))
 	
+	if last_action_pressed == "right":
+		
+		bullet_target.y = bullet_target.x*tan(angle)
+		bullet_target += gunpoint.global_position
+	else:
+
+		bullet_target.y = -bullet_target.x*tan(angle)
+		bullet_target = gunpoint.global_position - bullet_target
 		
 	var bullet_instance = bullet_scene.instance()
 	bullet_instance.global_position = gunpoint.global_position
