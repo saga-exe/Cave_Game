@@ -97,7 +97,7 @@ animations = [ {
 "speed": 9.0
 } ]
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Adventurer" type="KinematicBody2D"]
 scale = Vector2( 0.2, 0.2 )
 script = ExtResource( 54 )
 

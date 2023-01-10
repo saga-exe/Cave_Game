@@ -95,7 +95,7 @@ func _idle_state(delta) -> void:
 		return
 		
 	if Input.is_action_just_pressed("shoot") and can_shoot:
-		_shoot(delta)
+		_shoot()
 		return
 
 
@@ -122,7 +122,7 @@ func _run_state(delta) -> void:
 		return
 	
 	if Input.is_action_just_pressed("shoot") and can_shoot:
-		_shoot(delta)
+		_shoot()
 		return
 
 func _air_state(delta) -> void:
@@ -141,12 +141,12 @@ func _air_state(delta) -> void:
 		return
 	
 	if Input.is_action_just_pressed("shoot") and can_shoot:
-		_shoot(delta)
+		_shoot()
 		return
 		
 
 
-func _shoot(delta) -> void:
+func _shoot() -> void:
 	$ShootTimer.start()
 	var bullet_target = Vector2.ZERO
 
