@@ -28,3 +28,14 @@ func _physics_process(delta: float) -> void:
 	velocity.x = move_toward(velocity.x, direction_x * MAX_SPEED, ACCELERATION*delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+
+
+#func _on_Area2D_body_entered(body: Node) -> void:
+	
+
+func die() -> void:
+	queue_free()
+
+
+
+
