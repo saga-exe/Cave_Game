@@ -40,8 +40,10 @@ func _on_Area2D_body_entered(body: Node) -> void:
 	direction_to_player = direction_to_player.normalized()
 	if body.is_in_group("Player"):
 		body.take_damage(direction_to_player)
-		velocity.x == direction_to_player.x * -250
-		#make slime go boom backwards when player collide
+		velocity.x = direction_to_player.x * -400
+		print("collision: ", direction_to_player)
+
+		
 
 func die() -> void:
 	queue_free()
