@@ -27,11 +27,21 @@ func _physics_process(delta: float) -> void:
 
 	velocity.x = move_toward(velocity.x, direction_x * MAX_SPEED, ACCELERATION*delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
-
-
-
-#func _on_Area2D_body_entered(body: Node) -> void:
 	
+	if direction_x < 0:
+		$Sprite.set_flip_h(true)
+	else:
+		$Sprite.set_flip_h(false)
+
+
+
+func _on_Area2D_body_entered(body: Node) -> void:
+	var direction_to_player = player.global_position - global_position
+	direction_to_player = direction_to_player.normalized()
+	if body.is_in_group("Player"):
+		body.take_damage(direction_to_player)
+		velocity.x == direction_to_player.x * -250
+		#make slime go boom backwards when player collide
 
 func die() -> void:
 	queue_free()

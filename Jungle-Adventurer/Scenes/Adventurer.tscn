@@ -97,7 +97,7 @@ animations = [ {
 "speed": 9.0
 } ]
 
-[node name="Adventurer" type="KinematicBody2D"]
+[node name="Adventurer" type="KinematicBody2D" groups=["Player"]]
 scale = Vector2( 0.2, 0.2 )
 script = ExtResource( 54 )
 

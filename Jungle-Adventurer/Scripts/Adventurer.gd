@@ -203,3 +203,19 @@ func _shoot() -> void:
 func _on_ShootTimer_timeout() -> void:
 	can_shoot = true
 	return
+
+
+func take_damage(direction) -> void:
+	velocity = direction * 250
+	
+
+
+
+
+
+
+
+
+
+
+
