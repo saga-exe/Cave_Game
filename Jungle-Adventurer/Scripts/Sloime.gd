@@ -4,16 +4,18 @@ extends KinematicBody2D
 enum {IDLE, CHASE}
 
 
-const ACCELERATION = 100
+const ACCELERATION = 500
 const GRAVITY = 1000
 
-var MAX_SPEED = 50
+var MAX_SPEED = 40
 var velocity = Vector2.ZERO
 var direction = Vector2.LEFT
 var state = IDLE
+var last_direction = 1
 
 var air := true
 var turn := false
+var wait := false
 
 onready var level = get_node("/root/MainScene/Level1")
 onready var player = get_node("/root/MainScene/Adventurer")
@@ -30,26 +32,41 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_direction_x() -> float:
-	print(global_position)
-	#if state == IDLE:
-	if turn:
-		if direction.x > 0:
+	if state == IDLE:
+		if turn:
+			if direction.x > 0:
+				direction.x = -1
+			else:
+				direction.x = 1
+			turn = false
+	elif state == CHASE:
+		if player.global_position.x - global_position.x < 0:
 			direction.x = -1
 		else:
 			direction.x = 1
-		turn = false
-	if not turn:
-		#print("yaas")
-		return direction.x
-
-	#else:
-		#direction.x = player.global_position.x - global_position.x
-		#return direction.x
+		
+		if turn and global_position.x > 520 and last_direction == direction.x:
+			wait = true
+			turn = false
+		if wait:
+			if last_direction == direction.x:
+				direction.x = 0
+				#print("poing")
+			else:
+				direction.x = last_direction * -1
+				wait = false
+				print("okay")
+	if direction.x != 0:
+		last_direction = direction.x
+	print(direction.x)
 	return direction.x
 
 
 func _basic_movement(delta) -> void:
-	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+	if direction.x != 0:
+		velocity = velocity.move_toward(direction*MAX_SPEED, ACCELERATION*delta)
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, ACCELERATION*delta)
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
@@ -59,7 +76,6 @@ func _basic_movement(delta) -> void:
 	else:
 		$Sprite.set_flip_h(false)
 		$TerrainCheck.position = Vector2(50,25)
-	
 
 
 
@@ -67,10 +83,9 @@ func _basic_movement(delta) -> void:
 func _idle_state(delta) -> void:
 	MAX_SPEED = 40
 	direction.x = _update_direction_x()
-	velocity.x = move_toward(velocity.x, direction.x * MAX_SPEED, ACCELERATION*delta)
-	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	_basic_movement(delta)
+	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
@@ -83,12 +98,12 @@ func _idle_state(delta) -> void:
 	else:
 		air = true
 
+
+
 func _chase_state(delta) -> void:
-	MAX_SPEED = 80
+	MAX_SPEED = 60
 	
 	direction.x = _update_direction_x()
-	velocity.x = move_toward(velocity.x, direction.x * MAX_SPEED, ACCELERATION*delta)
-	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	_basic_movement(delta)
 	#vector så att det blir en båge
@@ -279,7 +294,6 @@ func _enter_air_state(jump: bool) -> void:
 
 
 func _on_Area2D_body_exited(body: Node) -> bool:
-	print("okay")
 	turn = true
 	return turn
 

@@ -61,12 +61,15 @@ func _left_right_movement(delta) -> void:
 func _get_input_x_update_direction() -> float:
 	if Input.is_action_just_pressed("move_right"):
 		last_action_pressed = "right"
-		sprite.set_flip_h(false)
 		gunpoint.position = Vector2(210, 5)
 	elif Input.is_action_just_pressed("move_left"):
 		last_action_pressed = "left"
-		sprite.set_flip_h(true)
 		gunpoint.position = Vector2(-190, 5)
+	
+	if velocity.x < 0:
+		sprite.set_flip_h(true)
+	else:
+		sprite.set_flip_h(false)
 	
 	if last_action_pressed == "left" and Input.is_action_pressed("move_left"):
 		input_x = -1
