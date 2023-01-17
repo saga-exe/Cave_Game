@@ -18,7 +18,6 @@ func set_direction(pos1: Vector2, pos2: Vector2) -> void:
 	rotation = direction.angle()
 
 
-
 func _on_BulletTimer_timeout() -> void:
 	queue_free()
 

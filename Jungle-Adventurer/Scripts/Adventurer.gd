@@ -207,10 +207,7 @@ func _on_ShootTimer_timeout() -> void:
 
 func take_damage(direction) -> void:
 	velocity = direction * 250
-	
-	
-func _wrong() -> void:
-	print(velocity)
+
 
 
 

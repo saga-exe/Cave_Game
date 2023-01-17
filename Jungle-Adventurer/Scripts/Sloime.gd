@@ -4,15 +4,22 @@ extends KinematicBody2D
 enum {IDLE, CHASE}
 
 
-const ACCELERATION = 1000
+const ACCELERATION = 100
 const GRAVITY = 1000
 
-var MAX_SPEED = 50
+var MAX_SPEED = 5
 var velocity = Vector2.ZERO
 var direction = Vector2.LEFT
 var state = IDLE
-onready var level = $TileMap
 
+var air := true
+var turn := false
+
+onready var level = get_node("/root/MainScene/Level1")
+onready var player = get_node("/root/MainScene/Adventurer")
+
+func _ready() -> void:
+	global_position = Vector2(200,300)
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -23,40 +30,76 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_direction_x() -> float:
+	print(global_position)
 	if state == IDLE:
-		if is_on_floor():
-			if $Tilemap.global_position.x == global_position.x + 10:
-				return direction.x
-			else:
-				if direction.x > 0:
-					direction.x = -1
-				else:
-					direction.x = 1
-		else:
+		if turn:
 			if direction.x > 0:
 				direction.x = -1
 			else:
 				direction.x = 1
+		if not turn:
+			#print("yaas")
+			return direction.x
+		#elif turn and not air:
+			#if direction.x > 0:
+				#direction.x = -1
+			#else:
+				#direction.x = 1
+		#return direction.x
 	else:
-		direction.x = $Adventurer.global_position.x - global_position.x
+		direction.x = player.global_position.x - global_position.x
+		return direction.x
 	return direction.x
 
 
-func _basic_movement(direction, delta) -> void:
+func _basic_movement(delta) -> void:
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
-	velocity.move_toward()
+
 
 
 
 func _idle_state(delta) -> void:
-	MAX_SPEED = 50
-
+	MAX_SPEED = 5
+	direction.x = _update_direction_x()
+	velocity.x = move_toward(velocity.x, direction.x * MAX_SPEED, ACCELERATION*delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	_basic_movement(delta)
+	#vector så att det blir en båge
+	var player_slime_distance = player.global_position - global_position
+	
+	if player_slime_distance.length() <= 600:
+		state = CHASE
+		return
+	
+	if is_on_floor():
+		air = false
+	else:
+		air = true
 
 func _chase_state(delta) -> void:
-	MAX_SPEED = 100
-
+	MAX_SPEED = 10
+	
+	direction.x = _update_direction_x()
+	velocity.x = move_toward(velocity.x, direction.x * MAX_SPEED, ACCELERATION*delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	_basic_movement(delta)
+	#vector så att det blir en båge
+	var player_slime_distance = player.global_position - global_position
+	
+	if player_slime_distance.length() >= 600:
+		state = IDLE
+		return
+	
+	if is_on_floor():
+		air = false
+	else:
+		air = true
+	
+	
 	
 
 
@@ -229,3 +272,12 @@ func _enter_air_state(jump: bool) -> void:
 	state = AIR
 
 """
+
+
+func _on_Area2D_body_exited(body: Node) -> bool:
+	#if body.is_in_group("Tile"):
+	print("okay")
+	turn = true
+	return turn
+	#else:
+		#return false
