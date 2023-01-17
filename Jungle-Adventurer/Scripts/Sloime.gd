@@ -7,7 +7,7 @@ enum {IDLE, CHASE}
 const ACCELERATION = 100
 const GRAVITY = 1000
 
-var MAX_SPEED = 5
+var MAX_SPEED = 50
 var velocity = Vector2.ZERO
 var direction = Vector2.LEFT
 var state = IDLE
@@ -31,24 +31,20 @@ func _physics_process(delta: float) -> void:
 
 func _update_direction_x() -> float:
 	print(global_position)
-	if state == IDLE:
-		if turn:
-			if direction.x > 0:
-				direction.x = -1
-			else:
-				direction.x = 1
-		if not turn:
-			#print("yaas")
-			return direction.x
-		#elif turn and not air:
-			#if direction.x > 0:
-				#direction.x = -1
-			#else:
-				#direction.x = 1
-		#return direction.x
-	else:
-		direction.x = player.global_position.x - global_position.x
+	#if state == IDLE:
+	if turn:
+		if direction.x > 0:
+			direction.x = -1
+		else:
+			direction.x = 1
+		turn = false
+	if not turn:
+		#print("yaas")
 		return direction.x
+
+	#else:
+		#direction.x = player.global_position.x - global_position.x
+		#return direction.x
 	return direction.x
 
 
@@ -56,12 +52,20 @@ func _basic_movement(delta) -> void:
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	if velocity.x < 0:
+		$Sprite.set_flip_h(true)
+		$TerrainCheck.position = Vector2(-50,25)
+	else:
+		$Sprite.set_flip_h(false)
+		$TerrainCheck.position = Vector2(50,25)
+	
 
 
 
 
 func _idle_state(delta) -> void:
-	MAX_SPEED = 5
+	MAX_SPEED = 40
 	direction.x = _update_direction_x()
 	velocity.x = move_toward(velocity.x, direction.x * MAX_SPEED, ACCELERATION*delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
@@ -80,7 +84,7 @@ func _idle_state(delta) -> void:
 		air = true
 
 func _chase_state(delta) -> void:
-	MAX_SPEED = 10
+	MAX_SPEED = 80
 	
 	direction.x = _update_direction_x()
 	velocity.x = move_toward(velocity.x, direction.x * MAX_SPEED, ACCELERATION*delta)
@@ -275,9 +279,7 @@ func _enter_air_state(jump: bool) -> void:
 
 
 func _on_Area2D_body_exited(body: Node) -> bool:
-	#if body.is_in_group("Tile"):
 	print("okay")
 	turn = true
 	return turn
-	#else:
-		#return false
+
