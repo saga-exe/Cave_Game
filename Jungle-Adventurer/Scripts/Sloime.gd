@@ -17,7 +17,6 @@ var turn_direction = 1
 var air := true
 var turn := false
 var wait := false
-var turnable := true
 
 onready var level = get_node("/root/MainScene/Level1")
 onready var player = get_node("/root/MainScene/Adventurer")
@@ -41,38 +40,31 @@ func _update_direction_x() -> float:
 			else:
 				direction.x = 1
 			turn = false
-	#print(direction.x)
-	#return direction.x
+			
 	elif state == CHASE:
 		if player.global_position.x - global_position.x < 0:
 			direction.x = -1
 		else:
 			direction.x = 1
 		
-		#if last_direction != direction.x:
-			#last_direction = direction.x
-			#return direction.x
-		#520 y-gränsen
 		if turn and global_position.y < 520:
 			turn = false
-		elif turn and global_position.y > 520:
-			wait = true
+		elif turn and global_position.y > 520: #and last_direction == direction.x:
 			turn = false
-			print("yaa")
+			wait = true
+				
 			
 		if wait:
 			if last_direction == direction.x:
 				direction.x = 0
 			
 			else:
-				#last_direction = direction.x
 				wait = false
 				turn = false
-				print("okay")
 		
 	if direction.x != 0:
 		last_direction = direction.x
-	print(direction.x)
+
 	return direction.x
 
 
@@ -120,6 +112,7 @@ func _chase_state(delta) -> void:
 	direction.x = _update_direction_x()
 	
 	_basic_movement(delta)
+	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
@@ -131,9 +124,6 @@ func _chase_state(delta) -> void:
 		air = false
 	else:
 		air = true
-	
-	
-	
 
 
 """
@@ -155,16 +145,14 @@ func die() -> void:
 	queue_free()
 """
 
+#turn behövs enbart då enemy ska vända vid slutet av en platform,
+#ej då spelaren hamnar på andra sidan
 
-func _on_Area2D_body_exited(body: Node) -> bool:
-	if turnable:
+func _on_Area2D_body_exited(body: Node) -> void:
+	if state == IDLE:
 		turn = true
-		print("turn")
-		$TurnTimer.start()
-	return turn
+		
+		print("okay")
 
+	return
 
-
-func _on_TurnTimer_timeout() -> bool:
-	turnable = true
-	return turnable

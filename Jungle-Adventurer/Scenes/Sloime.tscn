@@ -41,9 +41,5 @@ shape = SubResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck/Area2D"]
 shape = SubResource( 3 )
 
-[node name="TurnTimer" type="Timer" parent="."]
-wait_time = 0.5
-
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="TerrainCheck/Area2D" to="." method="_on_Area2D_body_exited"]
-[connection signal="timeout" from="TurnTimer" to="." method="_on_TurnTimer_timeout"]
