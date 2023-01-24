@@ -118,24 +118,11 @@ func _chase_state(delta) -> void:
 		air = true
 
 
-"""
-onready var player = get_node("/root/MainScene/Adventurer")
-var taken_damage := false
-
-
-func _on_Area2D_body_entered(body: Node) -> void:
-	var direction_to_player = player.global_position - global_position
-	direction_to_player = direction_to_player.normalized()
-	if body.is_in_group("Player"):
-		body.take_damage(direction_to_player)
-		velocity.x = direction_x * -100
-		print("collision: ", direction_to_player)
-		taken_damage = true
 
 
 func die() -> void:
 	queue_free()
-"""
+
 
 #turn behövs enbart då enemy ska vända vid slutet av en platform,
 #ej då spelaren hamnar på andra sidan
@@ -149,6 +136,16 @@ func _on_Area2D_body_exited(body: Node) -> void:
 			wait = true
 		elif body.is_in_group("Tile"):
 			wait = true
-	#turn_direction = direction.x
 	return
 
+
+
+func _on_Area2D_body_entered(body: Node) -> void:
+	if body.is_in_group("Player"):
+		var direction_to_player = player.global_position - global_position
+		direction_to_player = direction_to_player.normalized()
+		body.take_damage()
+		velocity.x = direction.x * -100
+		if (((global_position.y-45) - player.global_position.y) < 20) and (((global_position.y-45) - player.global_position.y) > 0):
+			die()
+			

@@ -116,4 +116,6 @@ position = Vector2( 210, 5 )
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 0.1
 
+[node name="KnockbackTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
