@@ -139,13 +139,23 @@ func _on_Area2D_body_exited(body: Node) -> void:
 	return
 
 
+#body
 
 func _on_Area2D_body_entered(body: Node) -> void:
+	var knockback = 1
+	var damage = 0
 	if body.is_in_group("Player"):
-		var direction_to_player = player.global_position - global_position
-		direction_to_player = direction_to_player.normalized()
-		body.take_damage()
-		velocity.x = direction.x * -100
+		if player.global_position.x - global_position.x < 0:
+			knockback = -1
+		else:
+			knockback = 1
 		if (((global_position.y-45) - player.global_position.y) < 20) and (((global_position.y-45) - player.global_position.y) > 0):
+			damage = 0
+			body.take_damage(damage, knockback)
 			die()
+		else:
+			damage = 10
+			body.take_damage(damage, knockback)
+			velocity.x = knockback * -200
+		
 			

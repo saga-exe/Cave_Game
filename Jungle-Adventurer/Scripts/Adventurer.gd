@@ -14,6 +14,7 @@ var direction := Vector2.ZERO
 var sprint = false
 var last_action_pressed = "right"
 var input_x = 0
+var hp = 100
 
 var bullet_direction = Vector2.ZERO
 
@@ -66,10 +67,17 @@ func _get_input_x_update_direction() -> float:
 		last_action_pressed = "left"
 		gunpoint.position = Vector2(-190, 5)
 	
-	if velocity.x < 0:
-		sprite.set_flip_h(true)
+	if velocity.x != 0:
+		if velocity.x < 0:
+			sprite.set_flip_h(true)
+		else:
+			sprite.set_flip_h(false)
 	else:
-		sprite.set_flip_h(false)
+		if last_action_pressed == "left":
+			sprite.set_flip_h(true)
+		else:
+			sprite.set_flip_h(false)
+		
 	
 	if last_action_pressed == "left" and Input.is_action_pressed("move_left"):
 		input_x = -1
@@ -208,9 +216,14 @@ func _on_ShootTimer_timeout() -> void:
 	return
 
 
-func take_damage() -> void:
-	velocity.x = direction.x * -250
-	print("knock")
+func take_damage(damage, knockback) -> void:
+	if damage == 0:
+		velocity.y = -250
+	else:
+		velocity.x = knockback * 250
+		hp -= damage
+		print(hp)
+	#print("knock")
 
 
 
