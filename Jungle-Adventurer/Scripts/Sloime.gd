@@ -20,9 +20,11 @@ var wait := false
 
 onready var level = get_node("/root/MainScene/Level1")
 onready var player = get_node("/root/MainScene/Adventurer")
+onready var TerrainCheck = $TerrainCheck
+onready var TerrainCheck2 = $TerrainCheck2
 
 func _ready() -> void:
-	global_position = Vector2(100,300)
+	global_position = Vector2(100,512)
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -46,13 +48,6 @@ func _update_direction_x() -> float:
 			direction.x = -1
 		else:
 			direction.x = 1
-		
-		if turn and global_position.y < 520:
-			turn = false
-		elif turn and global_position.y > 520: #and last_direction == direction.x:
-			turn = false
-			wait = true
-				
 			
 		if wait:
 			if last_direction == direction.x:
@@ -60,7 +55,6 @@ func _update_direction_x() -> float:
 			
 			else:
 				wait = false
-				turn = false
 		
 	if direction.x != 0:
 		last_direction = direction.x
@@ -78,10 +72,8 @@ func _basic_movement(delta) -> void:
 	
 	if velocity.x < 0:
 		$Sprite.set_flip_h(true)
-		$TerrainCheck.position = Vector2(-50,40)
 	else:
 		$Sprite.set_flip_h(false)
-		$TerrainCheck.position = Vector2(50,40)
 
 
 
@@ -150,9 +142,13 @@ func die() -> void:
 
 func _on_Area2D_body_exited(body: Node) -> void:
 	if state == IDLE:
-		turn = true
-		
-		print("okay")
-
+		if state == IDLE:
+			turn = true
+	elif state == CHASE:
+		if body.is_in_group("Tile"):
+			wait = true
+		elif body.is_in_group("Tile"):
+			wait = true
+	#turn_direction = direction.x
 	return
 
