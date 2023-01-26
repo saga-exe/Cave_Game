@@ -13,10 +13,12 @@ var direction = Vector2.LEFT
 var state = IDLE
 var last_direction = 1
 var turn_direction = 1
+var knockback_direction = 1
 
 var air := true
 var turn := false
 var wait := false
+var knockback := false
 
 onready var level = get_node("/root/MainScene/Level1")
 onready var player = get_node("/root/MainScene/Adventurer")
@@ -70,10 +72,22 @@ func _basic_movement(delta) -> void:
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
-	if velocity.x < 0:
-		$Sprite.set_flip_h(true)
+	#knockback_direction = -1 => velocity.x > 0 => flip(true)
+	if knockback:
+		if knockback_direction > 0:
+			$Sprite.set_flip_h(false)
+			if velocity.x > 0:
+				knockback = false
+		else:
+			$Sprite.set_flip_h(true)
+			if velocity.x < 0:
+				knockback = false
+			
 	else:
-		$Sprite.set_flip_h(false)
+		if velocity.x < 0:
+			$Sprite.set_flip_h(true)
+		else:
+			$Sprite.set_flip_h(false)
 
 
 
@@ -142,20 +156,22 @@ func _on_Area2D_body_exited(body: Node) -> void:
 #body
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	var knockback = 1
 	var damage = 0
 	if body.is_in_group("Player"):
+		knockback = true
 		if player.global_position.x - global_position.x < 0:
-			knockback = -1
+			knockback_direction = -1
 		else:
-			knockback = 1
+			knockback_direction = 1
 		if (((global_position.y-45) - player.global_position.y) < 20) and (((global_position.y-45) - player.global_position.y) > 0):
 			damage = 0
-			body.take_damage(damage, knockback)
+			body.take_damage(damage, knockback_direction)
 			die()
 		else:
 			damage = 10
-			body.take_damage(damage, knockback)
-			velocity.x = knockback * -200
+			body.take_damage(damage, knockback_direction)
+			velocity.x = knockback_direction * -200
 		
-			
+
+func _on_KnockbackTimer_timeout() -> void:
+	knockback = false
