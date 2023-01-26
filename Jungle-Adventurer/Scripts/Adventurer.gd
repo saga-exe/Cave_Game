@@ -15,6 +15,7 @@ var sprint = false
 var last_action_pressed = "right"
 var input_x = 0
 var hp = 100
+var knockback_direction_player = 0
 
 var bullet_direction = Vector2.ZERO
 
@@ -23,6 +24,7 @@ var state = IDLE
 var can_jump := true
 var can_shoot := true
 var is_shooting := false
+var knockback := false
 
 var bullet_scene = preload("res://Scenes/Bullet.tscn")
 
@@ -67,7 +69,18 @@ func _get_input_x_update_direction() -> float:
 		last_action_pressed = "left"
 		gunpoint.position = Vector2(-190, 5)
 	
-	if velocity.x != 0:
+	#knockback_direction = -1 => velocity.x < 0 => flip(false)
+	if knockback:
+		if knockback_direction_player < 0:
+			sprite.set_flip_h(false)
+			if velocity.x > 0 or last_action_pressed == "left":
+				knockback = false
+		else:
+			sprite.set_flip_h(true)
+			if velocity.x < 0 or last_action_pressed == "right":
+				knockback = false
+
+	elif velocity.x != 0:
 		if velocity.x < 0:
 			sprite.set_flip_h(true)
 		else:
@@ -77,6 +90,8 @@ func _get_input_x_update_direction() -> float:
 			sprite.set_flip_h(true)
 		else:
 			sprite.set_flip_h(false)
+			
+
 		
 	
 	if last_action_pressed == "left" and Input.is_action_pressed("move_left"):
@@ -216,16 +231,15 @@ func _on_ShootTimer_timeout() -> void:
 	return
 
 
-func take_damage(damage, knockback) -> void:
+func take_damage(damage, knockback_direction) -> void:
 	if damage == 0:
-		velocity.y = -250
+		velocity.y = -350
 	else:
-		velocity.x = knockback * 250
+		velocity.x = knockback_direction * 350
 		hp -= damage
 		print(hp)
-	#print("knock")
-
-
+		knockback = true
+	knockback_direction_player = knockback_direction
 
 
 

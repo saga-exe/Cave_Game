@@ -150,6 +150,8 @@ func _on_Area2D_body_exited(body: Node) -> void:
 			wait = true
 		elif body.is_in_group("Tile"):
 			wait = true
+		if knockback:
+			wait = false
 	return
 
 
