@@ -237,7 +237,6 @@ func take_damage(damage, knockback_direction) -> void:
 	else:
 		velocity.x = knockback_direction * 350
 		hp -= damage
-		print(hp)
 		knockback = true
 	knockback_direction_player = knockback_direction
 

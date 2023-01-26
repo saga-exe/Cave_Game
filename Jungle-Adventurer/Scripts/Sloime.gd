@@ -165,7 +165,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 			knockback_direction = -1
 		else:
 			knockback_direction = 1
-		if (((global_position.y-45) - player.global_position.y) < 20) and (((global_position.y-45) - player.global_position.y) > 0):
+		if (((global_position.y-45) - player.global_position.y) < 5) and (((global_position.y-45) - player.global_position.y) > -20):
 			damage = 0
 			body.take_damage(damage, knockback_direction)
 			die()
