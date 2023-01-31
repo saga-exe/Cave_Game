@@ -30,6 +30,7 @@ var bullet_scene = preload("res://Scenes/Bullet.tscn")
 
 onready var sprite = $AnimatedSprite
 onready var gunpoint = $GunPoint
+onready var HUD = get_node("/root/MainScene/HUD")
 
 func _ready() -> void:
 	global_position = Vector2(200,400)
@@ -255,6 +256,7 @@ func take_damage(damage, knockback_direction) -> void:
 		velocity.x = knockback_direction * 350
 		hp -= damage
 		knockback = true
+		HUD.health_changed(hp)
 	knockback_direction_player = knockback_direction
 
 
