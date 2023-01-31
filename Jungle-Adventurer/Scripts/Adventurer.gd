@@ -170,19 +170,29 @@ func _air_state(delta) -> void:
 		_shoot()
 		return
 		
-
-
-func _shoot() -> void:
-	$ShootTimer.start()
+func _bullet_direction() -> float:
+	# bullet_target is the position the bullet is aiming for
+	# bullet_target.x is always aimed to the correct side, and is later corrected if running
 	var bullet_target = Vector2.ZERO
+	var angle = 0
+	if state == IDLE:
+		if gunpoint.global_position.x - get_global_mouse_position().x <= 0:
+			direction.x == 1
+			last_action_pressed = "right"
+			gunpoint.position = Vector2(210, 5)
+			
+		else:
+			direction.x == -1
+			last_action_pressed = "left"
+			gunpoint.position = Vector2(-190, 5)
 
 	if gunpoint.global_position.x - get_global_mouse_position().x <= 0:
 		bullet_target.x =  get_global_mouse_position().x - gunpoint.global_position.x
 	else:
 		bullet_target.x = gunpoint.global_position.x - get_global_mouse_position().x
 
-	
-	var angle = (get_global_mouse_position() - gunpoint.global_position).angle()
+
+	angle = (get_global_mouse_position() - gunpoint.global_position).angle()
 	if angle >= deg2rad(30) and angle <= deg2rad(150):
 		angle = deg2rad(30)
 	elif angle >= deg2rad(-150) and angle <= deg2rad(-30):
@@ -200,12 +210,19 @@ func _shoot() -> void:
 
 		bullet_target.y = -bullet_target.x*tan(angle)
 		bullet_target = gunpoint.global_position - bullet_target
-		
+			
 	var bullet_instance = bullet_scene.instance()
 	bullet_instance.global_position = gunpoint.global_position
 	bullet_instance.set_direction(gunpoint.global_position, bullet_target)
-	
-	
+
+	return bullet_instance
+
+
+
+
+func _shoot() -> void:
+	$ShootTimer.start()
+	var bullet_instance = _bullet_direction()
 	get_tree().get_root().add_child(bullet_instance)
 	sprite.play("Shoot")
 	yield(sprite,"animation_finished")
