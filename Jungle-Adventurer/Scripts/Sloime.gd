@@ -46,7 +46,11 @@ func _update_direction_x() -> float:
 			turn = false
 			
 	elif state == CHASE:
-		if player.global_position.x - global_position.x < 0:
+		if player.global_position.x - global_position.x < 5 and player.global_position.x - global_position.x > -5:
+			if direction.x != 0:
+				last_direction = direction.x
+			direction.x = 0
+		elif player.global_position.x - global_position.x < 0:
 			direction.x = -1
 		else:
 			direction.x = 1
@@ -84,7 +88,12 @@ func _basic_movement(delta) -> void:
 				knockback = false
 			
 	else:
-		if velocity.x < 0:
+		if velocity.x == 0:
+			if last_direction < 0:
+				$Sprite.set_flip_h(true)
+			else:
+				$Sprite.set_flip_h(false)
+		elif velocity.x < 0:
 			$Sprite.set_flip_h(true)
 		else:
 			$Sprite.set_flip_h(false)
@@ -170,7 +179,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 			body.take_damage(damage, knockback_direction)
 			die()
 		else:
-			damage = 10
+			damage = 25
 			body.take_damage(damage, knockback_direction)
 			velocity.x = knockback_direction * -200
 		

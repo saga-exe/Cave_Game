@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-#fixa så att kan springa genom platformar
-
 enum {IDLE, RUN, AIR}
+
+signal game_over
 
 const ACCELERATION = 1500
 const GRAVITY = 1000
@@ -260,6 +260,8 @@ func take_damage(damage, knockback_direction) -> void:
 		knockback = true
 		HUD.health_changed(hp)
 	knockback_direction_player = knockback_direction
+	if hp <= 0:
+		emit_signal("game_over")
 
 
 
