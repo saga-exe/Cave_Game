@@ -1,10 +1,12 @@
 extends KinematicBody2D
 
+#fixa så att kan springa genom platformar
+
 enum {IDLE, RUN, AIR}
 
 const ACCELERATION = 1500
 const GRAVITY = 1000
-const JUMP_STRENGHT = -500
+const JUMP_STRENGHT = -600
 
 
 var MAX_SPEED = 300

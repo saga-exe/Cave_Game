@@ -10,3 +10,10 @@ margin_left = 879.0
 margin_top = 24.0
 margin_right = 972.0
 margin_bottom = 43.0
+
+[node name="GemText" type="Label" parent="."]
+margin_left = 883.0
+margin_top = 59.0
+margin_right = 929.0
+margin_bottom = 73.0
+text = "Gems: "
