@@ -19,6 +19,7 @@ var air := true
 var turn := false
 var wait := false
 var knockback := false
+var can_drop := false
 
 onready var level = get_node("/root/MainScene/Level1")
 onready var player = get_node("/root/MainScene/Adventurer")
@@ -27,6 +28,7 @@ onready var TerrainCheck2 = $TerrainCheck2
 
 func _ready() -> void:
 	global_position = Vector2(100,512)
+
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -58,7 +60,6 @@ func _update_direction_x() -> float:
 		if wait:
 			if last_direction == direction.x:
 				direction.x = 0
-			
 			else:
 				wait = false
 		
@@ -186,3 +187,9 @@ func _on_Area2D_body_entered(body: Node) -> void:
 
 func _on_KnockbackTimer_timeout() -> void:
 	knockback = false
+
+
+func _can_drop() -> void:
+	if $RayCast.collide_with_bodies():
+		if body.is_in_group("Tile"):
+			can_drop = true
