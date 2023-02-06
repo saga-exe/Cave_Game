@@ -1,7 +1,14 @@
 extends KinematicBody2D
 
-#slow down if stop sprint in air
 #take damage when jumping up into slime
+	#have several collision shapes with on way collision so can jump through and bonk and stuff?
+#take damage and respawn when drop out of frame
+#HUD
+#game over screen
+#main menu
+#storyline
+#nice sprites
+#should i be able to sprint when already in the air?
 
 enum {IDLE, RUN, AIR}
 
@@ -165,6 +172,11 @@ func _air_state(delta) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, ACCELERATION * delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	if Input.is_action_pressed("sprint"):
+		MAX_SPEED = 500
+	else:
+		MAX_SPEED = 300
 	
 	if is_on_floor():
 		state = IDLE

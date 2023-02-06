@@ -38,7 +38,8 @@ func _physics_process(delta: float) -> void:
 			_chase_state(delta)
 
 
-func _update_direction_x() -> float:
+func _update_direction_x(delta) -> float:
+	var player_slime_distance = player.global_position - global_position
 	_can_drop()
 	if state == IDLE:
 		if turn:
@@ -47,13 +48,16 @@ func _update_direction_x() -> float:
 			else:
 				direction.x = 1
 			turn = false
+		if velocity.x == 0:
+			direction.x = last_direction
+			velocity = velocity.move_toward(direction*MAX_SPEED, ACCELERATION*delta)
 			
 	elif state == CHASE:
-		if player.global_position.x - global_position.x < 5 and player.global_position.x - global_position.x > -5:
+		if player_slime_distance.x < 5 and player_slime_distance.x > -5:
 			if direction.x != 0:
 				last_direction = direction.x
 			direction.x = 0
-		elif player.global_position.x - global_position.x < 0:
+		elif player_slime_distance.x < 0:
 			direction.x = -1
 		else:
 			direction.x = 1
@@ -105,7 +109,7 @@ func _basic_movement(delta) -> void:
 
 func _idle_state(delta) -> void:
 	MAX_SPEED = 40
-	direction.x = _update_direction_x()
+	direction.x = _update_direction_x(delta)
 	
 	_basic_movement(delta)
 	
@@ -126,7 +130,7 @@ func _idle_state(delta) -> void:
 func _chase_state(delta) -> void:
 	MAX_SPEED = 60
 	
-	direction.x = _update_direction_x()
+	direction.x = _update_direction_x(delta)
 	
 	_basic_movement(delta)
 	
@@ -170,6 +174,8 @@ func _on_Area2D_body_entered(body: Node) -> void:
 	var damage = 0
 	if body.is_in_group("Player"):
 		knockback = true
+		if player.global_position.y > global_position.y:
+			print("skronk")
 		if player.global_position.x - global_position.x < 0:
 			knockback_direction = -1
 		else:
@@ -191,13 +197,9 @@ func _on_KnockbackTimer_timeout() -> void:
 # fixa beräkning så att den räknar ut om den kan droppa eller inte?
 
 func _can_drop() -> void:
-	if velocity.y != 0:
-		print(global_position.x)
 	var length_raycast = ($RayCast.get_collision_point().y - $RayCast.global_position.y)
 	var length_raycast2 = ($RayCast2.get_collision_point().y - $RayCast2.global_position.y)
-	if (length_raycast < 800 and length_raycast > 30):
-		wait = false
-	if (length_raycast2 < 800 and length_raycast2 > 30):
+	if (length_raycast < 800 and length_raycast > 30) or (length_raycast2 < 800 and length_raycast2 > 30):
 		wait = false
 
 
