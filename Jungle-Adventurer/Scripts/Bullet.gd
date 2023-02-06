@@ -25,5 +25,5 @@ func _on_BulletTimer_timeout() -> void:
 func _on_Bullet_body_entered(body: Node) -> void:
 	if body.is_in_group("Enemy"):
 		body.die()
-	elif body.is_in_group("Tile"):
-		queue_free()
+	#elif body.is_in_group("Tile"):
+		#queue_free()

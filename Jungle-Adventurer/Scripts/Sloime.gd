@@ -27,7 +27,7 @@ onready var TerrainCheck = $TerrainCheck
 onready var TerrainCheck2 = $TerrainCheck2
 
 func _ready() -> void:
-	global_position = Vector2(100,512)
+	global_position = Vector2(800,200)
 
 
 func _physics_process(delta: float) -> void:
@@ -39,6 +39,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_direction_x() -> float:
+	_can_drop()
 	if state == IDLE:
 		if turn:
 			if direction.x > 0:
@@ -158,8 +159,6 @@ func _on_Area2D_body_exited(body: Node) -> void:
 	elif state == CHASE:
 		if body.is_in_group("Tile"):
 			wait = true
-		elif body.is_in_group("Tile"):
-			wait = true
 		if knockback:
 			wait = false
 	return
@@ -189,7 +188,16 @@ func _on_KnockbackTimer_timeout() -> void:
 	knockback = false
 
 
+# fixa beräkning så att den räknar ut om den kan droppa eller inte?
+
 func _can_drop() -> void:
-	if $RayCast.collide_with_bodies():
-		if body.is_in_group("Tile"):
-			can_drop = true
+	if velocity.y != 0:
+		print(global_position.x)
+	var length_raycast = ($RayCast.get_collision_point().y - $RayCast.global_position.y)
+	var length_raycast2 = ($RayCast2.get_collision_point().y - $RayCast2.global_position.y)
+	if (length_raycast < 800 and length_raycast > 30):
+		wait = false
+	if (length_raycast2 < 800 and length_raycast2 > 30):
+		wait = false
+
+

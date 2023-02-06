@@ -1,10 +1,13 @@
 extends KinematicBody2D
 
+#slow down if stop sprint in air
+#take damage when jumping up into slime
+
 enum {IDLE, RUN, AIR}
 
 signal game_over
 
-const ACCELERATION = 1500
+const ACCELERATION = 1700
 const GRAVITY = 1000
 const JUMP_STRENGHT = -600
 
