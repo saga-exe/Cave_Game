@@ -21,7 +21,7 @@ var wait := false
 var knockback := false
 var can_drop := false
 
-onready var level = get_node("/root/MainScene/Level1")
+onready var level = get_node("/root/MainScene/kronk/Platforms")
 onready var player = get_node("/root/MainScene/Adventurer")
 onready var TerrainCheck = $TerrainCheck
 onready var TerrainCheck2 = $TerrainCheck2

@@ -183,9 +183,6 @@ func _air_state(delta) -> void:
 		set_collision_mask_bit(1, false)
 		slime.set_collision_mask_bit(0, false)
 		$AntiCollisionTimer.start()
-		
-		
-		#print(get_collision_mask_bit(2))
 	
 	if is_on_floor():
 		state = IDLE
