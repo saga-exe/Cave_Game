@@ -115,7 +115,6 @@ func _idle_state(delta) -> void:
 	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
-	
 	if player_slime_distance.length() <= 600:
 		state = CHASE
 		return
@@ -171,23 +170,27 @@ func _on_Area2D_body_exited(body: Node) -> void:
 #body
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	var damage = 0
-	if body.is_in_group("Player"):
-		knockback = true
-		if player.global_position.y > global_position.y:
-			print("skronk")
-		if player.global_position.x - global_position.x < 0:
-			knockback_direction = -1
-		else:
-			knockback_direction = 1
-		if (((global_position.y-45) - player.global_position.y) < 5) and (((global_position.y-45) - player.global_position.y) > -20):
-			damage = 0
-			body.take_damage(damage, knockback_direction)
-			die()
-		else:
-			damage = 25
-			body.take_damage(damage, knockback_direction)
-			velocity.x = knockback_direction * -200
+	
+	if get_collision_mask_bit(0):
+		var damage = 0
+		if body.is_in_group("Player"):
+			knockback = true
+			if player.global_position.y > global_position.y:
+				print("yeooo")
+			if player.global_position.x - global_position.x < 0:
+				knockback_direction = -1
+			else:
+				knockback_direction = 1
+			if (((global_position.y-45) - player.global_position.y) < 5) and (((global_position.y-45) - player.global_position.y) > -20):
+				damage = 0
+				body.take_damage(damage, knockback_direction)
+				die()
+			else:
+				damage = 25
+				body.take_damage(damage, knockback_direction)
+				velocity.x = knockback_direction * -200
+	else:
+		return
 		
 
 func _on_KnockbackTimer_timeout() -> void:

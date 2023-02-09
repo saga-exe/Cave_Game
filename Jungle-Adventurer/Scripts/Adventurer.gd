@@ -42,6 +42,7 @@ var bullet_scene = preload("res://Scenes/Bullet.tscn")
 
 onready var sprite = $AnimatedSprite
 onready var gunpoint = $GunPoint
+onready var slime = get_node("/root/MainScene/sloime")
 onready var HUD = get_node("/root/MainScene/HUD")
 
 func _ready() -> void:
@@ -177,6 +178,13 @@ func _air_state(delta) -> void:
 		MAX_SPEED = 500
 	else:
 		MAX_SPEED = 300
+	
+	if velocity.y < 0:
+		set_collision_mask_bit(1, false)
+		slime.set_collision_mask_bit(0, false)
+		
+		
+		#print(get_collision_mask_bit(2))
 	
 	if is_on_floor():
 		state = IDLE

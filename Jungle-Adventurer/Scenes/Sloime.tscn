@@ -16,6 +16,7 @@ extents = Vector2( 9, 9 )
 
 [node name="sloime" type="KinematicBody2D" groups=["Enemy"]]
 scale = Vector2( 0.75, 0.75 )
+collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
