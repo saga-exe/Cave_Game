@@ -179,9 +179,10 @@ func _air_state(delta) -> void:
 	else:
 		MAX_SPEED = 300
 	
-	if velocity.y < 0:
+	if velocity.y < 0 and $AntiCollisionTimer.time_left <= 0 and global_position < slime.global_position:
 		set_collision_mask_bit(1, false)
 		slime.set_collision_mask_bit(0, false)
+		$AntiCollisionTimer.start()
 		
 		
 		#print(get_collision_mask_bit(2))
@@ -287,6 +288,6 @@ func take_damage(damage, knockback_direction) -> void:
 		emit_signal("game_over")
 
 
-
-
-
+func _on_AntiCollisionTimer_timeout() -> void:
+	set_collision_mask_bit(1, true)
+	slime.set_collision_mask_bit(0, true)
