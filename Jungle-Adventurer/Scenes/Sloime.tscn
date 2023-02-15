@@ -17,6 +17,7 @@ extents = Vector2( 9, 9 )
 [node name="sloime" type="KinematicBody2D" groups=["Enemy"]]
 scale = Vector2( 0.75, 0.75 )
 collision_layer = 2
+collision_mask = 5
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -60,11 +61,13 @@ shape = SubResource( 3 )
 position = Vector2( 80, 20 )
 enabled = true
 cast_to = Vector2( 0, 800 )
+collision_mask = 4
 
 [node name="RayCast2" type="RayCast2D" parent="."]
 position = Vector2( -80, 20 )
 enabled = true
 cast_to = Vector2( 0, 800 )
+collision_mask = 4
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="TerrainCheck/Area2D" to="." method="_on_Area2D_body_exited"]

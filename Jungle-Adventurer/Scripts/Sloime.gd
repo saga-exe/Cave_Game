@@ -42,15 +42,17 @@ func _update_direction_x(delta) -> float:
 	var player_slime_distance = player.global_position - global_position
 	_can_drop()
 	if state == IDLE:
+		if wait:
+			wait = false
+			turn = true
 		if turn:
-			if direction.x > 0:
+			if last_direction > 0 or velocity.x > 0:
 				direction.x = -1
 			else:
 				direction.x = 1
 			turn = false
 		if velocity.x == 0:
 			direction.x = last_direction
-			velocity = velocity.move_toward(direction*MAX_SPEED, ACCELERATION*delta)
 			
 	elif state == CHASE:
 		if player_slime_distance.x < 5 and player_slime_distance.x > -5:
@@ -82,7 +84,6 @@ func _basic_movement(delta) -> void:
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
-	#knockback_direction = -1 => velocity.x > 0 => flip(true)
 	if knockback:
 		if knockback_direction > 0:
 			$Sprite.set_flip_h(false)
@@ -115,7 +116,7 @@ func _idle_state(delta) -> void:
 	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
-	if player_slime_distance.length() <= 600:
+	if player_slime_distance.length() <= 200:
 		state = CHASE
 		return
 	
@@ -127,7 +128,7 @@ func _idle_state(delta) -> void:
 
 
 func _chase_state(delta) -> void:
-	MAX_SPEED = 60
+	MAX_SPEED = 100
 	
 	direction.x = _update_direction_x(delta)
 	
@@ -136,7 +137,10 @@ func _chase_state(delta) -> void:
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
-	if player_slime_distance.length() >= 600:
+	if player_slime_distance.length() >= 200:
+		if wait:
+			turn = true
+			wait = false
 		state = IDLE
 		return
 	
@@ -197,12 +201,15 @@ func _on_KnockbackTimer_timeout() -> void:
 	knockback = false
 
 
-# fixa beräkning så att den räknar ut om den kan droppa eller inte?
-
 func _can_drop() -> void:
 	var length_raycast = ($RayCast.get_collision_point().y - $RayCast.global_position.y)
 	var length_raycast2 = ($RayCast2.get_collision_point().y - $RayCast2.global_position.y)
 	if (length_raycast < 800 and length_raycast > 30) or (length_raycast2 < 800 and length_raycast2 > 30):
-		wait = false
+		if state == CHASE:
+			if global_position.y < 410:
+				wait = false
+				can_drop = true
+		else:
+			turn = true
 
 
