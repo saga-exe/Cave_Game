@@ -33,8 +33,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if wait:
-		print("wait")
+	if global_position.y > 560:
+		print($RayCast.get_collision_point_().y)
 	match state:
 		IDLE:
 			_idle_state(delta)
@@ -198,26 +198,29 @@ func _on_TerrainArea_body_exited(body):
 	elif state == CHASE:
 		if body.is_in_group("Tile"):
 			turn = false
-			if (last_direction > 0 and $RayCast.get_collision_point().y < 560) or (last_direction < 0 and $RayCast2.get_collision_point().y < 560):
+			if (last_direction > 0 and $RayCast.get_collision_point().y < 500):
 				wait = false
 				can_drop = true
-			else:
-				wait = true
-				can_drop = false
+			#else:
+				#wait = true
+				#can_drop = false
 	can_check_right = false
+
+# $RayCast2.get_collision_point().y finns inte
 
 # if wait
 func _on_TerrainArea2_body_exited(body):
-	
+	 
 	if state == IDLE:
 		turn = true
 	elif state == CHASE:
 		if body.is_in_group("Tile"):
 			turn = false
-			if (last_direction > 0 and $RayCast.get_collision_point().y < 560) or (last_direction < 0 and $RayCast2.get_collision_point().y < 560):
+			if (last_direction < 0 and $RayCast2.get_collision_point().y < 600):
+				print("ok")
 				wait = false
 				can_drop = true
-			else:
-				wait = true
-				can_drop = false
+			#else:
+				#wait = true
+				#can_drop = false
 	can_check_left = false

@@ -34,7 +34,7 @@ position = Vector2( 2.5, 12.5 )
 shape = SubResource( 6 )
 
 [node name="TerrainCheck" type="KinematicBody2D" parent="." groups=["TerrainCheck"]]
-position = Vector2( 70, 40 )
+position = Vector2( 50, 40 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck"]
 shape = SubResource( 4 )
@@ -45,7 +45,7 @@ shape = SubResource( 4 )
 shape = SubResource( 3 )
 
 [node name="TerrainCheck2" type="KinematicBody2D" parent="." groups=["TerrainCheck2"]]
-position = Vector2( -70, 40 )
+position = Vector2( -50, 40 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2"]
 shape = SubResource( 4 )
