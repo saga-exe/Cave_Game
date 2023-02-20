@@ -34,25 +34,25 @@ position = Vector2( 2.5, 12.5 )
 shape = SubResource( 6 )
 
 [node name="TerrainCheck" type="KinematicBody2D" parent="." groups=["TerrainCheck"]]
-position = Vector2( 50, 40 )
+position = Vector2( 70, 40 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck"]
 shape = SubResource( 4 )
 
-[node name="Area2D" type="Area2D" parent="TerrainCheck"]
+[node name="TerrainArea" type="Area2D" parent="TerrainCheck"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck/TerrainArea"]
 shape = SubResource( 3 )
 
 [node name="TerrainCheck2" type="KinematicBody2D" parent="." groups=["TerrainCheck2"]]
-position = Vector2( -50, 40 )
+position = Vector2( -70, 40 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2"]
 shape = SubResource( 4 )
 
-[node name="Area2D" type="Area2D" parent="TerrainCheck2"]
+[node name="TerrainArea2" type="Area2D" parent="TerrainCheck2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2/TerrainArea2"]
 shape = SubResource( 3 )
 
 [node name="KnockbackTimer" type="Timer" parent="."]
@@ -70,6 +70,7 @@ cast_to = Vector2( 0, 800 )
 collision_mask = 4
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
-[connection signal="body_exited" from="TerrainCheck/Area2D" to="." method="_on_Area2D_body_exited"]
-[connection signal="body_exited" from="TerrainCheck2/Area2D" to="." method="_on_Area2D_body_exited"]
+[connection signal="body_entered" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_entered"]
+[connection signal="body_exited" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_exited"]
+[connection signal="body_exited" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_exited"]
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_KnockbackTimer_timeout"]

@@ -20,6 +20,8 @@ var turn := false
 var wait := false
 var knockback := false
 var can_drop := false
+var can_check_right := true
+var can_check_left := true
 
 onready var level = get_node("/root/MainScene/kronk/Platforms")
 onready var player = get_node("/root/MainScene/Adventurer")
@@ -31,6 +33,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if wait:
+		print("wait")
 	match state:
 		IDLE:
 			_idle_state(delta)
@@ -40,36 +44,32 @@ func _physics_process(delta: float) -> void:
 
 func _update_direction_x(delta) -> float:
 	var player_slime_distance = player.global_position - global_position
-	_can_drop()
 	if state == IDLE:
-		if wait:
-			wait = false
-			turn = true
-		if turn:
-			if last_direction > 0 or velocity.x > 0:
+		if turn or wait:
+			if last_direction > 0:
 				direction.x = -1
 			else:
 				direction.x = 1
 			turn = false
+			wait = false
 		if velocity.x == 0:
 			direction.x = last_direction
 			
 	elif state == CHASE:
 		if player_slime_distance.x < 5 and player_slime_distance.x > -5:
-			if direction.x != 0:
-				last_direction = direction.x
 			direction.x = 0
 		elif player_slime_distance.x < 0:
 			direction.x = -1
 		else:
 			direction.x = 1
-			
+		
 		if wait:
+			velocity.x = 0
 			if last_direction == direction.x:
 				direction.x = 0
 			else:
 				wait = false
-		
+
 	if direction.x != 0:
 		last_direction = direction.x
 
@@ -84,6 +84,9 @@ func _basic_movement(delta) -> void:
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
+	_sprite_direction()
+
+func _sprite_direction() -> void:
 	if knockback:
 		if knockback_direction > 0:
 			$Sprite.set_flip_h(false)
@@ -106,8 +109,6 @@ func _basic_movement(delta) -> void:
 			$Sprite.set_flip_h(false)
 
 
-
-
 func _idle_state(delta) -> void:
 	MAX_SPEED = 40
 	direction.x = _update_direction_x(delta)
@@ -116,15 +117,9 @@ func _idle_state(delta) -> void:
 	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
-	if player_slime_distance.length() <= 200:
+	if player_slime_distance.length() <= 600:
 		state = CHASE
 		return
-	
-	if is_on_floor():
-		air = false
-	else:
-		air = true
-
 
 
 func _chase_state(delta) -> void:
@@ -137,19 +132,12 @@ func _chase_state(delta) -> void:
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
-	if player_slime_distance.length() >= 200:
+	if player_slime_distance.length() >= 600:
 		if wait:
-			turn = true
 			wait = false
+			direction.x = last_direction 
 		state = IDLE
 		return
-	
-	if is_on_floor():
-		air = false
-	else:
-		air = true
-
-
 
 
 func die() -> void:
@@ -159,22 +147,17 @@ func die() -> void:
 #turn behövs enbart då enemy ska vända vid slutet av en platform,
 #ej då spelaren hamnar på andra sidan
 
-func _on_Area2D_body_exited(body: Node) -> void:
-	if state == IDLE:
-		if state == IDLE:
-			turn = true
-	elif state == CHASE:
-		if body.is_in_group("Tile"):
-			wait = true
-		if knockback:
-			wait = false
-	return
+"""
+_on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat platformen, aka slimen är påväg att åka av
+- ifall state == IDLE ska turn vara true, wait false och can_drop false
+- ifall state == CHASE ska turn vara false, och sedan cecka för platformar under och då bestämma om wait eller drop är true
+- då drop == true så är (turn och wait) == false
+- den droppar eftersom den aldrig kommer in på platformen och därför går inte terrancheck ut och stoppar slimen från att trilla
+"""
 
 
-#body
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	
 	if get_collision_mask_bit(0):
 		var damage = 0
 		if body.is_in_group("Player"):
@@ -193,23 +176,48 @@ func _on_Area2D_body_entered(body: Node) -> void:
 				damage = 25
 				body.take_damage(damage, knockback_direction)
 				velocity.x = knockback_direction * -200
-	else:
-		return
-		
+
 
 func _on_KnockbackTimer_timeout() -> void:
 	knockback = false
 
+# terraincheck decides if turn or not, then state decides if turn or wait, and after state it should be decided if it drops or not ( raycast )
 
-func _can_drop() -> void:
-	var length_raycast = ($RayCast.get_collision_point().y - $RayCast.global_position.y)
-	var length_raycast2 = ($RayCast2.get_collision_point().y - $RayCast2.global_position.y)
-	if (length_raycast < 800 and length_raycast > 30) or (length_raycast2 < 800 and length_raycast2 > 30):
-		if state == CHASE:
-			if global_position.y < 410:
+# det är om raycast är kortare än avståndet mellan slime och nedre kanten på skärmen som den kan droppa, ANNARS INTE
+
+
+func _on_TerrainArea_body_entered(body):
+	if body.is_in_group("Tile"):
+		can_check_right = true
+
+
+func _on_TerrainArea_body_exited(body):
+	
+	if state == IDLE:
+		turn = true
+	elif state == CHASE:
+		if body.is_in_group("Tile"):
+			turn = false
+			if (last_direction > 0 and $RayCast.get_collision_point().y < 560) or (last_direction < 0 and $RayCast2.get_collision_point().y < 560):
 				wait = false
 				can_drop = true
-		else:
-			turn = true
+			else:
+				wait = true
+				can_drop = false
+	can_check_right = false
 
-
+# if wait
+func _on_TerrainArea2_body_exited(body):
+	
+	if state == IDLE:
+		turn = true
+	elif state == CHASE:
+		if body.is_in_group("Tile"):
+			turn = false
+			if (last_direction > 0 and $RayCast.get_collision_point().y < 560) or (last_direction < 0 and $RayCast2.get_collision_point().y < 560):
+				wait = false
+				can_drop = true
+			else:
+				wait = true
+				can_drop = false
+	can_check_left = false
