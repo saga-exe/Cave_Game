@@ -10,6 +10,15 @@ extends KinematicBody2D
 #nice sprites
 #should i be able to sprint when already in the air?
 
+"""
+Layer1: Adventurer
+Layer2: Slime
+Layer3: Platforms
+Layer4: Slimespawns
+Layer5: Gems
+Layer6: EnemySpawner
+"""
+
 enum {IDLE, RUN, AIR}
 
 signal game_over
@@ -178,11 +187,11 @@ func _air_state(delta) -> void:
 		MAX_SPEED = 500
 	else:
 		MAX_SPEED = 300
-	
-	if velocity.y < 0 and $AntiCollisionTimer.time_left <= 0 and global_position < slime.global_position:
-		set_collision_mask_bit(1, false)
-		slime.set_collision_mask_bit(0, false)
-		$AntiCollisionTimer.start()
+	# ska denna del av funktion åka till slime script istället? då funkar även när slime är död
+	#if velocity.y < 0 and $AntiCollisionTimer.time_left <= 0 and global_position < slime.global_position:
+		#set_collision_mask_bit(1, false)
+		#slime.set_collision_mask_bit(0, false)
+		#$AntiCollisionTimer.start()
 	
 	if is_on_floor():
 		state = IDLE
@@ -288,3 +297,7 @@ func take_damage(damage, knockback_direction) -> void:
 func _on_AntiCollisionTimer_timeout() -> void:
 	set_collision_mask_bit(1, true)
 	slime.set_collision_mask_bit(0, true)
+
+
+func _on_EnemySpawner_body_entered(body: Node) -> void:
+	pass # Replace with function body.

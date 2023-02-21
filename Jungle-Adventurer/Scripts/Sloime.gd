@@ -29,13 +29,12 @@ onready var TerrainCheck = $TerrainCheck
 onready var TerrainCheck2 = $TerrainCheck2
 
 func _ready() -> void:
-	global_position = Vector2(800,200)
+	#global_position = Vector2(800,200)
 	$RayCast.set_collide_with_areas(true)
 	$RayCast2.set_collide_with_areas(true)
 
 
 func _physics_process(delta: float) -> void:
-	print($RayCast.get_collision_point().y)
 	match state:
 		IDLE:
 			_idle_state(delta)

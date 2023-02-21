@@ -8,6 +8,7 @@ extents = Vector2( 227, 198.5 )
 
 [node name="Gem" type="Area2D"]
 scale = Vector2( 0.05, 0.05 )
+collision_layer = 16
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
