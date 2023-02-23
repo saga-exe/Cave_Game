@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+# it doesn't wait after knockback
 
 enum {IDLE, CHASE}
 
