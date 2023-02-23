@@ -29,7 +29,6 @@ onready var TerrainCheck = $TerrainCheck
 onready var TerrainCheck2 = $TerrainCheck2
 
 func _ready() -> void:
-	#global_position = Vector2(800,200)
 	$RayCast.set_collide_with_areas(true)
 	$RayCast2.set_collide_with_areas(true)
 
