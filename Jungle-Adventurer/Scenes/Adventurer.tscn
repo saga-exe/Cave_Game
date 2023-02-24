@@ -1,90 +1,171 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=109 format=2]
 
-[ext_resource path="res://Adventurer/png/Dead (4).png" type="Texture" id=1]
-[ext_resource path="res://Adventurer/png/Dead (8).png" type="Texture" id=2]
-[ext_resource path="res://Adventurer/png/Melee (4).png" type="Texture" id=3]
-[ext_resource path="res://Adventurer/png/Melee (2).png" type="Texture" id=4]
-[ext_resource path="res://Adventurer/png/Jump (2).png" type="Texture" id=5]
-[ext_resource path="res://Adventurer/png/Jump (9).png" type="Texture" id=6]
+[ext_resource path="res://Character Sprites/Mage/Attack/attack2.png" type="Texture" id=1]
+[ext_resource path="res://Character Sprites/Mage/Death/death8.png" type="Texture" id=2]
+[ext_resource path="res://Character Sprites/Mage/Death/death9.png" type="Texture" id=3]
+[ext_resource path="res://Character Sprites/Mage/Death/death10.png" type="Texture" id=4]
+[ext_resource path="res://Character Sprites/Mage/Jump/jump6.png" type="Texture" id=5]
+[ext_resource path="res://Character Sprites/Mage/Jump/jump3.png" type="Texture" id=6]
 [ext_resource path="res://Adventurer/png/Slide (5).png" type="Texture" id=7]
-[ext_resource path="res://Adventurer/png/Idle (3).png" type="Texture" id=8]
-[ext_resource path="res://Adventurer/png/Jump (4).png" type="Texture" id=9]
-[ext_resource path="res://Adventurer/png/Dead (5).png" type="Texture" id=10]
-[ext_resource path="res://Adventurer/png/Dead (7).png" type="Texture" id=11]
-[ext_resource path="res://Adventurer/png/Run (5).png" type="Texture" id=12]
-[ext_resource path="res://Adventurer/png/Jump (3).png" type="Texture" id=13]
-[ext_resource path="res://Adventurer/png/Dead (3).png" type="Texture" id=14]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle9.png" type="Texture" id=8]
+[ext_resource path="res://Character Sprites/Mage/Jump/jump7.png" type="Texture" id=9]
+[ext_resource path="res://Character Sprites/Mage/Attack/attack1.png" type="Texture" id=10]
+[ext_resource path="res://Character Sprites/Mage/Attack/attack3.png" type="Texture" id=11]
+[ext_resource path="res://Character Sprites/Mage/Run/run5.png" type="Texture" id=12]
+[ext_resource path="res://Character Sprites/Mage/Jump/jump2.png" type="Texture" id=13]
+[ext_resource path="res://Character Sprites/Mage/Hurt/hurt1.png" type="Texture" id=14]
 [ext_resource path="res://Adventurer/png/Slide (4).png" type="Texture" id=15]
-[ext_resource path="res://Adventurer/png/Melee (3).png" type="Texture" id=16]
-[ext_resource path="res://Adventurer/png/Melee (6).png" type="Texture" id=17]
-[ext_resource path="res://Adventurer/png/Run (1).png" type="Texture" id=18]
-[ext_resource path="res://Adventurer/png/Idle (5).png" type="Texture" id=19]
-[ext_resource path="res://Adventurer/png/Dead (1).png" type="Texture" id=20]
-[ext_resource path="res://Adventurer/png/Jump (6).png" type="Texture" id=21]
-[ext_resource path="res://Adventurer/png/Melee (5).png" type="Texture" id=22]
-[ext_resource path="res://Adventurer/png/Idle (4).png" type="Texture" id=23]
-[ext_resource path="res://Adventurer/png/Dead (2).png" type="Texture" id=24]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle1.png" type="Texture" id=16]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle2.png" type="Texture" id=17]
+[ext_resource path="res://Character Sprites/Mage/Run/run6.png" type="Texture" id=18]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle12.png" type="Texture" id=19]
+[ext_resource path="res://Character Sprites/Mage/Attack_Extra/attack_extra4.png" type="Texture" id=20]
+[ext_resource path="res://Character Sprites/Mage/Jump/jump4.png" type="Texture" id=21]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle3.png" type="Texture" id=22]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle13.png" type="Texture" id=23]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle4.png" type="Texture" id=24]
 [ext_resource path="res://Adventurer/png/Slide (1).png" type="Texture" id=25]
 [ext_resource path="res://Adventurer/png/Shoot (3).png" type="Texture" id=26]
-[ext_resource path="res://Adventurer/png/Dead (10).png" type="Texture" id=27]
-[ext_resource path="res://Adventurer/png/Idle (1).png" type="Texture" id=28]
-[ext_resource path="res://Adventurer/png/Dead (9).png" type="Texture" id=29]
-[ext_resource path="res://Adventurer/png/Idle (9).png" type="Texture" id=30]
-[ext_resource path="res://Adventurer/png/Run (8).png" type="Texture" id=31]
-[ext_resource path="res://Adventurer/png/Run (3).png" type="Texture" id=32]
-[ext_resource path="res://Adventurer/png/Jump (8).png" type="Texture" id=33]
-[ext_resource path="res://Adventurer/png/Jump (10).png" type="Texture" id=34]
-[ext_resource path="res://Adventurer/png/Jump (7).png" type="Texture" id=35]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump12.png" type="Texture" id=27]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle10.png" type="Texture" id=28]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump1.png" type="Texture" id=29]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle11.png" type="Texture" id=30]
+[ext_resource path="res://Character Sprites/Mage/Run/run7.png" type="Texture" id=31]
+[ext_resource path="res://Character Sprites/Mage/Run/run4.png" type="Texture" id=32]
+[ext_resource path="res://Character Sprites/Mage/Jump/jump5.png" type="Texture" id=33]
+[ext_resource path="res://Character Sprites/Mage/Jump/jump1.png" type="Texture" id=34]
+[ext_resource path="res://Character Sprites/Mage/Climb/climb1.png" type="Texture" id=35]
 [ext_resource path="res://Adventurer/png/Shoot (2).png" type="Texture" id=36]
-[ext_resource path="res://Adventurer/png/Run (2).png" type="Texture" id=37]
-[ext_resource path="res://Adventurer/png/Run (4).png" type="Texture" id=38]
-[ext_resource path="res://Adventurer/png/Run (6).png" type="Texture" id=39]
-[ext_resource path="res://Adventurer/png/Idle (10).png" type="Texture" id=40]
-[ext_resource path="res://Adventurer/png/Melee (7).png" type="Texture" id=41]
-[ext_resource path="res://Adventurer/png/Idle (2).png" type="Texture" id=42]
-[ext_resource path="res://Adventurer/png/Dead (6).png" type="Texture" id=43]
+[ext_resource path="res://Character Sprites/Mage/Run/run8.png" type="Texture" id=37]
+[ext_resource path="res://Character Sprites/Mage/Run/run3.png" type="Texture" id=38]
+[ext_resource path="res://Character Sprites/Mage/Run/run1.png" type="Texture" id=39]
+[ext_resource path="res://Character Sprites/Mage/Run/run2.png" type="Texture" id=40]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump6.png" type="Texture" id=41]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump2.png" type="Texture" id=42]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump4.png" type="Texture" id=43]
 [ext_resource path="res://Adventurer/png/Slide (3).png" type="Texture" id=44]
-[ext_resource path="res://Adventurer/png/Run (7).png" type="Texture" id=45]
-[ext_resource path="res://Adventurer/png/Jump (5).png" type="Texture" id=46]
+[ext_resource path="res://Character Sprites/Mage/Climb/climb2.png" type="Texture" id=45]
+[ext_resource path="res://Character Sprites/Mage/Attack/attack6.png" type="Texture" id=46]
 [ext_resource path="res://Adventurer/png/Slide (2).png" type="Texture" id=47]
-[ext_resource path="res://Adventurer/png/Idle (8).png" type="Texture" id=48]
-[ext_resource path="res://Adventurer/png/Idle (6).png" type="Texture" id=49]
-[ext_resource path="res://Adventurer/png/Jump (1).png" type="Texture" id=50]
-[ext_resource path="res://Adventurer/png/Idle (7).png" type="Texture" id=51]
+[ext_resource path="res://Character Sprites/Mage/Attack_Extra/attack_extra3.png" type="Texture" id=48]
+[ext_resource path="res://Character Sprites/Mage/Attack_Extra/attack_extra6.png" type="Texture" id=49]
+[ext_resource path="res://Character Sprites/Mage/Attack/attack4.png" type="Texture" id=50]
+[ext_resource path="res://Character Sprites/Mage/Climb/climb4.png" type="Texture" id=51]
 [ext_resource path="res://Adventurer/png/Shoot (1).png" type="Texture" id=52]
-[ext_resource path="res://Adventurer/png/Melee (1).png" type="Texture" id=53]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump7.png" type="Texture" id=53]
 [ext_resource path="res://Scripts/Adventurer.gd" type="Script" id=54]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump8.png" type="Texture" id=55]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump3.png" type="Texture" id=56]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump5.png" type="Texture" id=57]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump9.png" type="Texture" id=58]
+[ext_resource path="res://Character Sprites/Mage/Climb/climb3.png" type="Texture" id=59]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump10.png" type="Texture" id=60]
+[ext_resource path="res://Character Sprites/Mage/High_Jump/high_jump11.png" type="Texture" id=61]
+[ext_resource path="res://Character Sprites/Mage/Hurt/hurt2.png" type="Texture" id=62]
+[ext_resource path="res://Character Sprites/Mage/Attack/attack5.png" type="Texture" id=63]
+[ext_resource path="res://Character Sprites/Mage/Attack_Extra/attack_extra2.png" type="Texture" id=64]
+[ext_resource path="res://Character Sprites/Mage/Attack_Extra/attack_extra5.png" type="Texture" id=65]
+[ext_resource path="res://Character Sprites/Mage/Attack_Extra/attack_extra0.png" type="Texture" id=66]
+[ext_resource path="res://Character Sprites/Mage/Hurt/hurt3.png" type="Texture" id=67]
+[ext_resource path="res://Character Sprites/Mage/Hurt/hurt4.png" type="Texture" id=68]
+[ext_resource path="res://Character Sprites/Mage/Attack/attack7.png" type="Texture" id=69]
+[ext_resource path="res://Character Sprites/Mage/Attack_Extra/attack_extra1.png" type="Texture" id=70]
+[ext_resource path="res://Character Sprites/Mage/Death/death7.png" type="Texture" id=71]
+[ext_resource path="res://Character Sprites/Mage/Death/death2.png" type="Texture" id=72]
+[ext_resource path="res://Character Sprites/Mage/Death/death1.png" type="Texture" id=73]
+[ext_resource path="res://Character Sprites/Mage/Death/death3.png" type="Texture" id=74]
+[ext_resource path="res://Character Sprites/Mage/Death/death4.png" type="Texture" id=75]
+[ext_resource path="res://Character Sprites/Mage/Death/death5.png" type="Texture" id=76]
+[ext_resource path="res://Character Sprites/Mage/Death/death6.png" type="Texture" id=77]
+[ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack3.png" type="Texture" id=78]
+[ext_resource path="res://Character Sprites/Mage/Walk/walk2.png" type="Texture" id=79]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle8.png" type="Texture" id=80]
+[ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack6.png" type="Texture" id=81]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack2.png" type="Texture" id=82]
+[ext_resource path="res://Character Sprites/Mage/Walk/walk1.png" type="Texture" id=83]
+[ext_resource path="res://Character Sprites/Mage/Walk/walk5.png" type="Texture" id=84]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle14.png" type="Texture" id=85]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle7.png" type="Texture" id=86]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack5.png" type="Texture" id=87]
+[ext_resource path="res://Character Sprites/Mage/Push/push2.png" type="Texture" id=88]
+[ext_resource path="res://Character Sprites/Mage/Push/push4.png" type="Texture" id=89]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle5.png" type="Texture" id=90]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack1.png" type="Texture" id=91]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack4.png" type="Texture" id=92]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack6.png" type="Texture" id=93]
+[ext_resource path="res://Character Sprites/Mage/Push/push3.png" type="Texture" id=94]
+[ext_resource path="res://Character Sprites/Mage/Walk/walk4.png" type="Texture" id=95]
+[ext_resource path="res://Character Sprites/Mage/Walk/walk6.png" type="Texture" id=96]
+[ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack1.png" type="Texture" id=97]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack8.png" type="Texture" id=98]
+[ext_resource path="res://Character Sprites/Mage/Push/push1.png" type="Texture" id=99]
+[ext_resource path="res://Character Sprites/Mage/Walk/walk3.png" type="Texture" id=100]
+[ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack4.png" type="Texture" id=101]
+[ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack5.png" type="Texture" id=102]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack3.png" type="Texture" id=103]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack7.png" type="Texture" id=104]
+[ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack2.png" type="Texture" id=105]
+[ext_resource path="res://Character Sprites/Mage/Idle/idle6.png" type="Texture" id=106]
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 65.0
-height = 300.0
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10.5, 24 )
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 20 ), ExtResource( 24 ), ExtResource( 14 ), ExtResource( 1 ), ExtResource( 10 ), ExtResource( 43 ), ExtResource( 11 ), ExtResource( 29 ), ExtResource( 2 ), ExtResource( 27 ) ],
+"frames": [ ExtResource( 10 ), ExtResource( 1 ), ExtResource( 11 ), ExtResource( 50 ), ExtResource( 63 ), ExtResource( 46 ), ExtResource( 69 ) ],
+"loop": true,
+"name": "Attack",
+"speed": 9.0
+}, {
+"frames": [ ExtResource( 66 ), ExtResource( 70 ), ExtResource( 64 ), ExtResource( 48 ), ExtResource( 20 ), ExtResource( 65 ), ExtResource( 49 ) ],
+"loop": true,
+"name": "AttackExtra",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 45 ), ExtResource( 59 ), ExtResource( 51 ) ],
+"loop": true,
+"name": "Climb",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 73 ), ExtResource( 72 ), ExtResource( 74 ), ExtResource( 75 ), ExtResource( 76 ), ExtResource( 77 ), ExtResource( 71 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "Dead",
 "speed": 13.0
 }, {
-"frames": [ ExtResource( 28 ), ExtResource( 42 ), ExtResource( 8 ), ExtResource( 23 ), ExtResource( 19 ), ExtResource( 49 ), ExtResource( 51 ), ExtResource( 48 ), ExtResource( 30 ), ExtResource( 40 ) ],
+"frames": [ ExtResource( 29 ), ExtResource( 42 ), ExtResource( 56 ), ExtResource( 43 ), ExtResource( 57 ), ExtResource( 41 ), ExtResource( 53 ), ExtResource( 55 ), ExtResource( 58 ), ExtResource( 60 ), ExtResource( 61 ), ExtResource( 27 ) ],
+"loop": true,
+"name": "DoubleJump",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 22 ), ExtResource( 24 ), ExtResource( 90 ), ExtResource( 106 ), ExtResource( 86 ), ExtResource( 80 ), ExtResource( 8 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 19 ), ExtResource( 23 ), ExtResource( 85 ) ],
+"loop": true,
+"name": "Eat",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 19 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ) ],
 "loop": true,
 "name": "Idle",
-"speed": 8.0
+"speed": 7.0
 }, {
-"frames": [ ExtResource( 50 ), ExtResource( 5 ), ExtResource( 13 ), ExtResource( 9 ), ExtResource( 46 ), ExtResource( 21 ), ExtResource( 35 ), ExtResource( 6 ), ExtResource( 33 ), ExtResource( 34 ) ],
+"frames": [ ExtResource( 34 ), ExtResource( 13 ), ExtResource( 6 ), ExtResource( 21 ), ExtResource( 33 ), ExtResource( 5 ), ExtResource( 9 ) ],
 "loop": true,
 "name": "Jump",
 "speed": 9.0
 }, {
-"frames": [ ExtResource( 53 ), ExtResource( 4 ), ExtResource( 16 ), ExtResource( 3 ), ExtResource( 22 ), ExtResource( 17 ), ExtResource( 41 ) ],
+"frames": [ ExtResource( 99 ), ExtResource( 88 ), ExtResource( 94 ), ExtResource( 89 ) ],
 "loop": true,
-"name": "Melee",
-"speed": 9.0
+"name": "Push",
+"speed": 5.0
 }, {
-"frames": [ ExtResource( 18 ), ExtResource( 37 ), ExtResource( 32 ), ExtResource( 38 ), ExtResource( 12 ), ExtResource( 39 ), ExtResource( 45 ), ExtResource( 31 ) ],
+"frames": [ ExtResource( 39 ), ExtResource( 40 ), ExtResource( 38 ), ExtResource( 32 ), ExtResource( 12 ), ExtResource( 18 ), ExtResource( 31 ), ExtResource( 37 ) ],
 "loop": true,
 "name": "Run",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 91 ), ExtResource( 82 ), ExtResource( 103 ), ExtResource( 92 ), ExtResource( 87 ), ExtResource( 93 ), ExtResource( 104 ), ExtResource( 98 ) ],
+"loop": true,
+"name": "RunAttack",
+"speed": 5.0
 }, {
 "frames": [ ExtResource( 52 ), ExtResource( 36 ), ExtResource( 26 ) ],
 "loop": true,
@@ -95,24 +176,42 @@ animations = [ {
 "loop": true,
 "name": "Slide",
 "speed": 9.0
+}, {
+"frames": [ ExtResource( 35 ), ExtResource( 45 ), ExtResource( 59 ), ExtResource( 51 ) ],
+"loop": true,
+"name": "StartClimb",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 62 ), ExtResource( 67 ), ExtResource( 68 ) ],
+"loop": true,
+"name": "TakeDamage",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 83 ), ExtResource( 79 ), ExtResource( 100 ), ExtResource( 95 ), ExtResource( 84 ), ExtResource( 96 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 97 ), ExtResource( 105 ), ExtResource( 78 ), ExtResource( 101 ), ExtResource( 102 ), ExtResource( 81 ) ],
+"loop": true,
+"name": "WalkAttack",
+"speed": 5.0
 } ]
 
 [node name="Adventurer" type="KinematicBody2D" groups=["Player"]]
-scale = Vector2( 0.15, 0.15 )
 collision_mask = 0
 script = ExtResource( 54 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -40, 0 )
+position = Vector2( -19.5, 20 )
 shape = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-scale = Vector2( 0.9, 1 )
 frames = SubResource( 1 )
-animation = "Idle"
+animation = "WalkAttack"
 
 [node name="GunPoint" type="Position2D" parent="."]
-position = Vector2( 210, 5 )
+position = Vector2( 5, 19 )
 
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 0.1

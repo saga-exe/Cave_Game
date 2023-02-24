@@ -10,6 +10,8 @@ extends KinematicBody2D
 #nice sprites
 #should i be able to sprint when already in the air?
 
+# have sprite not continue playing when in air
+
 """
 Layer1: Adventurer
 Layer2: Slime
@@ -95,27 +97,24 @@ func _get_input_x_update_direction() -> float:
 	#knockback_direction = -1 => velocity.x < 0 => flip(false)
 	if knockback:
 		if knockback_direction_player < 0:
-			sprite.set_flip_h(false)
+			_sprite_right()
 			if velocity.x > 0 or last_action_pressed == "left":
 				knockback = false
 		else:
-			sprite.set_flip_h(true)
+			_sprite_left()
 			if velocity.x < 0 or last_action_pressed == "right":
 				knockback = false
 
 	elif velocity.x != 0:
 		if velocity.x < 0:
-			sprite.set_flip_h(true)
+			_sprite_left()
 		else:
-			sprite.set_flip_h(false)
+			_sprite_right()
 	else:
 		if last_action_pressed == "left":
-			sprite.set_flip_h(true)
+			_sprite_left()
 		else:
-			sprite.set_flip_h(false)
-			
-
-		
+			_sprite_right()
 	
 	if last_action_pressed == "left" and Input.is_action_pressed("move_left"):
 		input_x = -1
@@ -124,6 +123,15 @@ func _get_input_x_update_direction() -> float:
 	else:
 		input_x = 0
 	return input_x
+
+
+func _sprite_left() -> void:
+	sprite.set_flip_h(true)
+	sprite.position.x = -40
+
+func _sprite_right() -> void:
+	sprite.set_flip_h(false)
+	sprite.position.x = 0
 
 
 func _idle_state(delta) -> void:
@@ -257,7 +265,7 @@ func _shoot() -> void:
 	$ShootTimer.start()
 	var bullet_instance = _bullet_direction()
 	get_tree().get_root().add_child(bullet_instance)
-	sprite.play("Shoot")
+	sprite.play("Attack")
 	yield(sprite,"animation_finished")
 	if is_on_floor() and velocity != Vector2.ZERO:
 		state = RUN
