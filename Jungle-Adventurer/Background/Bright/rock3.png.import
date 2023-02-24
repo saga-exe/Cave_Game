@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Background.png-ad75a6adc722190fbb28b5aba5a342bb.stex"
+path="res://.import/rock3.png-1a78ff8c8471c12f46a3231e21f73101.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Platform Sprites/PNG/Background/Pale/Background.png"
-dest_files=[ "res://.import/Background.png-ad75a6adc722190fbb28b5aba5a342bb.stex" ]
+source_file="res://Background/Bright/rock3.png"
+dest_files=[ "res://.import/rock3.png-1a78ff8c8471c12f46a3231e21f73101.stex" ]
 
 [params]
 

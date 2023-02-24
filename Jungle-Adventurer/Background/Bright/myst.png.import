@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rock3.png-0d45090887ab79beed5a42b2fd375606.stex"
+path="res://.import/myst.png-d5f07a4f95d3bcec0eb23386bd5ac8a9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Platform Sprites/PNG/Background/Bright/rock3.png"
-dest_files=[ "res://.import/rock3.png-0d45090887ab79beed5a42b2fd375606.stex" ]
+source_file="res://Background/Bright/myst.png"
+dest_files=[ "res://.import/myst.png-d5f07a4f95d3bcec0eb23386bd5ac8a9.stex" ]
 
 [params]
 
