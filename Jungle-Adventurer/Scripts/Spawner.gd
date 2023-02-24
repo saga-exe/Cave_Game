@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 onready var player = get_node("/root/MainScene/Adventurer")
 var slime_scene = preload("res://Scenes/Sloime.tscn")
-#var slime_instance = slime_scene.instance()
+var coin_scene = preload("res://Scenes/Coin.tscn")
 
 var furthest_position_x = 0
 
@@ -17,12 +17,14 @@ func _physics_process(delta: float) -> void:
 	
 
 func _slime_collision(body, tile_number) -> void:
-	print(body.name)
 	if body.is_in_group("Slimespawn"):
-		print("yee")
 		var slime_instance = slime_scene.instance()
 		get_tree().get_root().add_child(slime_instance)
 		slime_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+	elif body.is_in_group("CoinSpawn"):
+		var coin_instance = coin_scene.instance()
+		get_tree().get_root().add_child(coin_instance)
+		coin_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
 
 
 func _on_Tile1_body_entered(body: Node) -> void:

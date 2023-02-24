@@ -17,7 +17,7 @@ Layer1: Adventurer
 Layer2: Slime
 Layer3: Platforms
 Layer4: Slimespawns
-Layer5: Gems
+Layer5: Coins
 Layer6: EnemySpawner
 """
 
@@ -307,5 +307,3 @@ func _on_AntiCollisionTimer_timeout() -> void:
 	slime.set_collision_mask_bit(0, true)
 
 
-func _on_EnemySpawner_body_entered(body: Node) -> void:
-	pass # Replace with function body.

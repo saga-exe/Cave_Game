@@ -24,7 +24,7 @@ var can_drop := false
 var can_check_right := true
 var can_check_left := true
 
-onready var level = get_node("/root/MainScene/kronk/Platforms")
+onready var level = get_node("/root/MainScene/Level1/Platforms")
 onready var player = get_node("/root/MainScene/Adventurer")
 onready var TerrainCheck = $TerrainCheck
 onready var TerrainCheck2 = $TerrainCheck2
