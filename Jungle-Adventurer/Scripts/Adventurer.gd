@@ -10,7 +10,13 @@ extends KinematicBody2D
 #nice sprites
 #should i be able to sprint when already in the air?
 
-# have sprite not continue playing when in air
+#have sprite not continue playing when in air
+#coins not spawn diagonally to the upper left of another
+#stop being in climbstate when colliding with climbstopper
+
+#stopper on bottom
+#deactivate collsision with tiles
+#ladder_area and jump area on top with different tilemap
 
 """
 Layer1: Adventurer
@@ -19,17 +25,19 @@ Layer3: Platforms
 Layer4: Slimespawns
 Layer5: Coins
 Layer6: EnemySpawner
+Layer7: Ladders
+Layer8: ClimbStoppers
 """
 
-enum {IDLE, RUN, AIR}
+enum {IDLE, RUN, AIR, CLIMB}
 
 signal game_over
 
 const ACCELERATION = 1700
-const GRAVITY = 1000
-const JUMP_STRENGHT = -600
+const JUMP_STRENGTH = -600
 
 
+var GRAVITY = 1000
 var MAX_SPEED = 300
 var direction_x = "RIGHT"
 var velocity := Vector2.ZERO
@@ -48,17 +56,20 @@ var can_jump := true
 var can_shoot := true
 var is_shooting := false
 var knockback := false
+var ladder_area := false
+var climb_area := false
 
 var bullet_scene = preload("res://Scenes/Bullet.tscn")
 
 onready var sprite = $AnimatedSprite
 onready var gunpoint = $GunPoint
+onready var player_area = $PlayerArea
+onready var level = get_node("/root/MainScene/Level1/Platforms")
 onready var slime = get_node("/root/MainScene/sloime")
 onready var HUD = get_node("/root/MainScene/HUD")
 
 func _ready() -> void:
 	global_position = Vector2(200,400)
-
 
 
 func _physics_process(delta: float) -> void:
@@ -69,6 +80,9 @@ func _physics_process(delta: float) -> void:
 			_run_state(delta)
 		AIR:
 			_air_state(delta)
+		CLIMB:
+			_climb_state(delta)
+
 
 
 func _left_right_movement(delta) -> void:
@@ -136,17 +150,17 @@ func _sprite_right() -> void:
 
 func _idle_state(delta) -> void:
 	direction.x = _get_input_x_update_direction()
+	_left_right_movement(delta)
+	_climb()
+	
 	if Input.is_action_just_pressed("jump") and can_jump:
-		velocity.y = JUMP_STRENGHT
+		velocity.y = JUMP_STRENGTH
 		can_jump = false
 		state = AIR
 		sprite.play("Jump")
 		return
 		
-	_left_right_movement(delta)
-	
-		
-	if velocity.x != 0:
+	elif velocity.x != 0:
 		state = RUN
 		sprite.play("Run")
 		return
@@ -158,20 +172,20 @@ func _idle_state(delta) -> void:
 
 func _run_state(delta) -> void:
 	direction.x = _get_input_x_update_direction()
+	_left_right_movement(delta)
+	_climb()
 	if Input.is_action_just_pressed("jump") and can_jump:
-		velocity.y = JUMP_STRENGHT
+		velocity.y = JUMP_STRENGTH
 		can_jump = false
 		state = AIR
 		sprite.play("Jump")
 		return
 	
-
-	_left_right_movement(delta)
-	
 	if not is_on_floor():
-		state = AIR
 		can_jump = false
+		state = AIR
 		sprite.play("Jump")
+		return
 	
 	if is_on_floor() and velocity == Vector2.ZERO:
 		state = IDLE
@@ -181,6 +195,8 @@ func _run_state(delta) -> void:
 	if Input.is_action_just_pressed("shoot") and can_shoot:
 		_shoot()
 		return
+
+#nollställ direction.y !!!
 
 func _air_state(delta) -> void:
 	velocity.y = velocity.y + GRAVITY * delta if velocity.y + GRAVITY * delta < 500 else 500 
@@ -201,16 +217,64 @@ func _air_state(delta) -> void:
 		#slime.set_collision_mask_bit(0, false)
 		#$AntiCollisionTimer.start()
 	
-	if is_on_floor():
+	_climb()
+	
+	if is_on_floor(): #and velocity == Vector2.ZERO:
 		state = IDLE
 		sprite.play("Idle")
 		can_jump = true
 		return
+	#elif is_on_floor() and velocity.x != 0:
+		#state = RUN
+		#sprite.play("Run")
+		#can_jump = true
+		#return
 	
 	if Input.is_action_just_pressed("shoot") and can_shoot:
 		_shoot()
 		return
-		
+
+
+func _climb_state(delta) -> void:
+	can_jump = false
+	sprite.play("Climb")
+	var CLIMB_SPEED = 150
+	set_collision_mask_bit(2, false)
+	direction.x = _get_input_x_update_direction()
+	
+	if Input.is_action_pressed("down"):
+		direction.y = 1
+	elif Input.is_action_pressed("jump"):
+		direction.y = -1
+	else:
+		direction.y = 0
+
+	velocity = velocity.move_toward(direction*CLIMB_SPEED, ACCELERATION*delta)
+	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	if not ladder_area and climb_area:
+		if Input.is_action_pressed("down"):
+			return
+		else:
+			direction.y = 0
+			set_collision_mask_bit(2, true)
+			if is_on_floor() and velocity != Vector2.ZERO:
+				state = RUN
+				sprite.play("Run")
+				can_jump = true
+				return
+			elif is_on_floor():
+				state = IDLE
+				sprite.play("Idle")
+				can_jump = true
+				return
+			elif not is_on_floor():
+				state = AIR
+				can_jump = false
+				sprite.play("Jump")
+				return
+
+
 func _bullet_direction() -> float:
 	# bullet_target is the position the bullet is aiming for
 	# bullet_target.x is always aimed to the correct side, and is later corrected if running
@@ -306,4 +370,45 @@ func _on_AntiCollisionTimer_timeout() -> void:
 	set_collision_mask_bit(1, true)
 	slime.set_collision_mask_bit(0, true)
 
+
+func _on_PlayerArea_body_entered(body):
+	if body.is_in_group("Ladders"):
+		ladder_area = true
+	elif body.is_in_group("ClimbArea"):
+		climb_area = true
+
+func _on_PlayerArea_body_exited(body):
+	if body.is_in_group("Ladders"):
+		ladder_area = false
+		if not climb_area or (climb_area and not Input.is_action_pressed("down")):
+			set_collision_mask_bit(2, true)
+			direction.y = 0
+			if not is_on_floor():
+				state = AIR
+				can_jump = false
+				sprite.play("Jump")
+				return
+			if is_on_floor() and velocity != Vector2.ZERO:
+				state = RUN
+				sprite.play("Run")
+				can_jump = true
+				return
+			elif is_on_floor():
+				state = IDLE
+				sprite.play("Idle")
+				can_jump = true
+				return
+			
+	if body.is_in_group("ClimbArea"):
+		climb_area = false
+		
+
+func _climb() -> void:
+	if ladder_area:
+		can_jump = false
+		if Input.is_action_pressed("down") or Input.is_action_pressed("jump") or state == AIR:
+			state = CLIMB
+	elif climb_area:
+		if Input.is_action_pressed("down"):
+			state = CLIMB
 

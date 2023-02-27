@@ -199,7 +199,7 @@ animations = [ {
 } ]
 
 [node name="Adventurer" type="KinematicBody2D" groups=["Player"]]
-collision_mask = 0
+collision_mask = 4
 script = ExtResource( 54 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -220,5 +220,14 @@ wait_time = 0.1
 wait_time = 3.0
 one_shot = true
 
+[node name="PlayerArea" type="Area2D" parent="."]
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea"]
+position = Vector2( -19.5, 20 )
+shape = SubResource( 2 )
+
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
 [connection signal="timeout" from="AntiCollisionTimer" to="." method="_on_AntiCollisionTimer_timeout"]
+[connection signal="body_entered" from="PlayerArea" to="." method="_on_PlayerArea_body_entered"]
+[connection signal="body_exited" from="PlayerArea" to="." method="_on_PlayerArea_body_exited"]

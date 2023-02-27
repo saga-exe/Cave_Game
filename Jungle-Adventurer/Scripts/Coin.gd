@@ -9,5 +9,5 @@ func _ready() -> void:
 func _on_Coin_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		queue_free()
-		var coins = 1
-		HUD.gems_collected(coins)
+		var coin = 1
+		HUD.gems_collected(coin)
