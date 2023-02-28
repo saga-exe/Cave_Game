@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 #take damage when jumping up into slime
-	#have several collision shapes with on way collision so can jump through and bonk and stuff?
+#have several collision shapes with on way collision so can jump through and bonk and stuff?
 #take damage and respawn when drop out of frame
 #HUD
 #game over screen
@@ -13,6 +13,7 @@ extends KinematicBody2D
 #have sprite not continue playing when in air
 #coins not spawn diagonally to the upper left of another
 #stop being in climbstate when colliding with climbstopper
+#not climb when passing by in airstate
 
 #stopper on bottom
 #deactivate collsision with tiles

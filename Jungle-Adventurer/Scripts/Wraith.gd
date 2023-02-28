@@ -23,6 +23,9 @@ var wait := false
 var knockback := false
 var can_check_right := true
 var can_check_left := true
+var can_spell_cast := false
+
+var bullet_scene = preload("res://Scenes/WraithBullet.tscn")
 
 onready var level = get_node("/root/MainScene/Level1/Platforms")
 onready var player = get_node("/root/MainScene/Adventurer")
@@ -34,6 +37,8 @@ onready var sprite = $AnimatedSprite
 func _ready():
 	state = IDLE
 	sprite.play("Idle")
+	$SpellTimer.start()
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -88,24 +93,34 @@ func _basic_movement(delta) -> void:
 func _sprite_direction() -> void:
 	if knockback:
 		if knockback_direction > 0:
-			sprite.set_flip_h(false)
+			_sprite_right()
 			if velocity.x > 0:
 				knockback = false
 		else:
-			sprite.set_flip_h(true)
+			_sprite_left()
 			if velocity.x < 0:
 				knockback = false
 			
 	else:
 		if velocity.x == 0:
 			if last_direction < 0:
-				sprite.set_flip_h(true)
+				_sprite_left()
 			else:
-				sprite.set_flip_h(false)
+				_sprite_right()
 		elif velocity.x < 0:
-			sprite.set_flip_h(true)
+			_sprite_left()
 		else:
-			sprite.set_flip_h(false)
+			_sprite_right()
+
+
+func _sprite_right() -> void:
+	sprite.set_flip_h(false)
+	$CastPoint.position.x = 10
+
+
+func _sprite_left() -> void:
+	sprite.set_flip_h(true)
+	$CastPoint.position.x = -10
 
 
 func _idle_state(delta) -> void:
@@ -171,8 +186,6 @@ func _on_Area2D_body_entered(body: Node) -> void:
 		var damage = 0
 		if body.is_in_group("Player"):
 			knockback = true
-			if player.global_position.y > global_position.y:
-				print("yeooo")
 			if player.global_position.x - global_position.x < 0:
 				knockback_direction = -1
 			else:
@@ -224,7 +237,20 @@ func _attack() -> void:
 	var player_slime_distance = player.global_position - global_position
 	if player_slime_distance.length() <= 50:
 		sprite.play("Attack")
-	elif player_slime_distance.length() <= 200:
+		
+	elif player_slime_distance.length() <= 200 and can_spell_cast:
+		var target = Vector2(player.global_position.x, player.global_position.y+20)
 		sprite.play("SpellCast")
+		var bullet_instance = bullet_scene.instance()
+		bullet_instance.global_position = $CastPoint.global_position
+		bullet_instance.set_direction($CastPoint.global_position, target)
+		get_tree().get_root().add_child(bullet_instance)
+		$SpellTimer.start()
+		can_spell_cast = false
+		
 	
 
+
+
+func _on_SpellTimer_timeout():
+	can_spell_cast = true

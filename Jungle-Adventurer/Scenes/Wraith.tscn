@@ -106,7 +106,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 23.5, 16.5 )
+extents = Vector2( 9, 19 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 9, 9 )
@@ -133,10 +133,9 @@ frame = 8
 position = Vector2( 10, -8 )
 
 [node name="Area2D" type="Area2D" parent="." groups=["Slime"]]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 2.5, 12.5 )
+position = Vector2( -1, -13 )
 shape = SubResource( 6 )
 
 [node name="TerrainCheck" type="KinematicBody2D" parent="." groups=["TerrainCheck"]]
@@ -169,8 +168,12 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2/TerrainArea2"]
 shape = SubResource( 3 )
 
+[node name="SpellTimer" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_entered"]
 [connection signal="body_exited" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_exited"]
 [connection signal="body_entered" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_entered"]
 [connection signal="body_exited" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_exited"]
+[connection signal="timeout" from="SpellTimer" to="." method="_on_SpellTimer_timeout"]
