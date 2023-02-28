@@ -20,9 +20,9 @@ extends KinematicBody2D
 
 """
 Layer1: Adventurer
-Layer2: Slime
+Layer2: Enemy (slime,wraith)
 Layer3: Platforms
-Layer4: Slimespawns
+Layer4: WraithSpawns
 Layer5: Coins
 Layer6: EnemySpawner
 Layer7: Ladders
@@ -282,12 +282,10 @@ func _bullet_direction() -> float:
 	var angle = 0
 	if state == IDLE:
 		if gunpoint.global_position.x - get_global_mouse_position().x <= 0:
-			direction.x == 1
 			last_action_pressed = "right"
 			gunpoint.position = Vector2(210, 5)
 			
 		else:
-			direction.x == -1
 			last_action_pressed = "left"
 			gunpoint.position = Vector2(-190, 5)
 

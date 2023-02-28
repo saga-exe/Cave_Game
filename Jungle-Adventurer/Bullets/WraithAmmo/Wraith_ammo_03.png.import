@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/NormalBullet.png-e3cdfc5dd9a24d094dcd595eefcb0845.stex"
+path="res://.import/Wraith_ammo_03.png-919002fc10701ce86e5e71101e260dda.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Bullet/NormalBullet.png"
-dest_files=[ "res://.import/NormalBullet.png-e3cdfc5dd9a24d094dcd595eefcb0845.stex" ]
+source_file="res://Bullets/WraithAmmo/Wraith_ammo_03.png"
+dest_files=[ "res://.import/Wraith_ammo_03.png-919002fc10701ce86e5e71101e260dda.stex" ]
 
 [params]
 

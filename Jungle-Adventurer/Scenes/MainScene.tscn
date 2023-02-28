@@ -11,7 +11,7 @@
 
 [node name="EnemySpawner" parent="." instance=ExtResource( 3 )]
 
-[node name="kronk" parent="." instance=ExtResource( 7 )]
+[node name="Level1" parent="." instance=ExtResource( 7 )]
 
 [node name="ParallaxBackground" parent="." instance=ExtResource( 1 )]
 

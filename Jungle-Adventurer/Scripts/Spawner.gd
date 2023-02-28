@@ -20,7 +20,7 @@ func _slime_collision(body, tile_number) -> void:
 	if body.is_in_group("WraithSpawn"):
 		var wraith_instance = wraith_scene.instance()
 		get_tree().get_root().add_child(wraith_instance)
-		wraith_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+		wraith_instance.global_position = Vector2(global_position.x, 32*tile_number - 10)
 	elif body.is_in_group("CoinSpawn"):
 		var coin_instance = coin_scene.instance()
 		get_tree().get_root().add_child(coin_instance)
