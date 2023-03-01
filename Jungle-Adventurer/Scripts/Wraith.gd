@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 # it doesn't wait after knockback
-# drops to die from idle to chase
+# drops to die from idle to chase - fixed
 
 enum {IDLE, CHASE}
 
@@ -60,6 +60,8 @@ func _update_direction_x(delta) -> float:
 			turn = false
 			
 	elif state == CHASE:
+		if (not can_check_left and velocity.x < 0) or (not can_check_right and velocity.x > 0):
+			wait = true
 		if player_slime_distance.x < 5 and player_slime_distance.x > -5:
 			direction.x = 0
 		elif player_slime_distance.x < 0:
@@ -132,13 +134,13 @@ func _idle_state(delta) -> void:
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	if player_slime_distance.length() <= 400:
-		if turn:
-			turn = false
-			wait = true
+		#if turn:
+			#turn = false
+			#wait = true
 		sprite.play("Walking")
 		state = CHASE
 		return
-
+# if cant check left and velocity < 0 wait = true
 
 func _chase_state(delta) -> void:
 	if wait:
