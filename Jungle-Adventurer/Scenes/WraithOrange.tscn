@@ -1,7 +1,7 @@
 [gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://Enemies/Wraith_Orange/Idle/Wraith_02_Idle_000.png" type="Texture" id=1]
-[ext_resource path="res://Scripts/Wraith.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/WraithOrange.gd" type="Script" id=2]
 [ext_resource path="res://Enemies/Wraith_Orange/Walking/Wraith_02_Moving Forward_011.png" type="Texture" id=3]
 [ext_resource path="res://Enemies/Wraith_Orange/Idle/Wraith_02_Idle_009.png" type="Texture" id=4]
 [ext_resource path="res://Enemies/Wraith_Orange/Idle/Wraith_02_Idle_007.png" type="Texture" id=5]
@@ -116,7 +116,7 @@ extents = Vector2( 9, 9 )
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 17, 8 )
 
-[node name="Wraith" type="KinematicBody2D" groups=["Enemy", "Wraith"]]
+[node name="WraithOrange" type="KinematicBody2D" groups=["Enemy", "Wraith"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource( 2 )
@@ -130,7 +130,7 @@ position = Vector2( 0, -10 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 7 )
 animation = "Attack"
-frame = 10
+frame = 11
 playing = true
 
 [node name="CastPoint" type="Position2D" parent="."]

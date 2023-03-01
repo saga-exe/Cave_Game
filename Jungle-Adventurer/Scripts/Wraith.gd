@@ -252,7 +252,6 @@ func _attack() -> void:
 			can_attack = false
 			$AttackArea.set_collision_mask_bit(0, true)
 			print($AttackArea.get_collision_mask_bit(0))
-			$AttackTimer.start()
 			#sprite.yield()
 		else:
 			return
