@@ -59,6 +59,7 @@ var is_shooting := false
 var knockback := false
 var ladder_area := false
 var climb_area := false
+var stopper_area := false
 
 var bullet_scene = preload("res://Scenes/Bullet.tscn")
 
@@ -252,7 +253,7 @@ func _climb_state(delta) -> void:
 
 	velocity = velocity.move_toward(direction*CLIMB_SPEED, ACCELERATION*delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
-	
+
 	if not ladder_area and climb_area:
 		if Input.is_action_pressed("down"):
 			return
@@ -375,6 +376,23 @@ func _on_PlayerArea_body_entered(body):
 		ladder_area = true
 	elif body.is_in_group("ClimbArea"):
 		climb_area = true
+	elif body.is_in_group("ClimbStopper"):
+		stopper_area = true
+		if not is_on_floor():
+			state = AIR
+			can_jump = false
+			sprite.play("Jump")
+			return
+		if is_on_floor() and velocity != Vector2.ZERO:
+			state = RUN
+			sprite.play("Run")
+			can_jump = true
+			return
+		elif is_on_floor():
+			state = IDLE
+			sprite.play("Idle")
+			can_jump = true
+			return
 
 func _on_PlayerArea_body_exited(body):
 	if body.is_in_group("Ladders"):
@@ -397,6 +415,8 @@ func _on_PlayerArea_body_exited(body):
 				sprite.play("Idle")
 				can_jump = true
 				return
+	elif body.is_in_group("ClimbStopper"):
+		stopper_area = false
 			
 	if body.is_in_group("ClimbArea"):
 		climb_area = false
@@ -405,7 +425,7 @@ func _on_PlayerArea_body_exited(body):
 func _climb() -> void:
 	if ladder_area:
 		can_jump = false
-		if Input.is_action_pressed("down") or Input.is_action_pressed("jump") or state == AIR:
+		if (Input.is_action_pressed("down") and not stopper_area) or Input.is_action_pressed("jump"): #or #state == AIR:
 			state = CLIMB
 	elif climb_area:
 		if Input.is_action_pressed("down"):

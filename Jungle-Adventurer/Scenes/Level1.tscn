@@ -751,7 +751,7 @@ collision_mask = 0
 format = 1
 tile_data = PoolIntArray( 786462, 1, 0 )
 
-[node name="ClimbStopper" type="TileMap" parent="NonVisible"]
+[node name="ClimbStopper" type="TileMap" parent="NonVisible" groups=["ClimbStopper"]]
 scale = Vector2( 0.5, 0.5 )
 tile_set = SubResource( 38 )
 collision_layer = 128
