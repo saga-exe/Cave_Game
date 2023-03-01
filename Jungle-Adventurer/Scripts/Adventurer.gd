@@ -359,7 +359,8 @@ func take_damage(damage, knockback_direction) -> void:
 	else:
 		velocity.x = knockback_direction * 350
 		hp -= damage
-		knockback = true
+		if knockback_direction != 0:
+			knockback = true
 		HUD.health_changed(hp)
 	knockback_direction_player = knockback_direction
 	if hp <= 0:
@@ -393,6 +394,8 @@ func _on_PlayerArea_body_entered(body):
 			sprite.play("Idle")
 			can_jump = true
 			return
+	#elif body.is_in_group("WraithBullet"):
+		
 
 func _on_PlayerArea_body_exited(body):
 	if body.is_in_group("Ladders"):
@@ -405,7 +408,7 @@ func _on_PlayerArea_body_exited(body):
 				can_jump = false
 				sprite.play("Jump")
 				return
-			if is_on_floor() and velocity != Vector2.ZERO:
+			elif is_on_floor() and velocity != Vector2.ZERO:
 				state = RUN
 				sprite.play("Run")
 				can_jump = true

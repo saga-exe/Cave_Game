@@ -24,7 +24,12 @@ func set_direction(pos1: Vector2, pos2: Vector2) -> void:
 func _on_Timer_timeout():
 	queue_free()
 
+func die() -> void:
+	queue_free()
 
 func _on_WraithBullet_body_entered(body):
 	if body.is_in_group("Player"):
-		var x = 0
+		var damage = 20
+		var knockback_direction = 0
+		body.take_damage(damage, knockback_direction)
+		die()
