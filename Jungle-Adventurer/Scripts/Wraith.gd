@@ -23,7 +23,7 @@ var wait := false
 var knockback := false
 var can_check_right := true
 var can_check_left := true
-var can_spell_cast := false
+var can_attack := true
 
 var bullet_scene = preload("res://Scenes/WraithBullet.tscn")
 
@@ -37,11 +37,13 @@ onready var sprite = $AnimatedSprite
 func _ready():
 	state = IDLE
 	sprite.play("Idle")
-	$SpellTimer.start()
+	#$AttackTimer.start()
+	$AttackArea.set_collision_mask_bit(0, false)
 	
 
 
 func _physics_process(delta: float) -> void:
+	#print($AttackArea.get_collision_mask_bit(0))
 	match state:
 		IDLE:
 			_idle_state(delta)
@@ -118,11 +120,13 @@ func _sprite_direction() -> void:
 func _sprite_right() -> void:
 	sprite.set_flip_h(false)
 	$CastPoint.position.x = 10
+	$AttackArea.position.x = 0
 
 
 func _sprite_left() -> void:
 	sprite.set_flip_h(true)
 	$CastPoint.position.x = -10
+	$AttackArea.position.x = -16
 
 
 func _idle_state(delta) -> void:
@@ -154,6 +158,8 @@ func _chase_state(delta) -> void:
 	_basic_movement(delta)
 	_attack()
 	
+	if not can_attack:
+		$AttackArea.set_collision_mask_bit(0, false)
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
@@ -192,7 +198,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 				knockback_direction = -1
 			else:
 				knockback_direction = 1
-			if (((global_position.y-45) - player.global_position.y) < 5) and (((global_position.y-45) - player.global_position.y) > -20):
+			if (((global_position.y - 74.5) - player.global_position.y) < 5) and (((global_position.y - 74.5) - player.global_position.y) > -20):
 				damage = 0
 				body.take_damage(damage, knockback_direction)
 				die()
@@ -237,22 +243,42 @@ func _on_TerrainArea2_body_exited(body):
 
 func _attack() -> void:
 	var player_slime_distance = player.global_position - global_position
-	if player_slime_distance.length() <= 50:
-		sprite.play("Attack")
+	if player_slime_distance.length() <= 200:
+		#print(can_attack)
+		#print(player_slime_distance.length())
+		if player_slime_distance.length() <= 50 and can_attack: # do different lengths from either side
+			#print("attack")
+			sprite.play("Attack")
+			can_attack = false
+			$AttackArea.set_collision_mask_bit(0, true)
+			print($AttackArea.get_collision_mask_bit(0))
+			$AttackTimer.start()
+			#sprite.yield()
+		else:
+			return
 		
-	elif player_slime_distance.length() <= 200 and can_spell_cast:
+	elif player_slime_distance.length() <= 200 and can_attack:
 		var target = Vector2(player.global_position.x, player.global_position.y+20)
 		sprite.play("SpellCast")
 		var bullet_instance = bullet_scene.instance()
 		bullet_instance.global_position = $CastPoint.global_position
 		bullet_instance.set_direction($CastPoint.global_position, target)
 		get_tree().get_root().add_child(bullet_instance)
-		$SpellTimer.start()
-		can_spell_cast = false
+		$AttackTimer.start()
+		can_attack = false
 		
-	
 
 
+func _on_AttackArea_body_entered(body):
+	if body.is_in_group("Player"):
+		print("ok")
+		var knockback_direction = 0
+		if player.global_position.x - global_position.x < 0:
+			knockback_direction = -1
+		else:
+			knockback_direction = 1
+		body.take_damage(15, knockback_direction)
 
-func _on_SpellTimer_timeout():
-	can_spell_cast = true
+
+func _on_AttackTimer_timeout():
+	can_attack = true
