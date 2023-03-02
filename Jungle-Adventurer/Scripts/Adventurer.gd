@@ -56,6 +56,7 @@ var knockback := false
 var ladder_area := false
 var climb_area := false
 var stopper_area := false
+var damaged := false
 
 var bullet_scene = preload("res://Scenes/Bullet.tscn")
 
@@ -67,7 +68,7 @@ onready var slime = get_node("/root/MainScene/sloime")
 onready var HUD = get_node("/root/MainScene/HUD")
 
 func _ready() -> void:
-	global_position = Vector2(200,400)
+	global_position = Vector2(160,200)
 
 
 func _physics_process(delta: float) -> void:
@@ -80,7 +81,6 @@ func _physics_process(delta: float) -> void:
 			_air_state(delta)
 		CLIMB:
 			_climb_state(delta)
-
 
 
 func _left_right_movement(delta) -> void:
@@ -139,11 +139,12 @@ func _get_input_x_update_direction() -> float:
 
 func _sprite_left() -> void:
 	sprite.set_flip_h(true)
-	sprite.position.x = -40
+	sprite.position.x = -21
+
 
 func _sprite_right() -> void:
 	sprite.set_flip_h(false)
-	sprite.position.x = 0
+	sprite.position.x = 19
 
 
 func _idle_state(delta) -> void:
@@ -353,19 +354,19 @@ func take_damage(damage, knockback_direction) -> void:
 	if damage == 0:
 		velocity.y = -350
 	else:
+		damaged = true
+		set_collision_mask_bit(1, false)
+		#sprite.visible = false
+		$PlayerArea.set_collision_mask_bit(1, false)
+		$DamageTimer.start()
 		velocity.x = knockback_direction * 350
 		hp -= damage
 		if knockback_direction != 0:
 			knockback = true
 		HUD.health_changed(hp)
 	knockback_direction_player = knockback_direction
-	if hp <= 0:
-		emit_signal("game_over")
-
-
-func _on_AntiCollisionTimer_timeout() -> void:
-	set_collision_mask_bit(1, true)
-	slime.set_collision_mask_bit(0, true)
+	#if hp <= 0:
+		#emit_signal("game_over")
 
 
 func _on_PlayerArea_body_entered(body):
@@ -390,7 +391,8 @@ func _on_PlayerArea_body_entered(body):
 			sprite.play("Idle")
 			can_jump = true
 			return
-	#elif body.is_in_group("WraithBullet"):
+	#elif body.is_in_group("Wraith"):
+		#take_damage()
 		
 
 func _on_PlayerArea_body_exited(body):
@@ -429,4 +431,11 @@ func _climb() -> void:
 	elif climb_area:
 		if Input.is_action_pressed("down"):
 			state = CLIMB
+
+
+func _on_DamageTimer_timeout() -> void:
+	damaged = false
+	set_collision_mask_bit(1, true)
+	$PlayerArea.set_collision_mask_bit(1, true)
+	#sprite.visible = true
 

@@ -23,7 +23,6 @@ var wait := false
 var knockback := false
 var can_check_right := true
 var can_check_left := true
-var can_attack := true
 
 onready var level = get_node("/root/MainScene/Level1/Platforms")
 onready var player = get_node("/root/MainScene/Adventurer")
@@ -35,13 +34,9 @@ onready var sprite = $AnimatedSprite
 func _ready():
 	state = IDLE
 	sprite.play("Idle")
-	#$AttackTimer.start()
-	$AttackArea.set_collision_mask_bit(0, false)
-	
 
 
 func _physics_process(delta: float) -> void:
-	#print($AttackArea.get_collision_mask_bit(0))
 	match state:
 		IDLE:
 			_idle_state(delta)
@@ -117,14 +112,10 @@ func _sprite_direction() -> void:
 
 func _sprite_right() -> void:
 	sprite.set_flip_h(false)
-	$CastPoint.position.x = 10
-	$AttackArea.position.x = 0
 
 
 func _sprite_left() -> void:
 	sprite.set_flip_h(true)
-	$CastPoint.position.x = -10
-	$AttackArea.position.x = -16
 
 
 func _idle_state(delta) -> void:
@@ -154,10 +145,7 @@ func _chase_state(delta) -> void:
 	direction.x = _update_direction_x(delta)
 	
 	_basic_movement(delta)
-	_attack()
 	
-	if not can_attack:
-		$AttackArea.set_collision_mask_bit(0, false)
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
@@ -187,28 +175,25 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 
 
 
-func _on_Area2D_body_entered(body: Node) -> void:
-	if get_collision_mask_bit(0):
-		var damage = 0
-		if body.is_in_group("Player"):
-			knockback = true
-			if player.global_position.x - global_position.x < 0:
-				knockback_direction = -1
-			else:
-				knockback_direction = 1
-			if (((global_position.y - 74.5) - player.global_position.y) < 5) and (((global_position.y - 74.5) - player.global_position.y) > -20):
-				damage = 0
-				body.take_damage(damage, knockback_direction)
-				die()
-			else:
-				damage = 25
-				body.take_damage(damage, knockback_direction)
-				velocity.x = knockback_direction * -200
+func _on_WraithArea_body_entered(body: Node) -> void:
+	var damage = 0
+	if body.is_in_group("Player"):
+		knockback = true
+		if player.global_position.x - global_position.x < 0:
+			knockback_direction = -1
+		else:
+			knockback_direction = 1
+		if (((global_position.y - 74.5) - player.global_position.y) < 5) and (((global_position.y - 74.5) - player.global_position.y) > -20) and player.velocity.y >= 0:
+			damage = 0
+			body.take_damage(damage, knockback_direction)
+			die()
+		else:
+			set_collision_mask_bit(0, false)
+			damage = 25
+			body.take_damage(damage, knockback_direction)
+			velocity.x = knockback_direction * -200
 
-# terraincheck decides if turn or not, then state decides if turn or wait, and after state it should be decided if it drops or not ( raycast )
-
-# det är om raycast är kortare än avståndet mellan slime och nedre kanten på skärmen som den kan droppa, ANNARS INTE
-
+# terraincheck decides if turn or not, then state decides if turn or wait
 
 func _on_TerrainArea_body_entered(body):
 	if body.is_in_group("Tile"):
@@ -239,32 +224,5 @@ func _on_TerrainArea2_body_exited(body):
 	can_check_left = false
 
 
-func _attack() -> void:
-	var player_slime_distance = player.global_position - global_position
-	if player_slime_distance.length() <= 200:
-		#print(can_attack)
-		#print(player_slime_distance.length())
-		if player_slime_distance.length() <= 50 and can_attack: # do different lengths from either side
-			#print("attack")
-			sprite.play("Attack")
-			can_attack = false
-			$AttackArea.set_collision_mask_bit(0, true)
-			print($AttackArea.get_collision_mask_bit(0))
-			$AttackTimer.start()
-			#sprite.yield()
-
-
-
-func _on_AttackArea_body_entered(body):
-	if body.is_in_group("Player"):
-		print("ok")
-		var knockback_direction = 0
-		if player.global_position.x - global_position.x < 0:
-			knockback_direction = -1
-		else:
-			knockback_direction = 1
-		body.take_damage(15, knockback_direction)
-
-
-func _on_AttackTimer_timeout():
-	can_attack = true
+#func _on_DamageTimer_timeout() -> void:
+	#set_collision_mask_bit(0, true)
