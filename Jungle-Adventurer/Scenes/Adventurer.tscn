@@ -1,4 +1,4 @@
-[gd_scene load_steps=127 format=2]
+[gd_scene load_steps=132 format=2]
 
 [ext_resource path="res://Character Sprites/Mage/Attack/attack2.png" type="Texture" id=1]
 [ext_resource path="res://Character Sprites/Mage/Death/death8.png" type="Texture" id=2]
@@ -106,6 +106,21 @@
 [ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack7.png" type="Texture" id=104]
 [ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack2.png" type="Texture" id=105]
 [ext_resource path="res://Character Sprites/Mage/Idle/idle6.png" type="Texture" id=106]
+
+[sub_resource type="Shader" id=21]
+code = "shader_type canvas_item;
+
+uniform float hit_opacity = 0;
+
+void fragment(){
+ COLOR.rgb = texture(TEXTURE, UV).rgb * (1.0 - hit_opacity) + vec3(1,1,1) * hit_opacity;
+ COLOR.a = texture(TEXTURE, UV).a ; 
+}"
+
+[sub_resource type="ShaderMaterial" id=22]
+render_priority = 1
+shader = SubResource( 21 )
+shader_param/hit_opacity = 1.0
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -677,14 +692,75 @@ extents = Vector2( 10.5, 24 )
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 11.5, 25 )
 
+[sub_resource type="Animation" id=24]
+resource_name = "Damaged"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=26]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:shader_param/hit_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=25]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:material:render_priority")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:material:shader_param/hit_opacity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
 [node name="Adventurer" type="KinematicBody2D" groups=["Player"]]
 collision_mask = 6
 script = ExtResource( 54 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 22 )
 position = Vector2( 19, -22 )
 frames = SubResource( 1 )
-animation = "Attack"
+animation = "Idle"
+frame = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimatedSprite")
@@ -724,6 +800,11 @@ shape = SubResource( 3 )
 [node name="DamageTimer" type="Timer" parent="."]
 wait_time = 4.0
 one_shot = true
+
+[node name="Effects" type="AnimationPlayer" parent="."]
+anims/Damaged = SubResource( 24 )
+anims/Idle = SubResource( 26 )
+anims/RESET = SubResource( 25 )
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
 [connection signal="body_entered" from="PlayerArea" to="." method="_on_PlayerArea_body_entered"]

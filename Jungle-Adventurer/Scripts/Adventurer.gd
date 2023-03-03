@@ -69,6 +69,9 @@ onready var HUD = get_node("/root/MainScene/HUD")
 
 func _ready() -> void:
 	global_position = Vector2(160,200)
+	$Effects.play("Idle")
+	
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -356,11 +359,11 @@ func take_damage(damage, knockback_direction) -> void:
 	else:
 		damaged = true
 		set_collision_mask_bit(1, false)
-		#sprite.visible = false
 		$PlayerArea.set_collision_mask_bit(1, false)
 		$DamageTimer.start()
 		velocity.x = knockback_direction * 350
 		hp -= damage
+		$Effects.play("Damaged")
 		if knockback_direction != 0:
 			knockback = true
 		HUD.health_changed(hp)
@@ -437,5 +440,5 @@ func _on_DamageTimer_timeout() -> void:
 	damaged = false
 	set_collision_mask_bit(1, true)
 	$PlayerArea.set_collision_mask_bit(1, true)
-	#sprite.visible = true
+	$Effects.stop()
 
