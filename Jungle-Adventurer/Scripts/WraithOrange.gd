@@ -3,7 +3,7 @@ extends KinematicBody2D
 # it doesn't wait after knockback
 # drops to die from idle to chase - fixed
 
-enum {IDLE, CHASE}
+enum {IDLE, CHASE, DIE}
 
 
 const ACCELERATION = 500
@@ -42,6 +42,8 @@ func _physics_process(delta: float) -> void:
 			_idle_state(delta)
 		CHASE:
 			_chase_state(delta)
+		DIE:
+			_die_state(delta)
 
 
 func _update_direction_x(delta) -> float:
@@ -159,8 +161,15 @@ func _chase_state(delta) -> void:
 
 
 func die() -> void:
-	queue_free()
+	state = DIE
 
+
+func _die_state(delta) -> void:
+	velocity.x = 0
+	direction.x = 0
+	sprite.play("Dying")
+	yield(sprite,"animation_finished")
+	queue_free()
 
 #turn behövs enbart då enemy ska vända vid slutet av en platform,
 #ej då spelaren hamnar på andra sidan

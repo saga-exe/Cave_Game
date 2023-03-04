@@ -1,0 +1,45 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Bullets/PlayerFire/6.png" type="Texture" id=1]
+[ext_resource path="res://Bullets/PlayerFire/5.png" type="Texture" id=2]
+[ext_resource path="res://Bullets/PlayerFire/2.png" type="Texture" id=3]
+[ext_resource path="res://Bullets/PlayerFire/3.png" type="Texture" id=4]
+[ext_resource path="res://Bullets/PlayerFire/1.png" type="Texture" id=5]
+[ext_resource path="res://Bullets/PlayerFire/4.png" type="Texture" id=6]
+[ext_resource path="res://Scripts/PlayerFire.gd" type="Script" id=7]
+[ext_resource path="res://Light/Light_texture.webp" type="Texture" id=8]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "Default",
+"speed": 11.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 11.0454
+
+[node name="PlayerFire" type="Area2D"]
+collision_layer = 256
+collision_mask = 2
+script = ExtResource( 7 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -29, -5 )
+scale = Vector2( 0.15, 0.15 )
+frames = SubResource( 1 )
+animation = "Default"
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="FireTimer" type="Timer" parent="."]
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 8 )
+color = Color( 1, 0.843137, 0.596078, 1 )
+
+[connection signal="body_entered" from="." to="." method="_on_PlayerFire_body_entered"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]

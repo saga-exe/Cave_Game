@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=2]
+[gd_scene load_steps=94 format=2]
 
 [ext_resource path="res://Enemies/Wraith_Orange/Idle/Wraith_02_Idle_000.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/WraithOrange.gd" type="Script" id=2]
@@ -73,6 +73,21 @@
 [ext_resource path="res://Enemies/Wraith_Orange/Taunt/Wraith_02_Taunt_006.png" type="Texture" id=71]
 [ext_resource path="res://Enemies/Wraith_Orange/Taunt/Wraith_02_Taunt_005.png" type="Texture" id=72]
 [ext_resource path="res://Enemies/Wraith_Orange/Taunt/Wraith_02_Taunt_011.png" type="Texture" id=73]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_006.png" type="Texture" id=74]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_013.png" type="Texture" id=75]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_000.png" type="Texture" id=76]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_012.png" type="Texture" id=77]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_001.png" type="Texture" id=78]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_014.png" type="Texture" id=79]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_011.png" type="Texture" id=80]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_007.png" type="Texture" id=81]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_005.png" type="Texture" id=82]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_008.png" type="Texture" id=83]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_004.png" type="Texture" id=84]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_009.png" type="Texture" id=85]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_010.png" type="Texture" id=86]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_003.png" type="Texture" id=87]
+[ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_002.png" type="Texture" id=88]
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 8, 17.5 )
@@ -83,6 +98,11 @@ animations = [ {
 "loop": true,
 "name": "Attack",
 "speed": 11.0
+}, {
+"frames": [ ExtResource( 76 ), ExtResource( 78 ), ExtResource( 88 ), ExtResource( 87 ), ExtResource( 84 ), ExtResource( 82 ), ExtResource( 74 ), ExtResource( 81 ), ExtResource( 83 ), ExtResource( 85 ), ExtResource( 86 ), ExtResource( 80 ), ExtResource( 77 ), ExtResource( 75 ), ExtResource( 79 ) ],
+"loop": true,
+"name": "Dying",
+"speed": 22.0
 }, {
 "frames": [ ExtResource( 1 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 15 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 14 ), ExtResource( 16 ) ],
 "loop": true,
@@ -126,8 +146,9 @@ shape = SubResource( 5 )
 position = Vector2( 0, -10 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 7 )
-animation = "Attack"
-frame = 10
+animation = "Dying"
+frame = 6
+playing = true
 
 [node name="WraithArea" type="Area2D" parent="." groups=["Wraith"]]
 collision_layer = 2

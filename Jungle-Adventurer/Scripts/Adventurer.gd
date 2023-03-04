@@ -24,6 +24,7 @@ Layer5: Coins
 Layer6: EnemySpawner
 Layer7: Ladders
 Layer8: ClimbStoppers
+Layer9: Bullets
 """
 
 enum {IDLE, RUN, AIR, CLIMB}
@@ -58,7 +59,7 @@ var climb_area := false
 var stopper_area := false
 var damaged := false
 
-var bullet_scene = preload("res://Scenes/Bullet.tscn")
+var bullet_scene = preload("res://Scenes/PlayerFire.tscn")
 
 onready var sprite = $AnimatedSprite
 onready var gunpoint = $GunPoint
@@ -104,10 +105,8 @@ func _left_right_movement(delta) -> void:
 func _get_input_x_update_direction() -> float:
 	if Input.is_action_just_pressed("move_right"):
 		last_action_pressed = "right"
-		gunpoint.position = Vector2(210, 5)
 	elif Input.is_action_just_pressed("move_left"):
 		last_action_pressed = "left"
-		gunpoint.position = Vector2(-190, 5)
 	
 	#knockback_direction = -1 => velocity.x < 0 => flip(false)
 	if knockback:
@@ -143,11 +142,13 @@ func _get_input_x_update_direction() -> float:
 func _sprite_left() -> void:
 	sprite.set_flip_h(true)
 	sprite.position.x = -21
+	gunpoint.position.x = -30
 
 
 func _sprite_right() -> void:
 	sprite.set_flip_h(false)
 	sprite.position.x = 19
+	gunpoint.position.x = 30
 
 
 func _idle_state(delta) -> void:
@@ -285,11 +286,11 @@ func _bullet_direction() -> float:
 	if state == IDLE:
 		if gunpoint.global_position.x - get_global_mouse_position().x <= 0:
 			last_action_pressed = "right"
-			gunpoint.position = Vector2(210, 5)
+			gunpoint.position = Vector2(30, 0)
 			
 		else:
 			last_action_pressed = "left"
-			gunpoint.position = Vector2(-190, 5)
+			gunpoint.position = Vector2(-30, 0)
 
 	if gunpoint.global_position.x - get_global_mouse_position().x <= 0:
 		bullet_target.x =  get_global_mouse_position().x - gunpoint.global_position.x
