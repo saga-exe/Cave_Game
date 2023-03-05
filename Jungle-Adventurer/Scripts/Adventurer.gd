@@ -19,6 +19,8 @@ extends KinematicBody2D
 #deactivate collsision with tiles
 #ladder_area and jump area on top with different tilemap
 
+#run animation
+
 """
 Layer1: Adventurer
 Layer2: Enemy (slime, wraith)

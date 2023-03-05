@@ -107,7 +107,7 @@ position = Vector2( 0, -10 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 7 )
 animation = "Dying"
-frame = 11
+frame = 14
 playing = true
 
 [node name="CastPoint" type="Position2D" parent="."]

@@ -242,7 +242,7 @@ func _on_TerrainArea2_body_exited(body):
 
 func _attack() -> void:
 	if can_attack:
-		var target = Vector2(player.global_position.x, player.global_position.y+20)
+		var target = Vector2(player.global_position.x, player.global_position.y)
 		sprite.play("SpellCast")
 		var bullet_instance = bullet_scene.instance()
 		bullet_instance.global_position = $CastPoint.global_position
