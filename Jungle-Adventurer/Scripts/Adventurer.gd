@@ -163,6 +163,7 @@ func _idle_state(delta) -> void:
 	_left_right_movement(delta)
 	_climb()
 	
+	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
 		can_jump = false
@@ -172,7 +173,7 @@ func _idle_state(delta) -> void:
 		
 	elif velocity.x != 0:
 		state = RUN
-		if velocity.x > 200:
+		if MAX_SPEED == 300:
 			sprite.play("Run")
 		else:
 			sprite.play("Walk")
@@ -187,6 +188,12 @@ func _run_state(delta) -> void:
 	direction.x = _get_input_x_update_direction()
 	_left_right_movement(delta)
 	_climb()
+	
+	if MAX_SPEED == 300:
+		sprite.play("Run")
+	else:
+		sprite.play("Walk")
+	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
 		can_jump = false
@@ -268,7 +275,7 @@ func _climb_state(delta) -> void:
 			set_collision_mask_bit(2, true)
 			if is_on_floor() and velocity != Vector2.ZERO:
 				state = RUN
-				if velocity.x > 200:
+				if MAX_SPEED == 300:
 					sprite.play("Run")
 				else:
 					sprite.play("Walk")
@@ -347,7 +354,7 @@ func _shoot() -> void:
 	yield(sprite,"animation_finished")
 	if is_on_floor() and velocity != Vector2.ZERO:
 		state = RUN
-		if velocity.x > 200:
+		if MAX_SPEED == 300:
 			sprite.play("Run")
 		else:
 			sprite.play("Walk")
@@ -404,7 +411,7 @@ func _on_PlayerArea_body_entered(body):
 			return
 		if is_on_floor() and velocity != Vector2.ZERO:
 			state = RUN
-			if velocity.x > 200:
+			if MAX_SPEED == 300:
 				sprite.play("Run")
 			else:
 				sprite.play("Walk")
@@ -432,7 +439,7 @@ func _on_PlayerArea_body_exited(body):
 				return
 			elif is_on_floor() and velocity != Vector2.ZERO:
 				state = RUN
-				if velocity.x > 200:
+				if MAX_SPEED == 300:
 					sprite.play("Run")
 				else:
 					sprite.play("Walk")
