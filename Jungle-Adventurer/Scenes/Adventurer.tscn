@@ -97,13 +97,13 @@
 [ext_resource path="res://Character Sprites/Mage/Walk/walk4.png" type="Texture" id=95]
 [ext_resource path="res://Character Sprites/Mage/Walk/walk6.png" type="Texture" id=96]
 [ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack1.png" type="Texture" id=97]
-[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack8.png" type="Texture" id=98]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack7.png" type="Texture" id=98]
 [ext_resource path="res://Character Sprites/Mage/Push/push1.png" type="Texture" id=99]
 [ext_resource path="res://Character Sprites/Mage/Walk/walk3.png" type="Texture" id=100]
 [ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack4.png" type="Texture" id=101]
 [ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack5.png" type="Texture" id=102]
 [ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack3.png" type="Texture" id=103]
-[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack7.png" type="Texture" id=104]
+[ext_resource path="res://Character Sprites/Mage/Run_Attack/run_attack8.png" type="Texture" id=104]
 [ext_resource path="res://Character Sprites/Mage/Walk_Attack/walk_attack2.png" type="Texture" id=105]
 [ext_resource path="res://Character Sprites/Mage/Idle/idle6.png" type="Texture" id=106]
 [ext_resource path="res://Light/Light_texture.webp" type="Texture" id=107]
@@ -175,10 +175,10 @@ animations = [ {
 "name": "Run",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 91 ), ExtResource( 82 ), ExtResource( 103 ), ExtResource( 92 ), ExtResource( 87 ), ExtResource( 93 ), ExtResource( 104 ), ExtResource( 98 ) ],
+"frames": [ ExtResource( 91 ), ExtResource( 82 ), ExtResource( 103 ), ExtResource( 92 ), ExtResource( 87 ), ExtResource( 93 ), ExtResource( 98 ), ExtResource( 104 ) ],
 "loop": true,
 "name": "RunAttack",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [ ExtResource( 52 ), ExtResource( 36 ), ExtResource( 26 ) ],
 "loop": true,
@@ -208,7 +208,7 @@ animations = [ {
 "frames": [ ExtResource( 97 ), ExtResource( 105 ), ExtResource( 78 ), ExtResource( 101 ), ExtResource( 102 ), ExtResource( 81 ) ],
 "loop": true,
 "name": "WalkAttack",
-"speed": 5.0
+"speed": 9.0
 } ]
 
 [sub_resource type="Animation" id=4]
@@ -695,6 +695,7 @@ extents = Vector2( 11.5, 25 )
 
 [sub_resource type="Animation" id=24]
 resource_name = "Damaged"
+length = 1.2
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:material:shader_param/hit_opacity")
@@ -703,10 +704,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.8, 0.0, 0.8, 0.0, 0.8, 0.0 ]
+"values": [ 0.0, 0.8, 0.0, 0.8, 0.0, 0.8, 0.0 ]
 }
 
 [sub_resource type="Animation" id=26]
@@ -750,17 +751,30 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 1.0 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0.862745, 0.447059, 1 ) ]
+}
 
 [node name="Adventurer" type="KinematicBody2D" groups=["Player"]]
 collision_mask = 6
 script = ExtResource( 54 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+modulate = Color( 1, 0.862745, 0.447059, 1 )
 material = SubResource( 22 )
 position = Vector2( 19, -22 )
 frames = SubResource( 1 )
 animation = "Attack"
-playing = true
+frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimatedSprite")
@@ -788,9 +802,6 @@ shape = SubResource( 2 )
 [node name="GunPoint" type="Position2D" parent="."]
 position = Vector2( 30, 0 )
 
-[node name="ShootTimer" type="Timer" parent="."]
-wait_time = 0.1
-
 [node name="PlayerArea" type="Area2D" parent="."]
 collision_mask = 66
 
@@ -812,7 +823,6 @@ texture = ExtResource( 107 )
 color = Color( 1, 0.878431, 0.647059, 1 )
 range_layer_min = -100
 
-[connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
 [connection signal="body_entered" from="PlayerArea" to="." method="_on_PlayerArea_body_entered"]
 [connection signal="body_exited" from="PlayerArea" to="." method="_on_PlayerArea_body_exited"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]

@@ -3,6 +3,9 @@ extends KinematicBody2D
 # it doesn't wait after knockback
 # drops to die from idle to chase - fixed
 
+#fix jump on head
+#fix direction change after knockback
+
 enum {IDLE, CHASE, DIE}
 
 

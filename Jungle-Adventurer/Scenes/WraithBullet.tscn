@@ -1,17 +1,17 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/WraithBullet.gd" type="Script" id=1]
-[ext_resource path="res://Bullets/WraithAmmo/3.png" type="Texture" id=2]
-[ext_resource path="res://Bullets/WraithAmmo/1.png" type="Texture" id=3]
-[ext_resource path="res://Bullets/WraithAmmo/5.png" type="Texture" id=4]
-[ext_resource path="res://Bullets/WraithAmmo/6.png" type="Texture" id=5]
-[ext_resource path="res://Light/Light_texture.webp" type="Texture" id=6]
+[ext_resource path="res://Light/Light_texture.webp" type="Texture" id=2]
+[ext_resource path="res://Bullets/WraithAmmo/3.png" type="Texture" id=3]
+[ext_resource path="res://Bullets/WraithAmmo/1.png" type="Texture" id=4]
+[ext_resource path="res://Bullets/WraithAmmo/5.png" type="Texture" id=5]
+[ext_resource path="res://Bullets/WraithAmmo/6.png" type="Texture" id=6]
 [ext_resource path="res://Bullets/WraithAmmo/4.png" type="Texture" id=7]
 [ext_resource path="res://Bullets/WraithAmmo/2.png" type="Texture" id=8]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 5 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 6 ) ],
 "loop": true,
 "name": "Bullet",
 "speed": 10.0
@@ -43,7 +43,7 @@ wait_time = 2.0
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 4, 0 )
-texture = ExtResource( 6 )
+texture = ExtResource( 2 )
 color = Color( 1, 0.843137, 0.596078, 1 )
 
 [connection signal="body_entered" from="." to="." method="_on_WraithBullet_body_entered"]

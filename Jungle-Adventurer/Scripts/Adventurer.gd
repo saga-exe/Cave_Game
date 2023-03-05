@@ -65,6 +65,8 @@ var ladder_area := false
 var climb_area := false
 var stopper_area := false
 var damaged := false
+var shot := false
+var state_changed := false
 
 var bullet_scene = preload("res://Scenes/PlayerFire.tscn")
 
@@ -72,14 +74,11 @@ onready var sprite = $AnimatedSprite
 onready var gunpoint = $GunPoint
 onready var player_area = $PlayerArea
 onready var level = get_node("/root/MainScene/Level1/Platforms")
-onready var slime = get_node("/root/MainScene/sloime")
 onready var HUD = get_node("/root/MainScene/HUD")
 
 func _ready() -> void:
 	global_position = Vector2(160,200)
 	$Effects.play("Idle")
-	
-	
 
 
 func _physics_process(delta: float) -> void:
@@ -159,27 +158,24 @@ func _sprite_right() -> void:
 
 
 func _idle_state(delta) -> void:
+	
 	direction.x = _get_input_x_update_direction()
 	_left_right_movement(delta)
 	_climb()
 	
+	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
+		
+		_attack()
+	else:
+		sprite.play("Idle")
+	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
-		can_jump = false
-		state = AIR
-		sprite.play("Jump")
+		_airstate_switch()
 		return
 		
 	elif velocity.x != 0:
-		state = RUN
-		if MAX_SPEED == 300:
-			sprite.play("Run")
-		else:
-			sprite.play("Walk")
-		return
-		
-	if Input.is_action_just_pressed("shoot") and can_shoot:
-		_shoot()
+		_runstate_switch()
 		return
 
 
@@ -188,34 +184,30 @@ func _run_state(delta) -> void:
 	_left_right_movement(delta)
 	_climb()
 	
-	if MAX_SPEED == 300:
-		sprite.play("Run")
+	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
+		
+		_attack()
 	else:
-		sprite.play("Walk")
+		if MAX_SPEED == 300:
+			sprite.play("Run")
+		else:
+			sprite.play("Walk")
 	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
-		can_jump = false
-		state = AIR
-		sprite.play("Jump")
+		_airstate_switch()
 		return
 	
 	if not is_on_floor():
-		can_jump = false
-		state = AIR
-		sprite.play("Jump")
+		_airstate_switch()
 		return
 	
 	if is_on_floor() and velocity == Vector2.ZERO:
-		state = IDLE
-		sprite.play("Idle")
+		_idlestate_switch()
 		return
 	
-	if Input.is_action_just_pressed("shoot") and can_shoot:
-		_shoot()
-		return
+	
 
-#nollställ direction.y !!!
 
 func _air_state(delta) -> void:
 	velocity.y = velocity.y + GRAVITY * delta if velocity.y + GRAVITY * delta < 500 else 500 
@@ -225,6 +217,11 @@ func _air_state(delta) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, ACCELERATION * delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
+		_attack()
+	else:
+		sprite.play("Jump")
 	
 	if Input.is_action_pressed("sprint"):
 		MAX_SPEED = 300
@@ -239,14 +236,10 @@ func _air_state(delta) -> void:
 	_climb()
 	
 	if is_on_floor():
-		state = IDLE
-		sprite.play("Idle")
-		can_jump = true
+		_idlestate_switch()
 		return
 	
-	if Input.is_action_just_pressed("shoot") and can_shoot:
-		_shoot()
-		return
+	
 
 
 func _climb_state(delta) -> void:
@@ -255,7 +248,6 @@ func _climb_state(delta) -> void:
 	var CLIMB_SPEED = 150
 	set_collision_mask_bit(2, false)
 	direction.x = _get_input_x_update_direction()
-	
 	if Input.is_action_pressed("down"):
 		direction.y = 1
 	elif Input.is_action_pressed("jump"):
@@ -273,22 +265,13 @@ func _climb_state(delta) -> void:
 			direction.y = 0
 			set_collision_mask_bit(2, true)
 			if is_on_floor() and velocity != Vector2.ZERO:
-				state = RUN
-				if MAX_SPEED == 300:
-					sprite.play("Run")
-				else:
-					sprite.play("Walk")
-				can_jump = true
+				_runstate_switch()
 				return
 			elif is_on_floor():
-				state = IDLE
-				sprite.play("Idle")
-				can_jump = true
+				_idlestate_switch()
 				return
 			elif not is_on_floor():
-				state = AIR
-				can_jump = false
-				sprite.play("Jump")
+				_airstate_switch()
 				return
 
 
@@ -338,42 +321,44 @@ func _bullet_direction() -> float:
 	return bullet_instance
 
 
-
-
-func _shoot() -> void:
-	$ShootTimer.start()
-	var bullet_instance = _bullet_direction()
-	get_tree().get_root().add_child(bullet_instance)
+func _attack() -> void:
+	#if changes state continue anim where it was
+	var frame = sprite.get_frame() + 1
+	can_shoot = false
+	if Input.is_action_just_pressed("sprint") or Input.is_action_just_released("sprint"):
+		state_changed = true
 	if velocity.x == 0:
 		sprite.play("Attack")
-	elif run:
+		if state_changed:
+			sprite.set_frame(frame)
+	elif MAX_SPEED == 300:
 		sprite.play("RunAttack")
+		if state_changed:
+			sprite.set_frame(frame)
 	else:
 		sprite.play("WalkAttack")
-	yield(sprite,"animation_finished")
-	if is_on_floor() and velocity != Vector2.ZERO:
-		state = RUN
-		if MAX_SPEED == 300:
-			sprite.play("Run")
-		else:
-			sprite.play("Walk")
-		can_jump = true
-		return
-	elif is_on_floor():
-		state = IDLE
-		sprite.play("Idle")
-		can_jump = true
-		return
-	elif not is_on_floor():
-		state = AIR
-		can_jump = false
-		sprite.play("Jump")
-		return
-
-
-func _on_ShootTimer_timeout() -> void:
-	can_shoot = true
-	return
+		if state_changed:
+			sprite.set_frame(frame)
+	
+	if sprite.get_frame() == 4 and not shot:
+		shot = true
+		var bullet_instance = _bullet_direction()
+		get_tree().get_root().add_child(bullet_instance)
+	
+	state_changed = false
+	
+	if velocity.x == 0:
+		if sprite.get_frame() == 6:
+			can_shoot = true
+			shot = false
+	elif MAX_SPEED == 300:
+		if sprite.get_frame() == 7:
+			can_shoot = true
+			shot = false
+	else:
+		if sprite.get_frame() == 5:
+			can_shoot = true
+			shot = false
 
 
 func take_damage(damage, knockback_direction) -> void:
@@ -404,22 +389,13 @@ func _on_PlayerArea_body_entered(body):
 	elif body.is_in_group("ClimbStopper"):
 		stopper_area = true
 		if not is_on_floor():
-			state = AIR
-			can_jump = false
-			sprite.play("Jump")
+			_airstate_switch()
 			return
 		if is_on_floor() and velocity != Vector2.ZERO:
-			state = RUN
-			if MAX_SPEED == 300:
-				sprite.play("Run")
-			else:
-				sprite.play("Walk")
-			can_jump = true
+			_runstate_switch()
 			return
 		elif is_on_floor():
-			state = IDLE
-			sprite.play("Idle")
-			can_jump = true
+			_idlestate_switch()
 			return
 	#elif body.is_in_group("Wraith"):
 		#take_damage()
@@ -432,22 +408,13 @@ func _on_PlayerArea_body_exited(body):
 			set_collision_mask_bit(2, true)
 			direction.y = 0
 			if not is_on_floor():
-				state = AIR
-				can_jump = false
-				sprite.play("Jump")
+				_airstate_switch()
 				return
 			elif is_on_floor() and velocity != Vector2.ZERO:
-				state = RUN
-				if MAX_SPEED == 300:
-					sprite.play("Run")
-				else:
-					sprite.play("Walk")
-				can_jump = true
+				_runstate_switch()
 				return
 			elif is_on_floor():
-				state = IDLE
-				sprite.play("Idle")
-				can_jump = true
+				_idlestate_switch()
 				return
 	elif body.is_in_group("ClimbStopper"):
 		stopper_area = false
@@ -472,3 +439,22 @@ func _on_DamageTimer_timeout() -> void:
 	$PlayerArea.set_collision_mask_bit(1, true)
 	$Effects.stop()
 
+func _airstate_switch() -> void:
+	state = AIR
+	can_jump = false
+	if not can_shoot:
+		state_changed = true
+
+
+func _runstate_switch() -> void:
+	state = RUN
+	can_jump = true
+	if not can_shoot:
+		state_changed = true
+
+
+func _idlestate_switch() -> void:
+	state = IDLE
+	can_jump = true
+	if not can_shoot:
+		state_changed = true
