@@ -9,13 +9,14 @@ enum {IDLE, CHASE, DIE}
 const ACCELERATION = 500
 const GRAVITY = 1000
 
-var MAX_SPEED = 40
+var MAX_SPEED = 20
 var velocity = Vector2.ZERO
 var direction = Vector2.LEFT
 var state = IDLE
 var last_direction = 1
 var turn_direction = 1
 var knockback_direction = 1
+var hp = 100
 
 var air := true
 var turn := false
@@ -37,6 +38,7 @@ onready var sprite = $AnimatedSprite
 func _ready():
 	state = IDLE
 	sprite.play("Idle")
+	$HealthBar.visible = false
 
 
 
@@ -127,7 +129,7 @@ func _sprite_left() -> void:
 
 
 func _idle_state(delta) -> void:
-	MAX_SPEED = 40
+	MAX_SPEED = 20
 	direction.x = _update_direction_x(delta)
 	
 	_basic_movement(delta)
@@ -145,7 +147,7 @@ func _chase_state(delta) -> void:
 		sprite.play("Idle")
 	else:
 		sprite.play("Walking")
-	MAX_SPEED = 100
+	MAX_SPEED = 50
 	
 	direction.x = _update_direction_x(delta)
 	
@@ -169,6 +171,7 @@ func die() -> void:
 
 
 func _die_state(delta) -> void:
+	set_collision_mask_bit(8, false)
 	velocity.x = 0
 	direction.x = 0
 	sprite.play("Dying")
@@ -254,3 +257,14 @@ func _attack() -> void:
 
 func _on_ShootTimer_timeout():
 	can_attack = true
+
+
+func take_damage(damage) -> void:
+	hp -= damage
+	$HealthBar.value = hp
+	if hp < 100:
+		$HealthBar.visible = true
+	else:
+		$HealthBar.visible = false
+	if hp <= 0:
+		state = DIE

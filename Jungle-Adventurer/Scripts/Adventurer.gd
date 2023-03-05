@@ -163,7 +163,6 @@ func _idle_state(delta) -> void:
 	_left_right_movement(delta)
 	_climb()
 	
-	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
 		can_jump = false

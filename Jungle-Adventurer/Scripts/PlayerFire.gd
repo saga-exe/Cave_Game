@@ -29,8 +29,13 @@ func _on_FireTimer_timeout() -> void:
 
 
 func _on_PlayerFire_body_entered(body: Node) -> void:
+	var damage = 0
 	if body.is_in_group("Enemy"):
-		body.die()
+		if body.is_in_group("WraithOrange"):
+			damage = 50
+		elif body.is_in_group("WraithTeal"):
+			damage = 70
+		body.take_damage(damage)
 		velocity = 0
 		if direction.x < 0:
 			$AnimatedSprite.set_flip_v(true)
