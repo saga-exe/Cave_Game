@@ -789,4 +789,3 @@ tile_set = SubResource( 42 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 786463, 0, 0 )

@@ -10,6 +10,10 @@ extends KinematicBody2D
 #should i be able to sprint when already in the air?
 
 #have sprite not continue playing when in air
+#health bar on enemies
+#chests as checkpoints
+#fire pits
+#extra attack and double jump
 
 #stopper on bottom
 #deactivate collsision with tiles
@@ -37,11 +41,11 @@ const JUMP_STRENGTH = -600
 
 
 var GRAVITY = 1000
-var MAX_SPEED = 300
+var MAX_SPEED = 150
 var direction_x = "RIGHT"
 var velocity := Vector2.ZERO
 var direction := Vector2.ZERO
-var sprint = false
+var run = false
 var last_action_pressed = "right"
 var input_x = 0
 var hp = 100
@@ -90,9 +94,9 @@ func _physics_process(delta: float) -> void:
 
 func _left_right_movement(delta) -> void:
 	if Input.is_action_pressed("sprint"):
-		MAX_SPEED = 500
-	else:
 		MAX_SPEED = 300
+	else:
+		MAX_SPEED = 150
 
 	if direction.x != 0:
 		velocity = velocity.move_toward(direction*MAX_SPEED, ACCELERATION*delta)
@@ -166,7 +170,10 @@ func _idle_state(delta) -> void:
 		
 	elif velocity.x != 0:
 		state = RUN
-		sprite.play("Run")
+		if velocity.x > 200:
+			sprite.play("Run")
+		else:
+			sprite.play("Walk")
 		return
 		
 	if Input.is_action_just_pressed("shoot") and can_shoot:
@@ -212,9 +219,9 @@ func _air_state(delta) -> void:
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	if Input.is_action_pressed("sprint"):
-		MAX_SPEED = 500
-	else:
 		MAX_SPEED = 300
+	else:
+		MAX_SPEED = 150
 	# ska denna del av funktion åka till slime script istället? då funkar även när slime är död
 	#if velocity.y < 0 and $AntiCollisionTimer.time_left <= 0 and global_position < slime.global_position:
 		#set_collision_mask_bit(1, false)
@@ -223,16 +230,11 @@ func _air_state(delta) -> void:
 	
 	_climb()
 	
-	if is_on_floor(): #and velocity == Vector2.ZERO:
+	if is_on_floor():
 		state = IDLE
 		sprite.play("Idle")
 		can_jump = true
 		return
-	#elif is_on_floor() and velocity.x != 0:
-		#state = RUN
-		#sprite.play("Run")
-		#can_jump = true
-		#return
 	
 	if Input.is_action_just_pressed("shoot") and can_shoot:
 		_shoot()
@@ -264,7 +266,10 @@ func _climb_state(delta) -> void:
 			set_collision_mask_bit(2, true)
 			if is_on_floor() and velocity != Vector2.ZERO:
 				state = RUN
-				sprite.play("Run")
+				if velocity.x > 200:
+					sprite.play("Run")
+				else:
+					sprite.play("Walk")
 				can_jump = true
 				return
 			elif is_on_floor():
@@ -331,11 +336,19 @@ func _shoot() -> void:
 	$ShootTimer.start()
 	var bullet_instance = _bullet_direction()
 	get_tree().get_root().add_child(bullet_instance)
-	sprite.play("Attack")
+	if velocity.x == 0:
+		sprite.play("Attack")
+	elif run:
+		sprite.play("RunAttack")
+	else:
+		sprite.play("WalkAttack")
 	yield(sprite,"animation_finished")
 	if is_on_floor() and velocity != Vector2.ZERO:
 		state = RUN
-		sprite.play("Run")
+		if velocity.x > 200:
+			sprite.play("Run")
+		else:
+			sprite.play("Walk")
 		can_jump = true
 		return
 	elif is_on_floor():
@@ -389,7 +402,10 @@ func _on_PlayerArea_body_entered(body):
 			return
 		if is_on_floor() and velocity != Vector2.ZERO:
 			state = RUN
-			sprite.play("Run")
+			if velocity.x > 200:
+				sprite.play("Run")
+			else:
+				sprite.play("Walk")
 			can_jump = true
 			return
 		elif is_on_floor():
@@ -414,7 +430,10 @@ func _on_PlayerArea_body_exited(body):
 				return
 			elif is_on_floor() and velocity != Vector2.ZERO:
 				state = RUN
-				sprite.play("Run")
+				if velocity.x > 200:
+					sprite.play("Run")
+				else:
+					sprite.play("Walk")
 				can_jump = true
 				return
 			elif is_on_floor():

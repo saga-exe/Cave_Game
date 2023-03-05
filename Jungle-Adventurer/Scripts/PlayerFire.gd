@@ -1,17 +1,17 @@
 extends Area2D
 
-const VELOCITY = 1500
+var velocity = 1000
 
 var direction := Vector2.ZERO
 
 
 func _ready() -> void:
 	$FireTimer.start()
-	print("instance")
+	$AnimatedSprite.play("Travelling")
 
 
 func _physics_process(delta: float) -> void:
-	global_position += VELOCITY * delta * direction
+	global_position += velocity * delta * direction
 
 
 func set_direction(pos1: Vector2, pos2: Vector2) -> void:
@@ -20,11 +20,21 @@ func set_direction(pos1: Vector2, pos2: Vector2) -> void:
 
 
 func _on_FireTimer_timeout() -> void:
+	velocity = 0
+	if direction.x < 0:
+		$AnimatedSprite.set_flip_v(true)
+	$AnimatedSprite.play("Exlpodes")
+	yield($AnimatedSprite, "animation_finished")
 	queue_free()
 
 
 func _on_PlayerFire_body_entered(body: Node) -> void:
 	if body.is_in_group("Enemy"):
 		body.die()
+		velocity = 0
+		if direction.x < 0:
+			$AnimatedSprite.set_flip_v(true)
+		$AnimatedSprite.play("Exlpodes")
+		yield($AnimatedSprite, "animation_finished")
 		queue_free()
 
