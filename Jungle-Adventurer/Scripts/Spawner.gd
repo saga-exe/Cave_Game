@@ -35,11 +35,11 @@ func _slime_collision(body, tile_number) -> void:
 	elif body.is_in_group("FireSmall"):
 		var fire_instance = firesmall_scene.instance()
 		get_tree().get_root().add_child(fire_instance)
-		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 15)
 	elif body.is_in_group("FireMedium"):
 		var fire_instance = firemedium_scene.instance()
 		get_tree().get_root().add_child(fire_instance)
-		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 5)
 
 
 func _on_Tile1_body_entered(body: Node) -> void:

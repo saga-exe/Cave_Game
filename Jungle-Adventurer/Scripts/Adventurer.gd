@@ -25,12 +25,13 @@ extends KinematicBody2D
 Layer1: Adventurer
 Layer2: Enemy (slime, wraith)
 Layer3: Platforms
-Layer4: WraithSpawns
+Layer4: Spawn objects
 Layer5: Coins
 Layer6: EnemySpawner
 Layer7: Ladders
 Layer8: ClimbStoppers
 Layer9: Bullets
+Layer10: Noninteractive objects
 """
 
 enum {IDLE, RUN, AIR, CLIMB}
