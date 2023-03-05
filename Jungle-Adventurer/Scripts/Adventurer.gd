@@ -330,7 +330,7 @@ func _attack() -> void:
 	if velocity.x == 0:
 		sprite.play("Attack")
 		if state_changed:
-			sprite.set_frame(frame)
+			sprite.set_frame(frame + 3)
 	elif MAX_SPEED == 300:
 		sprite.play("RunAttack")
 		if state_changed:
