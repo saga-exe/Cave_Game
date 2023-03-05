@@ -14,6 +14,10 @@ config/name="Jungle explorer"
 run/main_scene="res://Scenes/MainScene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Globals="*res://Scripts/Globals.gd"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/AS2P/plugin.cfg" )

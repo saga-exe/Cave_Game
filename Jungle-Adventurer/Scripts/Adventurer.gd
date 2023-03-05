@@ -30,6 +30,7 @@ Layer9: Bullets
 enum {IDLE, RUN, AIR, CLIMB}
 
 signal game_over
+signal damage
 
 const ACCELERATION = 1700
 const JUMP_STRENGTH = -600
@@ -365,6 +366,7 @@ func take_damage(damage, knockback_direction) -> void:
 		velocity.x = knockback_direction * 350
 		hp -= damage
 		$Effects.play("Damaged")
+		emit_signal("damage")
 		if knockback_direction != 0:
 			knockback = true
 		HUD.health_changed(hp)

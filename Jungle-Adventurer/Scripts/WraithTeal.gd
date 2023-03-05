@@ -3,7 +3,7 @@ extends KinematicBody2D
 # it doesn't wait after knockback
 # drops to die from idle to chase - fixed
 
-enum {IDLE, CHASE}
+enum {IDLE, CHASE, DIE}
 
 
 const ACCELERATION = 500
@@ -37,7 +37,7 @@ onready var sprite = $AnimatedSprite
 func _ready():
 	state = IDLE
 	sprite.play("Idle")
-	
+
 
 
 func _physics_process(delta: float) -> void:
@@ -46,6 +46,8 @@ func _physics_process(delta: float) -> void:
 			_idle_state(delta)
 		CHASE:
 			_chase_state(delta)
+		DIE:
+			_die_state(delta)
 
 
 func _update_direction_x(delta) -> float:
@@ -132,7 +134,7 @@ func _idle_state(delta) -> void:
 	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
-	if player_slime_distance.length() <= 400:
+	if player_slime_distance.length() <= 400 and player.get_collision_mask_bit(1):
 		sprite.play("Walking")
 		state = CHASE
 		return
@@ -153,7 +155,7 @@ func _chase_state(delta) -> void:
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
-	if player_slime_distance.length() >= 400:
+	if player_slime_distance.length() >= 400 or player.get_collision_mask_bit(1) == false:
 		sprite.play("Walking")
 		if wait:
 			wait = false
@@ -163,8 +165,15 @@ func _chase_state(delta) -> void:
 
 
 func die() -> void:
-	queue_free()
+	state = DIE
 
+
+func _die_state(delta) -> void:
+	velocity.x = 0
+	direction.x = 0
+	sprite.play("Dying")
+	yield(sprite,"animation_finished")
+	queue_free()
 
 #turn behövs enbart då enemy ska vända vid slutet av en platform,
 #ej då spelaren hamnar på andra sidan
@@ -180,22 +189,22 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	if get_collision_mask_bit(0):
-		var damage = 0
-		if body.is_in_group("Player"):
-			knockback = true
-			if player.global_position.x - global_position.x < 0:
-				knockback_direction = -1
-			else:
-				knockback_direction = 1
-			if (((global_position.y - 74.5) - player.global_position.y) < 5) and (((global_position.y - 74.5) - player.global_position.y) > -20):
-				damage = 0
-				body.take_damage(damage, knockback_direction)
-				die()
-			else:
-				damage = 25
-				body.take_damage(damage, knockback_direction)
-				velocity.x = knockback_direction * -200
+	var damage = 0
+	if body.is_in_group("Player"):
+		knockback = true
+		if player.global_position.x - global_position.x < 0:
+			knockback_direction = -1
+		else:
+			knockback_direction = 1
+		if (((global_position.y - 74.5) - player.global_position.y) < 5) and (((global_position.y - 74.5) - player.global_position.y) > -20) and player.velocity.y >= 0:
+			damage = 0
+			body.take_damage(damage, knockback_direction)
+			die()
+		else:
+			set_collision_mask_bit(0, false)
+			damage = 25
+			body.take_damage(damage, knockback_direction)
+			velocity.x = knockback_direction * -200
 
 # terraincheck decides if turn or not, then state decides if turn or wait, and after state it should be decided if it drops or not ( raycast )
 

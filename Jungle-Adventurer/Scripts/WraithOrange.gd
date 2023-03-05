@@ -128,10 +128,7 @@ func _idle_state(delta) -> void:
 	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
-	if player_slime_distance.length() <= 400:
-		#if turn:
-			#turn = false
-			#wait = true
+	if player_slime_distance.length() <= 400 and player.get_collision_mask_bit(1):
 		sprite.play("Walking")
 		state = CHASE
 		return
@@ -151,7 +148,7 @@ func _chase_state(delta) -> void:
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
-	if player_slime_distance.length() >= 400:
+	if player_slime_distance.length() >= 400 or player.get_collision_mask_bit(1) == false:
 		sprite.play("Walking")
 		if wait:
 			wait = false
@@ -179,7 +176,7 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 - ifall state == IDLE ska turn vara true, wait false och can_drop false
 - ifall state == CHASE ska turn vara false, och sedan cecka för platformar under och då bestämma om wait eller drop är true
 - då drop == true så är (turn och wait) == false
-- den droppar eftersom den aldrig kommer in på platformen och därför går inte terrancheck ut och stoppar slimen från att trilla
+- den droppar eftersom den aldrig kommer in på platformen och därför går inte terraincheck ut och stoppar slimen från att trilla
 """
 
 

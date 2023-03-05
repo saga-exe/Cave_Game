@@ -695,7 +695,6 @@ extents = Vector2( 11.5, 25 )
 
 [sub_resource type="Animation" id=24]
 resource_name = "Damaged"
-length = 3.0
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:material:shader_param/hit_opacity")
@@ -704,10 +703,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0 ]
+"values": [ 0.8, 0.0, 0.8, 0.0, 0.8, 0.0 ]
 }
 
 [sub_resource type="Animation" id=26]
@@ -760,8 +759,7 @@ script = ExtResource( 54 )
 material = SubResource( 22 )
 position = Vector2( 19, -22 )
 frames = SubResource( 1 )
-animation = "Idle"
-frame = 8
+animation = "Attack"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimatedSprite")

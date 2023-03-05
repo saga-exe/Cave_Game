@@ -147,8 +147,7 @@ position = Vector2( 0, -10 )
 scale = Vector2( 0.16, 0.16 )
 frames = SubResource( 7 )
 animation = "Dying"
-frame = 6
-playing = true
+frame = 14
 
 [node name="WraithArea" type="Area2D" parent="." groups=["Wraith"]]
 collision_layer = 2
