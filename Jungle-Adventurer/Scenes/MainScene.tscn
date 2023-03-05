@@ -28,7 +28,6 @@ limit_bottom = 410
 [node name="Gem" parent="." instance=ExtResource( 2 )]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
 color = Color( 0.0823529, 0.0823529, 0.0823529, 1 )
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]

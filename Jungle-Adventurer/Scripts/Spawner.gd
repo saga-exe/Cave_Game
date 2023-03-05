@@ -4,6 +4,8 @@ onready var player = get_node("/root/MainScene/Adventurer")
 var wraith_orange_scene = preload("res://Scenes/WraithOrange.tscn")
 var wraith_teal_scene = preload("res://Scenes/WraithTeal.tscn")
 var coin_scene = preload("res://Scenes/Coin.tscn")
+var firesmall_scene = preload("res://Scenes/FireSmall.tscn")
+var firemedium_scene = preload("res://Scenes/FireMedium.tscn")
 
 var furthest_position_x = 0
 
@@ -30,6 +32,14 @@ func _slime_collision(body, tile_number) -> void:
 		var coin_instance = coin_scene.instance()
 		get_tree().get_root().add_child(coin_instance)
 		coin_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+	elif body.is_in_group("FireSmall"):
+		var fire_instance = firesmall_scene.instance()
+		get_tree().get_root().add_child(fire_instance)
+		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+	elif body.is_in_group("FireMedium"):
+		var fire_instance = firemedium_scene.instance()
+		get_tree().get_root().add_child(fire_instance)
+		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
 
 
 func _on_Tile1_body_entered(body: Node) -> void:
