@@ -30,7 +30,7 @@ position = Vector2( -28, -5 )
 scale = Vector2( 0.15, 0.15 )
 frames = SubResource( 1 )
 animation = "Bullet"
-frame = 1
+frame = 4
 playing = true
 flip_h = true
 
@@ -45,6 +45,7 @@ wait_time = 2.0
 position = Vector2( 4, 0 )
 texture = ExtResource( 2 )
 color = Color( 1, 0.843137, 0.596078, 1 )
+range_layer_min = -100
 
 [connection signal="body_entered" from="." to="." method="_on_WraithBullet_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

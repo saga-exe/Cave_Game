@@ -18,8 +18,6 @@ func _ready():
 
 func _on_StartButton_pressed():
 	print("ok")
-	#Transition.load_scene("res://Scenes/MainScene.tscn")
-
-
-func _on_Button_pressed():
 	Transition.load_scene("res://Scenes/MainScene.tscn")
+
+

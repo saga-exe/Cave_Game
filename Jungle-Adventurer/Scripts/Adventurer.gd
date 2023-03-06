@@ -40,7 +40,7 @@ signal game_over
 signal damage
 
 const ACCELERATION = 1700
-const JUMP_STRENGTH = -600
+const JUMP_STRENGTH = -450
 
 
 var GRAVITY = 1000

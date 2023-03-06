@@ -14,7 +14,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if global_position.x < 1200:
-		global_position.x += 1200*delta
+		global_position.x += 3000*delta
 	elif player.global_position.x > global_position.x - 600:
 		global_position.x = player.global_position.x + 600
 	
