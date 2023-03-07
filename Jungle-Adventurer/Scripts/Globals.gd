@@ -12,5 +12,8 @@ func difficulty() -> float:
 func finish() -> void:
 	finished = true
 
+func antifinish() -> void:
+	finished = false
+
 func finished() -> bool:
 	return finished

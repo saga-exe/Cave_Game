@@ -34,7 +34,7 @@ Layer9: Bullets
 Layer10: Noninteractive objects
 """
 
-enum {IDLE, RUN, AIR, CLIMB}
+enum {IDLE, RUN, AIR, CLIMB, FINISHED}
 
 signal game_over
 signal damage
@@ -98,6 +98,8 @@ func _physics_process(delta: float) -> void:
 			_air_state(delta)
 		CLIMB:
 			_climb_state(delta)
+		FINISHED:
+			_finished_state(delta)
 
 
 func _left_right_movement(delta) -> void:
@@ -177,7 +179,10 @@ func _idle_state(delta) -> void:
 		sprite.play("Idle")
 	
 	if can_end and Input.is_action_just_pressed("E"):
-		_level_finished()
+		state = FINISHED
+	
+	if global_position.y > 620:
+		state = FINISHED
 	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
@@ -204,7 +209,10 @@ func _run_state(delta) -> void:
 			sprite.play("Walk")
 	
 	if can_end and Input.is_action_just_pressed("E"):
-		_level_finished()
+		state = FINISHED
+	
+	if global_position.y > 620:
+		state = FINISHED
 	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
@@ -232,7 +240,10 @@ func _air_state(delta) -> void:
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	if can_end and Input.is_action_just_pressed("E"):
-		_level_finished()
+		state = FINISHED
+	
+	if global_position.y > 620:
+		state = FINISHED
 	
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
 		_attack()
@@ -275,7 +286,10 @@ func _climb_state(delta) -> void:
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	if can_end and Input.is_action_just_pressed("E"):
-		_level_finished()
+		state = FINISHED
+	
+	if global_position.y > 620:
+		state = FINISHED
 	
 	if not ladder_area and climb_area:
 		if Input.is_action_pressed("down"):
@@ -481,7 +495,11 @@ func _idlestate_switch() -> void:
 		state_changed = true
 
 
-func _level_finished() -> void:
+func _finished_state(delta) -> void:
 	
+	sprite.play("Idle")
 	Globals.finish()
-	Transition.load_scene("res://Scenes/LevelFinished.tscn")
+	if can_end:
+		Transition.load_scene("res://Scenes/LevelFinished.tscn")
+	else:
+		Transition.load_scene("res://Scenes/GameOver.tscn")

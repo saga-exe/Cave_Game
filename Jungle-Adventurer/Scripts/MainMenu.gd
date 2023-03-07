@@ -44,3 +44,7 @@ func _on_LowerDifficulty_pressed() -> void:
 func _on_HigherDifficulty_pressed() -> void:
 	if difficulty < 2:
 		difficulty += 0.5
+
+
+func _on_QuitButton_pressed() -> void:
+	get_tree().quit()

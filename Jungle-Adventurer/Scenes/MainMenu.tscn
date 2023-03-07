@@ -10,15 +10,26 @@ size = 29
 font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.203922, 0.0392157, 0.0392157, 1 )
+bg_color = Color( 0.584314, 0.0980392, 0.0980392, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.290196, 0.00392157, 0.00392157, 1 )
+border_blend = true
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.486275, 0.0627451, 0.0627451, 1 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 0.0823529, 0, 0, 1 )
+bg_color = Color( 0.337255, 0, 0, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0.141176, 0.00392157, 0.00392157, 1 )
+border_blend = true
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
@@ -44,7 +55,7 @@ margin_left = -76.0
 margin_top = -26.5
 margin_right = 76.0
 margin_bottom = 26.5
-mouse_default_cursor_shape = 3
+mouse_default_cursor_shape = 2
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
@@ -60,6 +71,9 @@ margin_left = 264.0
 margin_top = 80.0
 margin_right = 770.0
 margin_bottom = 193.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 3 )
 text = "Dungeon slayer"
 
@@ -82,6 +96,13 @@ margin_top = 337.0
 margin_right = 643.0
 margin_bottom = 376.0
 
+[node name="QuitButton" type="Button" parent="."]
+margin_left = 438.0
+margin_top = 448.0
+margin_right = 536.0
+margin_bottom = 498.0
+
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="LowerDifficulty" to="." method="_on_LowerDifficulty_pressed"]
 [connection signal="pressed" from="HigherDifficulty" to="." method="_on_HigherDifficulty_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_QuitButton_pressed"]
