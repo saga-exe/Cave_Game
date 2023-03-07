@@ -8,7 +8,13 @@ func _ready() -> void:
 	$AnimatedSprite.play("Idle")
 
 
+func _physics_process(delta: float) -> void:
+	if Globals.finished():
+		queue_free()
+
+
 func _on_Coin_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		queue_free()
 		HUD.gems_collected(coin)
+

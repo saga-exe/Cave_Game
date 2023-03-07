@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Fonts/Gothical.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/Berkahi Blackletter.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Scenes/ParallaxBackground.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/ParallaxBackground(menu).tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=4]
 
 [sub_resource type="DynamicFont" id=1]
@@ -33,6 +33,8 @@ margin_right = 1024.0
 margin_bottom = 600.0
 script = ExtResource( 4 )
 
+[node name="Node" parent="." instance=ExtResource( 3 )]
+
 [node name="StartButton" type="Button" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -51,11 +53,9 @@ custom_styles/normal = SubResource( 2 )
 button_mask = 7
 text = "Start Game"
 
-[node name="Node" parent="." instance=ExtResource( 3 )]
-
 [node name="GameName" type="Label" parent="."]
 modulate = Color( 0.819608, 0.0862745, 0.0862745, 1 )
-self_modulate = Color( 0.180392, 0.0470588, 0.0470588, 1 )
+self_modulate = Color( 0.698039, 0.0901961, 0.0901961, 1 )
 margin_left = 264.0
 margin_top = 80.0
 margin_right = 770.0
@@ -63,4 +63,25 @@ margin_bottom = 193.0
 custom_fonts/font = SubResource( 3 )
 text = "Dungeon slayer"
 
+[node name="Difficulty" type="Label" parent="."]
+margin_left = 471.0
+margin_top = 348.0
+margin_right = 551.0
+margin_bottom = 379.0
+text = "Normal"
+
+[node name="LowerDifficulty" type="Button" parent="."]
+margin_left = 379.0
+margin_top = 330.0
+margin_right = 443.0
+margin_bottom = 370.0
+
+[node name="HigherDifficulty" type="Button" parent="."]
+margin_left = 570.0
+margin_top = 337.0
+margin_right = 643.0
+margin_bottom = 376.0
+
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="LowerDifficulty" to="." method="_on_LowerDifficulty_pressed"]
+[connection signal="pressed" from="HigherDifficulty" to="." method="_on_HigherDifficulty_pressed"]

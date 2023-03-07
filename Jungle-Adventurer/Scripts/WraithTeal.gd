@@ -20,6 +20,7 @@ var last_direction = 1
 var turn_direction = 1
 var knockback_direction = 1
 var hp = 100
+var difficulty = 0
 
 var air := true
 var turn := false
@@ -42,10 +43,12 @@ func _ready():
 	state = IDLE
 	sprite.play("Idle")
 	$HealthBar.visible = false
-
+	difficulty = Globals.difficulty()
 
 
 func _physics_process(delta: float) -> void:
+	if Globals.finished():
+		queue_free()
 	match state:
 		IDLE:
 			_idle_state(delta)
@@ -203,13 +206,11 @@ func _on_Area2D_body_entered(body: Node) -> void:
 		else:
 			knockback_direction = 1
 		if (((global_position.y - 74.5) - player.global_position.y) < 5) and (((global_position.y - 74.5) - player.global_position.y) > -20) and player.velocity.y >= 0:
-			damage = 0
-			body.take_damage(damage, knockback_direction)
+			body.take_damage(0, knockback_direction)
 			die()
 		else:
 			set_collision_mask_bit(0, false)
-			damage = 25
-			body.take_damage(damage, knockback_direction)
+			body.take_damage(25, knockback_direction)
 			velocity.x = knockback_direction * -200
 
 # terraincheck decides if turn or not, then state decides if turn or wait, and after state it should be decided if it drops or not ( raycast )
@@ -263,7 +264,7 @@ func _on_ShootTimer_timeout():
 
 
 func take_damage(damage) -> void:
-	hp -= damage
+	hp -= damage * (2- difficulty)
 	$HealthBar.value = hp
 	if hp < 100:
 		$HealthBar.visible = true

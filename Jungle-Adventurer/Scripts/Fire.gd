@@ -11,6 +11,6 @@ func _ready():
 	$AnimatedSprite.play("default")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _physics_process(delta: float) -> void:
+	if Globals.finished():
+		queue_free()

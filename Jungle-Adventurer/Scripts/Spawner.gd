@@ -17,6 +17,8 @@ func _physics_process(delta: float) -> void:
 		global_position.x += 3000*delta
 	elif player.global_position.x > global_position.x - 600:
 		global_position.x = player.global_position.x + 600
+	if Globals.finished():
+		queue_free()
 	
 
 func _slime_collision(body, tile_number) -> void:

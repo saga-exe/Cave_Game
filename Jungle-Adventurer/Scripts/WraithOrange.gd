@@ -17,6 +17,7 @@ var last_direction = 1
 var turn_direction = 1
 var knockback_direction = 1
 var hp = 100
+var difficulty = 0
 
 var air := true
 var turn := false
@@ -36,9 +37,12 @@ func _ready():
 	state = IDLE
 	sprite.play("Idle")
 	$HealthBar.visible = false
+	difficulty = Globals.difficulty()
 
 
 func _physics_process(delta: float) -> void:
+	if Globals.finished():
+		queue_free()
 	match state:
 		IDLE:
 			_idle_state(delta)
@@ -231,7 +235,7 @@ func _on_TerrainArea2_body_exited(body):
 
 
 func take_damage(damage) -> void:
-	hp -= damage
+	hp -= damage * (2 - difficulty)
 	$HealthBar.value = hp
 	if hp < 100:
 		$HealthBar.visible = true

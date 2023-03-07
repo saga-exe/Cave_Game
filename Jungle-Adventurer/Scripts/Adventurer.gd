@@ -28,7 +28,7 @@ Layer3: Platforms
 Layer4: Spawn objects
 Layer5: Coins
 Layer6: EnemySpawner
-Layer7: Ladders
+Layer7: Ladders and End
 Layer8: ClimbStoppers
 Layer9: Bullets
 Layer10: Noninteractive objects
@@ -53,6 +53,7 @@ var last_action_pressed = "right"
 var input_x = 0
 var hp = 100
 var knockback_direction_player = 0
+var difficulty = 0
 
 var bullet_direction = Vector2.ZERO
 
@@ -68,6 +69,7 @@ var stopper_area := false
 var damaged := false
 var shot := false
 var state_changed := false
+var can_end := false
 
 var bullet_scene = preload("res://Scenes/PlayerFire.tscn")
 
@@ -80,7 +82,11 @@ onready var HUD = get_node("/root/MainScene/HUD")
 func _ready() -> void:
 	global_position = Vector2(160,200)
 	$Effects.play("Idle")
+	difficulty = Globals.difficulty()
 
+
+func difficulty(number) -> void:
+	difficulty = number
 
 func _physics_process(delta: float) -> void:
 	match state:
@@ -170,6 +176,9 @@ func _idle_state(delta) -> void:
 	else:
 		sprite.play("Idle")
 	
+	if can_end and Input.is_action_just_pressed("E"):
+		_level_finished()
+	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
 		_airstate_switch()
@@ -193,6 +202,9 @@ func _run_state(delta) -> void:
 			sprite.play("Run")
 		else:
 			sprite.play("Walk")
+	
+	if can_end and Input.is_action_just_pressed("E"):
+		_level_finished()
 	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
@@ -218,6 +230,9 @@ func _air_state(delta) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, ACCELERATION * delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	if can_end and Input.is_action_just_pressed("E"):
+		_level_finished()
 	
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
 		_attack()
@@ -258,7 +273,10 @@ func _climb_state(delta) -> void:
 
 	velocity = velocity.move_toward(direction*CLIMB_SPEED, ACCELERATION*delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
-
+	
+	if can_end and Input.is_action_just_pressed("E"):
+		_level_finished()
+	
 	if not ladder_area and climb_area:
 		if Input.is_action_pressed("down"):
 			return
@@ -371,7 +389,7 @@ func take_damage(damage, knockback_direction) -> void:
 		$PlayerArea.set_collision_mask_bit(1, false)
 		$DamageTimer.start()
 		velocity.x = knockback_direction * 350
-		hp -= damage
+		hp -= damage * difficulty
 		$Effects.play("Damaged")
 		emit_signal("damage")
 		if knockback_direction != 0:
@@ -385,6 +403,8 @@ func take_damage(damage, knockback_direction) -> void:
 func _on_PlayerArea_body_entered(body):
 	if body.is_in_group("Ladders"):
 		ladder_area = true
+	elif body.is_in_group("End"):
+		can_end = true
 	elif body.is_in_group("ClimbArea"):
 		climb_area = true
 	elif body.is_in_group("ClimbStopper"):
@@ -459,3 +479,9 @@ func _idlestate_switch() -> void:
 	can_jump = true
 	if not can_shoot:
 		state_changed = true
+
+
+func _level_finished() -> void:
+	
+	Globals.finish()
+	Transition.load_scene("res://Scenes/LevelFinished.tscn")

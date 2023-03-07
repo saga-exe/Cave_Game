@@ -12,6 +12,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	global_position += VELOCITY * delta * direction
+	if Globals.finished():
+		queue_free()
 
 
 func set_direction(pos1: Vector2, pos2: Vector2) -> void:

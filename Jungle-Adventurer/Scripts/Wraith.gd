@@ -43,7 +43,8 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
-	#print($AttackArea.get_collision_mask_bit(0))
+	if Globals.finished():
+		queue_free()
 	match state:
 		IDLE:
 			_idle_state(delta)

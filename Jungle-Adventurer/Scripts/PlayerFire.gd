@@ -8,10 +8,13 @@ var direction := Vector2.ZERO
 func _ready() -> void:
 	$FireTimer.start()
 	$AnimatedSprite.play("Travelling")
+	
 
 
 func _physics_process(delta: float) -> void:
 	global_position += velocity * delta * direction
+	if Globals.finished():
+		queue_free()
 
 
 func set_direction(pos1: Vector2, pos2: Vector2) -> void:
