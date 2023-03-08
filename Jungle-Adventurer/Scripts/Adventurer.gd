@@ -10,16 +10,15 @@ extends KinematicBody2D
 #should i be able to sprint when already in the air?
 
 #have sprite not continue playing when in air
-#health bar on enemies
-#chests as checkpoints
-#fire pits
+#chests
+#checkpoints
+#lava
 #extra attack and double jump
 
 #stopper on bottom
 #deactivate collsision with tiles
 #ladder_area and jump area on top with different tilemap
 
-#run animation
 
 """
 Layer1: Adventurer
@@ -28,7 +27,7 @@ Layer3: Platforms
 Layer4: Spawn objects
 Layer5: Coins
 Layer6: EnemySpawner
-Layer7: Ladders and End
+Layer7: Ladders, End, Lava (PlayerArea interactions)
 Layer8: ClimbStoppers
 Layer9: Bullets
 Layer10: Noninteractive objects
@@ -80,7 +79,7 @@ onready var level = get_node("/root/MainScene/Level1/Platforms")
 onready var HUD = get_node("/root/MainScene/HUD")
 
 func _ready() -> void:
-	global_position = Vector2(160,200)
+	global_position = Vector2(190,485)
 	$Effects.play("Idle")
 	difficulty = Globals.difficulty()
 
@@ -419,6 +418,12 @@ func _on_PlayerArea_body_entered(body):
 		ladder_area = true
 	elif body.is_in_group("End"):
 		can_end = true
+	elif body.is_in_group("Lava"):
+		print("ok")
+		velocity.y = -250
+		velocity.x = 0
+		$PlayerArea.set_collision_mask_bit(6, false)
+		state = FINISHED
 	elif body.is_in_group("ClimbArea"):
 		climb_area = true
 	elif body.is_in_group("ClimbStopper"):
@@ -453,7 +458,8 @@ func _on_PlayerArea_body_exited(body):
 				return
 	elif body.is_in_group("ClimbStopper"):
 		stopper_area = false
-			
+	elif body.is_in_group("End"):
+		can_end = false
 	if body.is_in_group("ClimbArea"):
 		climb_area = false
 		
@@ -496,7 +502,8 @@ func _idlestate_switch() -> void:
 
 
 func _finished_state(delta) -> void:
-	
+	velocity.y += GRAVITY*delta
+	velocity = move_and_slide(velocity, Vector2.UP)
 	sprite.play("Idle")
 	Globals.finish()
 	if can_end:

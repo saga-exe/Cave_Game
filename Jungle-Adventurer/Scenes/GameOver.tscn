@@ -34,12 +34,14 @@ margin_left = 447.0
 margin_top = 368.0
 margin_right = 589.0
 margin_bottom = 421.0
+text = "Main Menu"
 
 [node name="RestartButton" type="Button" parent="."]
 margin_left = 452.0
 margin_top = 457.0
 margin_right = 587.0
 margin_bottom = 510.0
+text = "Restart"
 
 [connection signal="pressed" from="MainMenuButton" to="." method="_on_MainMenuButton_pressed"]
 [connection signal="pressed" from="RestartButton" to="." method="_on_RestartButton_pressed"]

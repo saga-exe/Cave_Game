@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Light/Light_texture.webp" type="Texture" id=1]
+[ext_resource path="res://Scripts/LavaLight.gd" type="Script" id=2]
+
+[node name="LavaLight" type="Light2D"]
+texture = ExtResource( 1 )
+color = Color( 1, 0.733333, 0.447059, 1 )
+energy = 0.8
+range_layer_min = -100
+script = ExtResource( 2 )

@@ -55,12 +55,14 @@ margin_left = 451.0
 margin_top = 364.0
 margin_right = 546.0
 margin_bottom = 409.0
+text = "Next Level"
 
 [node name="MainMenuButton" type="Button" parent="."]
 margin_left = 431.0
 margin_top = 450.0
 margin_right = 577.0
 margin_bottom = 514.0
+text = "Main Menu"
 
 [connection signal="timeout" from="FireworkTimer" to="." method="_on_FireworkTimer_timeout"]
 [connection signal="timeout" from="FireworkTimer2" to="." method="_on_FireworkTimer_timeout"]

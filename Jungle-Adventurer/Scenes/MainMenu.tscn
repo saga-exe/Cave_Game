@@ -89,18 +89,21 @@ margin_left = 379.0
 margin_top = 330.0
 margin_right = 443.0
 margin_bottom = 370.0
+text = "<-"
 
 [node name="HigherDifficulty" type="Button" parent="."]
 margin_left = 570.0
 margin_top = 337.0
 margin_right = 643.0
 margin_bottom = 376.0
+text = "->"
 
 [node name="QuitButton" type="Button" parent="."]
 margin_left = 438.0
 margin_top = 448.0
 margin_right = 536.0
 margin_bottom = 498.0
+text = "Quit"
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="LowerDifficulty" to="." method="_on_LowerDifficulty_pressed"]

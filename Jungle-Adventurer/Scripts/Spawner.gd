@@ -6,6 +6,7 @@ var wraith_teal_scene = preload("res://Scenes/WraithTeal.tscn")
 var coin_scene = preload("res://Scenes/Coin.tscn")
 var firesmall_scene = preload("res://Scenes/FireSmall.tscn")
 var firemedium_scene = preload("res://Scenes/FireMedium.tscn")
+var lavalight_scene = preload("res://Scenes/LavaLight.tscn")
 
 var furthest_position_x = 0
 
@@ -42,6 +43,10 @@ func _slime_collision(body, tile_number) -> void:
 		var fire_instance = firemedium_scene.instance()
 		get_tree().get_root().add_child(fire_instance)
 		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 5)
+	elif body.is_in_group("Lava"):
+		var lavalight_instance = lavalight_scene.instance()
+		get_tree().get_root().add_child(lavalight_instance)
+		lavalight_instance.global_position = Vector2(global_position.x, 32*tile_number + 5)
 
 
 func _on_Tile1_body_entered(body: Node) -> void:
