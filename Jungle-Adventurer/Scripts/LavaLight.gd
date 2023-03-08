@@ -25,4 +25,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		lower = true
 	
+	if Globals.finished():
+		queue_free()
+	
 	

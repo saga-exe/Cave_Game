@@ -198,7 +198,6 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	var damage = 0
 	if body.is_in_group("Player"):
 		knockback = true
 		if player.global_position.x - global_position.x < 0:

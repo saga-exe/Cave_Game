@@ -1,19 +1,19 @@
 extends Node
 
-var difficulty = 0
-var finished := false
+var difficulty_number = 0
+var is_finished := false
 
 func get_difficulty(difficulty_get) -> void:
-	difficulty = difficulty_get
+	difficulty_number = difficulty_get
 
 func difficulty() -> float:
-	return difficulty
+	return difficulty_number
 
 func finish() -> void:
-	finished = true
+	is_finished = true
 
 func antifinish() -> void:
-	finished = false
+	is_finished = false
 
 func finished() -> bool:
-	return finished
+	return is_finished

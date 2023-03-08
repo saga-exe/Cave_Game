@@ -35,8 +35,7 @@ Layer10: Noninteractive objects
 
 enum {IDLE, RUN, AIR, CLIMB, FINISHED}
 
-signal game_over
-signal damage
+#signal damage
 
 const ACCELERATION = 1700
 const JUMP_STRENGTH = -450
@@ -70,6 +69,7 @@ var damaged := false
 var shot := false
 var state_changed := false
 var can_end := false
+var can_double_jump := false
 
 var bullet_scene = preload("res://Scenes/PlayerFire.tscn")
 
@@ -249,10 +249,17 @@ func _air_state(delta) -> void:
 		state = FINISHED
 		hp -= 25
 	
+	if Input.is_action_just_pressed("jump") and can_double_jump:
+		can_double_jump = false
+		velocity.y = -300
+		sprite.play("DoubleJump")
+	
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
 		_attack()
-	else:
+	elif can_double_jump:
 		sprite.play("Jump")
+	else:
+		sprite.play("DoubleJump")
 	
 	if Input.is_action_pressed("sprint"):
 		MAX_SPEED = 300
@@ -410,7 +417,7 @@ func take_damage(damage, knockback_direction) -> void:
 		velocity.x = knockback_direction * 350
 		hp -= damage * difficulty
 		$Effects.play("Damaged")
-		emit_signal("damage")
+		#emit_signal("damage")
 		if knockback_direction != 0:
 			knockback = true
 		HUD.health_changed(hp)
@@ -492,6 +499,7 @@ func _on_DamageTimer_timeout() -> void:
 func _airstate_switch() -> void:
 	state = AIR
 	can_jump = false
+	can_double_jump = true
 	if not can_shoot:
 		state_changed = true
 
@@ -499,6 +507,7 @@ func _airstate_switch() -> void:
 func _runstate_switch() -> void:
 	state = RUN
 	can_jump = true
+	can_double_jump = true
 	if not can_shoot:
 		state_changed = true
 
@@ -506,6 +515,7 @@ func _runstate_switch() -> void:
 func _idlestate_switch() -> void:
 	state = IDLE
 	can_jump = true
+	can_double_jump = true
 	if not can_shoot:
 		state_changed = true
 
@@ -514,20 +524,22 @@ func _finished_state(delta) -> void:
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 	sprite.play("Idle")
-	#if not $PlayerArea.get_collision_mask_bit(6):
-		
-	anim_player.play("BlackOut")
-	yield(anim_player, "animation_finished")
-	global_position = last_pos
-	HUD.health_changed(hp)
-	anim_player.play_backwards("BlackOut")
-	
-	$PlayerArea.set_collision_mask_bit(6, true)
-	state = IDLE
-	return
-		
-	Globals.finish()
+
 	if can_end:
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
+		Globals.finish()
 	elif hp <= 0:
 		Transition.load_scene("res://Scenes/GameOver.tscn")
+		Globals.finish()
+	else:
+		anim_player.play("BlackOut")
+		yield(anim_player, "animation_finished")
+		global_position = last_pos
+		HUD.health_changed(hp)
+		anim_player.play_backwards("BlackOut")
+		
+		$PlayerArea.set_collision_mask_bit(6, true)
+		state = IDLE
+		return
+		
+	

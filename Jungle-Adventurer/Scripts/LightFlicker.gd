@@ -21,3 +21,4 @@ func _physics_process(delta: float) -> void:
 		scale.y += scale_change*delta
 	else:
 		lower = true
+
