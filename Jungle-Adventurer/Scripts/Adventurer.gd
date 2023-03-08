@@ -53,6 +53,7 @@ var input_x = 0
 var hp = 100
 var knockback_direction_player = 0
 var difficulty = 0
+var last_pos = Vector2(0,0)
 
 var bullet_direction = Vector2.ZERO
 
@@ -77,6 +78,7 @@ onready var gunpoint = $GunPoint
 onready var player_area = $PlayerArea
 onready var level = get_node("/root/MainScene/Level1/Platforms")
 onready var HUD = get_node("/root/MainScene/HUD")
+onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
 
 func _ready() -> void:
 	global_position = Vector2(190,485)
@@ -182,6 +184,7 @@ func _idle_state(delta) -> void:
 	
 	if global_position.y > 620:
 		state = FINISHED
+		hp -= 25
 	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
@@ -212,6 +215,7 @@ func _run_state(delta) -> void:
 	
 	if global_position.y > 620:
 		state = FINISHED
+		hp -= 25
 	
 	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_STRENGTH
@@ -243,6 +247,7 @@ func _air_state(delta) -> void:
 	
 	if global_position.y > 620:
 		state = FINISHED
+		hp -= 25
 	
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
 		_attack()
@@ -289,6 +294,7 @@ func _climb_state(delta) -> void:
 	
 	if global_position.y > 620:
 		state = FINISHED
+		hp -= 25
 	
 	if not ladder_area and climb_area:
 		if Input.is_action_pressed("down"):
@@ -419,11 +425,11 @@ func _on_PlayerArea_body_entered(body):
 	elif body.is_in_group("End"):
 		can_end = true
 	elif body.is_in_group("Lava"):
-		print("ok")
 		velocity.y = -250
 		velocity.x = 0
 		$PlayerArea.set_collision_mask_bit(6, false)
 		state = FINISHED
+		hp -= 25
 	elif body.is_in_group("ClimbArea"):
 		climb_area = true
 	elif body.is_in_group("ClimbStopper"):
@@ -458,6 +464,9 @@ func _on_PlayerArea_body_exited(body):
 				return
 	elif body.is_in_group("ClimbStopper"):
 		stopper_area = false
+	elif body.is_in_group("Tile"):
+		last_pos = global_position
+		last_pos.x -= 80
 	elif body.is_in_group("End"):
 		can_end = false
 	if body.is_in_group("ClimbArea"):
@@ -505,8 +514,20 @@ func _finished_state(delta) -> void:
 	velocity.y += GRAVITY*delta
 	velocity = move_and_slide(velocity, Vector2.UP)
 	sprite.play("Idle")
+	#if not $PlayerArea.get_collision_mask_bit(6):
+		
+	anim_player.play("BlackOut")
+	yield(anim_player, "animation_finished")
+	global_position = last_pos
+	HUD.health_changed(hp)
+	anim_player.play_backwards("BlackOut")
+	
+	$PlayerArea.set_collision_mask_bit(6, true)
+	state = IDLE
+	return
+		
 	Globals.finish()
 	if can_end:
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
-	else:
+	elif hp <= 0:
 		Transition.load_scene("res://Scenes/GameOver.tscn")

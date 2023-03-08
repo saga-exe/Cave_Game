@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Globals.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Coin.tscn" type="PackedScene" id=2]
@@ -7,6 +7,53 @@
 [ext_resource path="res://Scenes/ParallaxBackground(game).tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Adventurer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Animation" id=4]
+resource_name = "BlackOut"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.109804, 0.0117647, 0.270588, 0 ), Color( 0.00392157, 0.00392157, 0.00392157, 1 ), Color( 0.00392157, 0.00392157, 0.00392157, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasModulate:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.0823529, 0.0823529, 0.0823529, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.109804, 0.0117647, 0.270588, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Reload"
+length = 0.8
 
 [node name="MainScene" type="Node"]
 script = ExtResource( 1 )
@@ -26,3 +73,15 @@ z_index = 1
 color = Color( 0.0823529, 0.0823529, 0.0823529, 1 )
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/BlackOut = SubResource( 4 )
+anims/RESET = SubResource( 2 )
+anims/Reload = SubResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0.109804, 0.0117647, 0.270588, 0 )
