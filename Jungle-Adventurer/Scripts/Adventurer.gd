@@ -70,6 +70,7 @@ var shot := false
 var state_changed := false
 var can_end := false
 var can_double_jump := false
+var speed_power := false
 
 var bullet_scene = preload("res://Scenes/PlayerFire.tscn")
 
@@ -104,8 +105,12 @@ func _physics_process(delta: float) -> void:
 
 
 func _left_right_movement(delta) -> void:
-	if Input.is_action_pressed("sprint"):
+	if Input.is_action_pressed("sprint") and not speed_power:
 		MAX_SPEED = 300
+	elif Input.is_action_pressed("sprint"):
+		MAX_SPEED = 500
+	elif speed_power:
+		MAX_SPEED = 250
 	else:
 		MAX_SPEED = 150
 
@@ -205,7 +210,7 @@ func _run_state(delta) -> void:
 		
 		_attack()
 	else:
-		if MAX_SPEED == 300:
+		if MAX_SPEED == 300 or 500:
 			sprite.play("Run")
 		else:
 			sprite.play("Walk")
@@ -261,8 +266,12 @@ func _air_state(delta) -> void:
 	else:
 		sprite.play("DoubleJump")
 	
-	if Input.is_action_pressed("sprint"):
+	if Input.is_action_pressed("sprint") and not speed_power:
 		MAX_SPEED = 300
+	elif Input.is_action_pressed("sprint"):
+		MAX_SPEED = 500
+	elif speed_power:
+		MAX_SPEED = 250
 	else:
 		MAX_SPEED = 150
 	# ska denna del av funktion åka till slime script istället? då funkar även när slime är död
@@ -376,7 +385,7 @@ func _attack() -> void:
 		sprite.play("Attack")
 		if state_changed:
 			sprite.set_frame(frame + 3)
-	elif MAX_SPEED == 300:
+	elif MAX_SPEED == 300 or MAX_SPEED == 500:
 		sprite.play("RunAttack")
 		if state_changed:
 			sprite.set_frame(frame)
@@ -396,7 +405,7 @@ func _attack() -> void:
 		if sprite.get_frame() == 6:
 			can_shoot = true
 			shot = false
-	elif MAX_SPEED == 300:
+	elif MAX_SPEED == 300 or MAX_SPEED == 500:
 		if sprite.get_frame() == 7:
 			can_shoot = true
 			shot = false
@@ -471,7 +480,7 @@ func _on_PlayerArea_body_exited(body):
 				return
 	elif body.is_in_group("ClimbStopper"):
 		stopper_area = false
-	elif body.is_in_group("Tile"):
+	elif body.is_in_group("Tile") and velocity.y <= 0:
 		last_pos = global_position
 		last_pos.x -= 80
 	elif body.is_in_group("End"):
@@ -543,3 +552,19 @@ func _finished_state(delta) -> void:
 		return
 		
 	
+func power_up(power) -> void:
+	$PowerUpTimer.start()
+	if power == "speed":
+		speed_power = true
+	elif power == "star":
+		speed_power = true
+		$PlayerArea.set_collision_mask_bit(1, false)
+		set_collision_mask_bit(1, false)
+
+
+func _on_PowerUpTimer_timeout() -> void:
+	print("done")
+	speed_power = false
+	difficulty = Globals.difficulty()
+	$PlayerArea.set_collision_mask_bit(1, true)
+	set_collision_mask_bit(1, true)
