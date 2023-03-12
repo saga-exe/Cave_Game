@@ -1,8 +1,10 @@
 extends Control
 
 var difficulty = 1
+var level = 1
 
-onready var DIFFICULTY = $Difficulty
+onready var difficulty_label = $Difficulty
+onready var level_label = $Level
 onready var layer1 = $Node/ParallaxBackground/ParallaxLayer1
 onready var layer2 = $Node/ParallaxBackground/ParallaxLayer2
 onready var layer3 = $Node/ParallaxBackground/ParallaxLayer3
@@ -20,19 +22,26 @@ func _physics_process(delta: float) -> void:
 	layer6.motion_offset.x += 5*delta
 	
 	if difficulty == 0.5:
-		DIFFICULTY.text = "Easy"
+		difficulty_label.text = "Easy"
 	elif difficulty == 1:
-		DIFFICULTY.text = "Normal"
+		difficulty_label.text = "Normal"
 	elif difficulty == 1.5:
-		DIFFICULTY.text = "Hard"
+		difficulty_label.text = "Hard"
 	else:
-		DIFFICULTY.text = "Super Hard"
+		difficulty_label.text = "Super Hard"
+	
+	if level == 1:
+		level_label.text = "Level 1"
+	else:
+		level_label.text = "Level 2"
 		
 
 
 func _on_StartButton_pressed():
 	Globals.get_difficulty(difficulty)
+	Transition.level(level)
 	Transition.load_scene("res://Scenes/MainScene.tscn")
+	
 	
 
 
@@ -48,3 +57,13 @@ func _on_HigherDifficulty_pressed() -> void:
 
 func _on_QuitButton_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_LowerLevel_pressed() -> void:
+	if level > 1:
+		level -= 1
+
+
+func _on_HigherLevel_pressed() -> void:
+	if level < 2:
+		level += 1

@@ -77,7 +77,6 @@ var bullet_scene = preload("res://Scenes/PlayerFire.tscn")
 onready var sprite = $AnimatedSprite
 onready var gunpoint = $GunPoint
 onready var player_area = $PlayerArea
-onready var level = get_node("/root/MainScene/Level1/Platforms")
 onready var HUD = get_node("/root/MainScene/HUD")
 onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
 

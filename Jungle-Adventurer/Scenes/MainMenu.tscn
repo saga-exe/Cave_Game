@@ -104,7 +104,27 @@ margin_right = 536.0
 margin_bottom = 498.0
 text = "Quit"
 
+[node name="LowerLevel" type="Button" parent="."]
+margin_left = 373.0
+margin_top = 382.0
+margin_right = 427.0
+margin_bottom = 436.0
+
+[node name="HigherLevel" type="Button" parent="."]
+margin_left = 570.0
+margin_top = 396.0
+margin_right = 623.0
+margin_bottom = 446.0
+
+[node name="Level" type="Label" parent="."]
+margin_left = 470.0
+margin_top = 392.0
+margin_right = 531.0
+margin_bottom = 423.0
+
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="LowerDifficulty" to="." method="_on_LowerDifficulty_pressed"]
 [connection signal="pressed" from="HigherDifficulty" to="." method="_on_HigherDifficulty_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="LowerLevel" to="." method="_on_LowerLevel_pressed"]
+[connection signal="pressed" from="HigherLevel" to="." method="_on_HigherLevel_pressed"]
