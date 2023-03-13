@@ -554,6 +554,7 @@ func power_up(power) -> void:
 	elif power == "star":
 		speed_power = true
 		Globals.can_collide = false
+		$Effects.play("StarPower")
 
 
 func _on_PowerUpTimer_timeout() -> void:

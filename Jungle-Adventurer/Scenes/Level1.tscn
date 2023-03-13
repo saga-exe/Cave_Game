@@ -1320,7 +1320,6 @@ format = 1
 tile_data = PoolIntArray( 196635, 0, 0 )
 
 [node name="NonVisible" type="Node2D" parent="."]
-visible = false
 
 [node name="CanClimbArea" type="TileMap" parent="NonVisible" groups=["ClimbArea"]]
 scale = Vector2( 0.5, 0.5 )
@@ -1336,7 +1335,6 @@ tile_set = SubResource( 17 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 524297, 0, 0, 589845, 0, 0 )
 
 [node name="WraithOrange" type="TileMap" parent="NonVisible" groups=["WraithOrangeSpawn"]]
 scale = Vector2( 0.5, 0.5 )
@@ -1344,7 +1342,6 @@ tile_set = SubResource( 2 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 262160, 1, 0, 786462, 1, 0, 786466, 1, 0, 786471, 1, 0 )
 
 [node name="ClimbStopper" type="TileMap" parent="NonVisible" groups=["ClimbStopper"]]
 scale = Vector2( 0.5, 0.5 )
@@ -1382,7 +1379,6 @@ tile_set = SubResource( 67 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 589844, 0, 0 )
 
 [node name="StarPowerUp" type="TileMap" parent="NonVisible" groups=["StarSpawn"]]
 scale = Vector2( 0.5, 0.5 )
@@ -1390,6 +1386,7 @@ tile_set = SubResource( 69 )
 collision_layer = 8
 collision_mask = 0
 format = 1
+tile_data = PoolIntArray( 786459, 0, 0 )
 
 [node name="Heart" type="TileMap" parent="NonVisible" groups=["HeartSpawn"]]
 scale = Vector2( 0.5, 0.5 )
@@ -1397,4 +1394,3 @@ tile_set = SubResource( 71 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 393236, 0, 0, 786476, 0, 0 )

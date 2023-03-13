@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=2]
+[gd_scene load_steps=135 format=2]
 
 [ext_resource path="res://Character Sprites/Mage/Attack/attack2.png" type="Texture" id=1]
 [ext_resource path="res://Character Sprites/Mage/Death/death8.png" type="Texture" id=2]
@@ -766,6 +766,34 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Color( 1, 0.862745, 0.447059, 1 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Light2D:texture_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=28]
+resource_name = "StarPower"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Light2D:texture_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 8, 8.3, 8.6, 8.9, 9.2, 9.5, 9.7, 10 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 4.0, 4.0, 2.5, 4.0, 2.5, 4.0, 2.5, 3.0, 1.0 ]
+}
 
 [node name="Adventurer" type="KinematicBody2D" groups=["Player"]]
 collision_mask = 6
@@ -777,7 +805,7 @@ material = SubResource( 22 )
 position = Vector2( 19, -22 )
 frames = SubResource( 1 )
 animation = "DoubleJump"
-frame = 7
+frame = 2
 playing = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -821,6 +849,7 @@ one_shot = true
 anims/Damaged = SubResource( 24 )
 anims/Idle = SubResource( 26 )
 anims/RESET = SubResource( 25 )
+anims/StarPower = SubResource( 28 )
 
 [node name="Light2D" type="Light2D" parent="."]
 scale = Vector2( 1.5, 1.5 )
