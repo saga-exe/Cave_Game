@@ -41,6 +41,7 @@ func _physics_process(delta: float) -> void:
 
 func _on_StartButton_pressed():
 	Globals.get_difficulty(difficulty)
+	Globals.get_level(level)
 	Transition.level(level)
 	Transition.load_scene("res://Scenes/MainScene.tscn")
 	

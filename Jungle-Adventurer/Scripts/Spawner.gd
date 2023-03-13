@@ -9,6 +9,7 @@ var firemedium_scene = preload("res://Scenes/FireMedium.tscn")
 var lavalight_scene = preload("res://Scenes/LavaLight.tscn")
 var speed_scene = preload("res://Scenes/SpeedPowerUp.tscn")
 var star_scene = preload("res://Scenes/Star.tscn")
+var heart_scene = preload("res://Scenes/Heart.tscn")
 
 var furthest_position_x = 0
 
@@ -57,6 +58,10 @@ func _slime_collision(body, tile_number) -> void:
 		var star_instance = star_scene.instance()
 		get_tree().get_root().add_child(star_instance)
 		star_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+	elif body.is_in_group("HeartSpawn"):
+		var heart_instance = heart_scene.instance()
+		get_tree().get_root().add_child(heart_instance)
+		heart_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
 
 
 func _on_Tile1_body_entered(body: Node) -> void:

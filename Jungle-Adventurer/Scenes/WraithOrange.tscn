@@ -173,14 +173,14 @@ shape = SubResource( 6 )
 
 [node name="TerrainCheck" type="KinematicBody2D" parent="." groups=["TerrainCheck"]]
 position = Vector2( 30, 20 )
-collision_layer = 2
+collision_layer = 512
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck"]
 shape = SubResource( 4 )
 
 [node name="TerrainArea" type="Area2D" parent="TerrainCheck"]
-collision_layer = 2
+collision_layer = 512
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck/TerrainArea"]
@@ -188,14 +188,14 @@ shape = SubResource( 3 )
 
 [node name="TerrainCheck2" type="KinematicBody2D" parent="." groups=["TerrainCheck2"]]
 position = Vector2( -30, 20 )
-collision_layer = 2
+collision_layer = 512
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2"]
 shape = SubResource( 4 )
 
 [node name="TerrainArea2" type="Area2D" parent="TerrainCheck2"]
-collision_layer = 2
+collision_layer = 512
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2/TerrainArea2"]

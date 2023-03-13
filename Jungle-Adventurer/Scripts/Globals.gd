@@ -1,6 +1,7 @@
 extends Node
 
 var difficulty_number = 0
+var level = 0
 var is_finished := false
 var level_scene = preload("res://Scenes/Level1.tscn")
 
@@ -18,3 +19,10 @@ func antifinish() -> void:
 
 func finished() -> bool:
 	return is_finished
+
+func get_level(level_get) -> void:
+	level = level_get
+	print(level)
+
+func level() -> float:
+	return level

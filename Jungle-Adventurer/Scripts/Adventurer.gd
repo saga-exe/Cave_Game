@@ -30,7 +30,7 @@ Layer6: EnemySpawner
 Layer7: Ladders, End, Lava (PlayerArea interactions)
 Layer8: ClimbStoppers
 Layer9: Bullets
-Layer10: Noninteractive objects
+Layer10: Noninteractive objects (terrainceck)
 """
 
 enum {IDLE, RUN, AIR, CLIMB, FINISHED}
@@ -539,10 +539,8 @@ func _finished_state(delta) -> void:
 
 	if can_end:
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
-		#Globals.finish()
 	elif hp <= 0:
 		Transition.load_scene("res://Scenes/GameOver.tscn")
-		#Globals.finish()
 	else:
 		anim_player.play("BlackOut")
 		yield(anim_player, "animation_finished")
@@ -570,3 +568,8 @@ func _on_PowerUpTimer_timeout() -> void:
 	difficulty = Globals.difficulty()
 	$PlayerArea.set_collision_mask_bit(1, true)
 	set_collision_mask_bit(1, true)
+
+
+func heal(health):
+	hp += health * (2 - difficulty)
+	HUD.health_changed(hp)

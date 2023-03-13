@@ -40,7 +40,6 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
-	print(state)
 	if Globals.finished():
 		queue_free()
 	match state:

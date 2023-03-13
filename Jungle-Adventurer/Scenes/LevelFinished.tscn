@@ -69,4 +69,5 @@ text = "Main Menu"
 [connection signal="timeout" from="FireworkTimer3" to="." method="_on_FireworkTimer_timeout"]
 [connection signal="timeout" from="FireworkTimer4" to="." method="_on_FireworkTimer_timeout"]
 [connection signal="timeout" from="FireworkTimer5" to="." method="_on_FireworkTimer_timeout"]
+[connection signal="pressed" from="NextLevelButton" to="." method="_on_NextLevelButton_pressed"]
 [connection signal="pressed" from="MainMenuButton" to="." method="_on_MainMenuButton_pressed"]

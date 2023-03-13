@@ -1,5 +1,6 @@
 extends Control
 
+var previous_level = 0
 
 onready var layer1 = $Node/ParallaxBackground/ParallaxLayer1
 onready var layer2 = $Node/ParallaxBackground/ParallaxLayer2
@@ -13,6 +14,7 @@ onready var firework_scene = preload("res://Scenes/Fireworks.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Globals.antifinish()
+	previous_level = Globals.level()
 
 
 func _physics_process(delta: float) -> void:
@@ -38,3 +40,11 @@ func _on_MainMenuButton_pressed() -> void:
 	$FireworkTimer4.stop()
 	$FireworkTimer5.stop()
 	Transition.load_scene("res://Scenes/MainMenu.tscn")
+
+
+func _on_NextLevelButton_pressed():
+	if previous_level < 2:
+		Transition.level(previous_level + 1)
+		Transition.load_scene("res://Scenes/MainScene.tscn")
+	else:
+		return

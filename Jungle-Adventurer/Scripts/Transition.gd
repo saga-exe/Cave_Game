@@ -24,8 +24,6 @@ func load_scene(path):
 		var level_instance = level_scene.instance()
 		get_tree().get_root().add_child(level_instance)
 		level_instance.global_position = Vector2(0, 0)
-	#else:
-		#Globals.finish()
 	animationplayer.play_backwards("fade_in")
 	
 
