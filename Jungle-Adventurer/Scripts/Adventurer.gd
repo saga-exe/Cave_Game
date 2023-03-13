@@ -84,10 +84,13 @@ func _ready() -> void:
 	difficulty = Globals.difficulty
 
 
-func difficulty(number) -> void:
-	difficulty = number
-
 func _physics_process(delta: float) -> void:
+	if velocity.y < 0:
+		Globals.y_move = -1
+	elif velocity. y > 0:
+		Globals.y_move = 1
+	else:
+		Globals.y_move = 0
 	match state:
 		IDLE:
 			_idle_state(delta)
@@ -414,8 +417,6 @@ func take_damage(damage, knockback_direction) -> void:
 	else:
 		Globals.damaged = true
 		Globals.can_collide = false
-		#set_collision_mask_bit(1, false)
-		#$PlayerArea.set_collision_mask_bit(1, false)
 		$DamageTimer.start()
 		velocity.x = knockback_direction * 350
 		hp -= damage * difficulty

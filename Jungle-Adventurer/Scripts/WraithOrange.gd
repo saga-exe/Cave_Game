@@ -194,15 +194,20 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 
 func _on_WraithArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
-		knockback = true
-		if player.global_position.x - global_position.x < 0:
-			knockback_direction = -1
+		if (body.global_position.y - global_position.y) > 26:
+			$TopKill/CollisionShape2D.disabled = true
+			$TopKill/TopKillArea/CollisionShape2D.disabled = true
+			$TileCollision.disabled = true
+			$KinematicBody2D/PlayerCollision.disabled = true
+			$WraithArea/CollisionShape2D.disabled = true
+			state = DIE
+			body.take_damage(25, 0)
 		else:
-			knockback_direction = 1
-		if (((global_position.y - 74.5) - player.global_position.y) < 5) and (((global_position.y - 74.5) - player.global_position.y) > -20) and player.velocity.y >= 0:
-			body.take_damage(0, knockback_direction)
-			die()
-		else:
+			knockback = true
+			if player.global_position.x - global_position.x < 0:
+				knockback_direction = -1
+			else:
+				knockback_direction = 1
 			set_collision_mask_bit(0, false)
 			body.take_damage(25, knockback_direction)
 			velocity.x = knockback_direction * -200
@@ -250,7 +255,7 @@ func take_damage(damage) -> void:
 
 
 func _on_TopKillArea_body_entered(body: Node) -> void:
-	if body.is_in_group("Player") and ((global_position.y - player.global_position.y) > 55):
+	if body.is_in_group("Player") and ((global_position.y - player.global_position.y) > 55) and Globals.y_move == 1:
 		GRAVITY = 0
 		knockback = true
 		if player.global_position.x - global_position.x < 0:
@@ -273,3 +278,5 @@ func _can_collide() -> void:
 	else:
 		$KinematicBody2D/PlayerCollision.disabled = false
 		$WraithArea/CollisionShape2D.disabled = false
+	if Globals.y_move == -1:
+		$KinematicBody2D/PlayerCollision.disabled = true

@@ -1336,7 +1336,7 @@ tile_set = SubResource( 17 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 262160, 0, 0, 524297, 0, 0, 589845, 0, 0 )
+tile_data = PoolIntArray( 524297, 0, 0, 589845, 0, 0 )
 
 [node name="WraithOrange" type="TileMap" parent="NonVisible" groups=["WraithOrangeSpawn"]]
 scale = Vector2( 0.5, 0.5 )
@@ -1344,7 +1344,7 @@ tile_set = SubResource( 2 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 786462, 1, 0, 786466, 1, 0, 786471, 1, 0 )
+tile_data = PoolIntArray( 262160, 1, 0, 786462, 1, 0, 786466, 1, 0, 786471, 1, 0 )
 
 [node name="ClimbStopper" type="TileMap" parent="NonVisible" groups=["ClimbStopper"]]
 scale = Vector2( 0.5, 0.5 )
