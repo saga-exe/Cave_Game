@@ -201,9 +201,6 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2/TerrainArea2"]
 shape = SubResource( 3 )
 
-[node name="DamageTimer" type="Timer" parent="."]
-wait_time = 4.0
-
 [node name="HealthBar" type="ProgressBar" parent="."]
 margin_left = -15.0
 margin_top = -50.0
@@ -219,4 +216,3 @@ percent_visible = false
 [connection signal="body_exited" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_exited"]
 [connection signal="body_entered" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_entered"]
 [connection signal="body_exited" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_exited"]
-[connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]

@@ -12,6 +12,8 @@ onready var layer4 = $Node/ParallaxBackground/ParallaxLayer4
 onready var layer5 = $Node/ParallaxBackground2/ParallaxLayer5
 onready var layer6 = $Node/ParallaxBackground2/ParallaxLayer6
 
+func _ready():
+	Globals.antifinish()
 
 func _physics_process(delta: float) -> void:
 	layer1.motion_offset.x += 40*delta
@@ -31,9 +33,9 @@ func _physics_process(delta: float) -> void:
 		difficulty_label.text = "Super Hard"
 	
 	if level == 1:
-		level_label.text = "Level 1"
+		level_label.text = "1"
 	else:
-		level_label.text = "Level 2"
+		level_label.text = "2"
 		
 
 

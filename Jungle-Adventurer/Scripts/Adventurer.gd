@@ -481,7 +481,10 @@ func _on_PlayerArea_body_exited(body):
 		stopper_area = false
 	elif body.is_in_group("Tile") and velocity.y <= 0:
 		last_pos = global_position
-		last_pos.x -= 80
+		if velocity.x < 0:
+			last_pos.x += 80
+		else:
+			last_pos.x -= 80
 	elif body.is_in_group("End"):
 		can_end = false
 	if body.is_in_group("ClimbArea"):
@@ -530,15 +533,16 @@ func _idlestate_switch() -> void:
 
 func _finished_state(delta) -> void:
 	velocity.y += GRAVITY*delta
+	velocity.x = 0
 	velocity = move_and_slide(velocity, Vector2.UP)
 	sprite.play("Idle")
 
 	if can_end:
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
-		Globals.finish()
+		#Globals.finish()
 	elif hp <= 0:
 		Transition.load_scene("res://Scenes/GameOver.tscn")
-		Globals.finish()
+		#Globals.finish()
 	else:
 		anim_player.play("BlackOut")
 		yield(anim_player, "animation_finished")
@@ -562,7 +566,6 @@ func power_up(power) -> void:
 
 
 func _on_PowerUpTimer_timeout() -> void:
-	print("done")
 	speed_power = false
 	difficulty = Globals.difficulty()
 	$PlayerArea.set_collision_mask_bit(1, true)
