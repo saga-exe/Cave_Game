@@ -7,7 +7,7 @@ enum {IDLE, CHASE, DIE}
 
 
 const ACCELERATION = 500
-const GRAVITY = 1000
+var GRAVITY = 1000
 
 var MAX_SPEED = 40
 var velocity = Vector2.ZERO
@@ -36,11 +36,11 @@ func _ready():
 	state = IDLE
 	sprite.play("Idle")
 	$HealthBar.visible = false
-	difficulty = Globals.difficulty()
+	difficulty = Globals.difficulty
 
 
 func _physics_process(delta: float) -> void:
-	if Globals.finished():
+	if Globals.is_finished:
 		queue_free()
 	match state:
 		IDLE:
@@ -126,6 +126,7 @@ func _sprite_left() -> void:
 
 
 func _idle_state(delta) -> void:
+	_can_collide()
 	MAX_SPEED = 40
 	direction.x = _update_direction_x(delta)
 	
@@ -140,6 +141,7 @@ func _idle_state(delta) -> void:
 # if cant check left and velocity < 0 wait = true
 
 func _chase_state(delta) -> void:
+	_can_collide()
 	if wait:
 		sprite.play("Idle")
 	else:
@@ -167,6 +169,9 @@ func die() -> void:
 
 
 func _die_state(delta) -> void:
+	$KinematicBody2D/PlayerCollision.disabled = true
+	$WraithArea/CollisionShape2D.disabled = true
+	$TopKill/CollisionShape2D.disabled = true
 	set_collision_mask_bit(8, false)
 	velocity.x = 0
 	direction.x = 0
@@ -242,3 +247,34 @@ func take_damage(damage) -> void:
 		$HealthBar.visible = false
 	if hp <= 0:
 		state = DIE
+
+
+func _on_TopKillArea_body_entered(body: Node) -> void:
+	print("enter")
+	if body.is_in_group("Player") and player.velocity.y == 0:
+		print("entered")
+		GRAVITY = 0
+		knockback = true
+		if player.global_position.x - global_position.x < 0:
+			knockback_direction = -1
+		else:
+			knockback_direction = 1
+		body.take_damage(0, knockback_direction)
+		$TopKill/CollisionShape2D.disabled = true
+		$TopKill/TopKillArea/CollisionShape2D.disabled = true
+		$TileCollision.disabled = true
+		$KinematicBody2D/PlayerCollision.disabled = true
+		$WraithArea/CollisionShape2D.disabled = true
+		state = DIE
+
+
+func _can_collide() -> void:
+	if not Globals.can_collide:
+		$KinematicBody2D/PlayerCollision.disabled = true
+		$WraithArea/CollisionShape2D.disabled = true
+	else:
+		$KinematicBody2D/PlayerCollision.disabled = false
+		$WraithArea/CollisionShape2D.disabled = false
+		#$TopKill/CollisionShape2D.disabled = false
+		#$TopKill/TopKillArea/CollisionShape2D.disabled = false
+		#$TileCollision.disabled = false

@@ -13,7 +13,7 @@ onready var layer5 = $Node/ParallaxBackground2/ParallaxLayer5
 onready var layer6 = $Node/ParallaxBackground2/ParallaxLayer6
 
 func _ready():
-	Globals.antifinish()
+	Globals.is_finished = false
 
 func _physics_process(delta: float) -> void:
 	layer1.motion_offset.x += 40*delta
@@ -40,8 +40,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_StartButton_pressed():
-	Globals.get_difficulty(difficulty)
-	Globals.get_level(level)
+	Globals.difficulty = difficulty
+	Globals.level = level
 	Transition.level(level)
 	Transition.load_scene("res://Scenes/MainScene.tscn")
 	

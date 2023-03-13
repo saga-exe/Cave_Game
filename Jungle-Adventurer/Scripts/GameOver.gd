@@ -9,7 +9,7 @@ onready var layer5 = $Node/ParallaxBackground2/ParallaxLayer5
 onready var layer6 = $Node/ParallaxBackground2/ParallaxLayer6
 
 func _ready() -> void:
-	Globals.antifinish()
+	Globals.is_finished = false
 
 func _physics_process(delta: float) -> void:
 	layer1.motion_offset.x += 5*delta

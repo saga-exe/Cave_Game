@@ -31,11 +31,10 @@ Layer7: Ladders, End, Lava (PlayerArea interactions)
 Layer8: ClimbStoppers
 Layer9: Bullets
 Layer10: Noninteractive objects (terrainceck)
+Layer11: Enemy 2 (TopKill)
 """
 
 enum {IDLE, RUN, AIR, CLIMB, FINISHED}
-
-#signal damage
 
 const ACCELERATION = 1700
 const JUMP_STRENGTH = -450
@@ -83,7 +82,7 @@ onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
 func _ready() -> void:
 	global_position = Vector2(190,485)
 	$Effects.play("Idle")
-	difficulty = Globals.difficulty()
+	difficulty = Globals.difficulty
 
 
 func difficulty(number) -> void:
@@ -128,7 +127,6 @@ func _get_input_x_update_direction() -> float:
 	elif Input.is_action_just_pressed("move_left"):
 		last_action_pressed = "left"
 	
-	#knockback_direction = -1 => velocity.x < 0 => flip(false)
 	if knockback:
 		if knockback_direction_player < 0:
 			_sprite_right()
@@ -273,11 +271,6 @@ func _air_state(delta) -> void:
 		MAX_SPEED = 250
 	else:
 		MAX_SPEED = 150
-	# ska denna del av funktion åka till slime script istället? då funkar även när slime är död
-	#if velocity.y < 0 and $AntiCollisionTimer.time_left <= 0 and global_position < slime.global_position:
-		#set_collision_mask_bit(1, false)
-		#slime.set_collision_mask_bit(0, false)
-		#$AntiCollisionTimer.start()
 	
 	_climb()
 	
@@ -419,19 +412,20 @@ func take_damage(damage, knockback_direction) -> void:
 		velocity.y = -350
 	else:
 		damaged = true
-		set_collision_mask_bit(1, false)
-		$PlayerArea.set_collision_mask_bit(1, false)
+		Globals.can_collide = false
+		#set_collision_mask_bit(1, false)
+		#$PlayerArea.set_collision_mask_bit(1, false)
 		$DamageTimer.start()
 		velocity.x = knockback_direction * 350
 		hp -= damage * difficulty
 		$Effects.play("Damaged")
-		#emit_signal("damage")
 		if knockback_direction != 0:
 			knockback = true
 		HUD.health_changed(hp)
 	knockback_direction_player = knockback_direction
-	#if hp <= 0:
-		#emit_signal("game_over")
+	if hp <= 0:
+		state = FINISHED
+		
 
 
 func _on_PlayerArea_body_entered(body):
@@ -442,9 +436,9 @@ func _on_PlayerArea_body_entered(body):
 	elif body.is_in_group("Lava"):
 		velocity.y = -250
 		velocity.x = 0
+		take_damage(25, 0)
 		$PlayerArea.set_collision_mask_bit(6, false)
 		state = FINISHED
-		hp -= 25
 	elif body.is_in_group("ClimbArea"):
 		climb_area = true
 	elif body.is_in_group("ClimbStopper"):
@@ -458,8 +452,6 @@ func _on_PlayerArea_body_entered(body):
 		elif is_on_floor():
 			_idlestate_switch()
 			return
-	#elif body.is_in_group("Wraith"):
-		#take_damage()
 		
 
 func _on_PlayerArea_body_exited(body):
@@ -481,7 +473,7 @@ func _on_PlayerArea_body_exited(body):
 		stopper_area = false
 	elif body.is_in_group("Tile") and velocity.y <= 0:
 		last_pos = global_position
-		if velocity.x < 0:
+		if last_action_pressed == "left":
 			last_pos.x += 80
 		else:
 			last_pos.x -= 80
@@ -494,7 +486,7 @@ func _on_PlayerArea_body_exited(body):
 func _climb() -> void:
 	if ladder_area:
 		can_jump = false
-		if (Input.is_action_pressed("down") and not stopper_area) or Input.is_action_pressed("jump"): #or #state == AIR:
+		if (Input.is_action_pressed("down") and not stopper_area) or Input.is_action_pressed("jump"):
 			state = CLIMB
 	elif climb_area:
 		if Input.is_action_pressed("down"):
@@ -559,15 +551,15 @@ func power_up(power) -> void:
 		speed_power = true
 	elif power == "star":
 		speed_power = true
-		$PlayerArea.set_collision_mask_bit(1, false)
-		set_collision_mask_bit(1, false)
+		Globals.can_collide = false
 
 
 func _on_PowerUpTimer_timeout() -> void:
 	speed_power = false
-	difficulty = Globals.difficulty()
+	difficulty = Globals.difficulty
 	$PlayerArea.set_collision_mask_bit(1, true)
 	set_collision_mask_bit(1, true)
+	Globals.can_collide = true
 
 
 func heal(health):

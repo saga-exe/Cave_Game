@@ -11,17 +11,13 @@ var speed_scene = preload("res://Scenes/SpeedPowerUp.tscn")
 var star_scene = preload("res://Scenes/Star.tscn")
 var heart_scene = preload("res://Scenes/Heart.tscn")
 
-var furthest_position_x = 0
-
-func _ready() -> void:
-	pass 
 
 func _physics_process(delta: float) -> void:
 	if global_position.x < 1200:
 		global_position.x += 3000*delta
 	elif player.global_position.x > global_position.x - 600:
 		global_position.x = player.global_position.x + 600
-	if Globals.finished():
+	if Globals.is_finished:
 		queue_free()
 	
 

@@ -42,11 +42,11 @@ func _ready():
 	state = IDLE
 	sprite.play("Idle")
 	$HealthBar.visible = false
-	difficulty = Globals.difficulty()
+	difficulty = Globals.difficulty
 
 
 func _physics_process(delta: float) -> void:
-	if Globals.finished():
+	if Globals.is_finished:
 		queue_free()
 	match state:
 		IDLE:

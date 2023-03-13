@@ -13,8 +13,8 @@ onready var firework_scene = preload("res://Scenes/Fireworks.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Globals.antifinish()
-	previous_level = Globals.level()
+	Globals.is_finished = false
+	previous_level = Globals.level
 
 
 func _physics_process(delta: float) -> void:

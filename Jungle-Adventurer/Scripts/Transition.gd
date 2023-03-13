@@ -12,7 +12,7 @@ func level(level_number) -> void:
 func load_scene(path):
 	animationplayer.play("fade_in")
 	if not path == "res://Scenes/MainScene.tscn":
-		Globals.finish()
+		Globals.is_finished = true
 	yield(animationplayer, "animation_finished")
 	
 	get_tree().change_scene(path)

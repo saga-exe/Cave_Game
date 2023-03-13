@@ -8,7 +8,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if Globals.finished():
+	if Globals.is_finished:
 		queue_free()
 
 
