@@ -64,7 +64,6 @@ var knockback := false
 var ladder_area := false
 var climb_area := false
 var stopper_area := false
-var damaged := false
 var shot := false
 var state_changed := false
 var can_end := false
@@ -410,8 +409,10 @@ func _attack() -> void:
 func take_damage(damage, knockback_direction) -> void:
 	if damage == 0:
 		velocity.y = -350
+		_airstate_switch()
+		state = AIR
 	else:
-		damaged = true
+		Globals.damaged = true
 		Globals.can_collide = false
 		#set_collision_mask_bit(1, false)
 		#$PlayerArea.set_collision_mask_bit(1, false)
@@ -494,7 +495,7 @@ func _climb() -> void:
 
 
 func _on_DamageTimer_timeout() -> void:
-	damaged = false
+	Globals.damaged = false
 	set_collision_mask_bit(1, true)
 	$PlayerArea.set_collision_mask_bit(1, true)
 	$Effects.stop()

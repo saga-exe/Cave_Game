@@ -1390,7 +1390,6 @@ tile_set = SubResource( 69 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 786451, 0, 0 )
 
 [node name="Heart" type="TileMap" parent="NonVisible" groups=["HeartSpawn"]]
 scale = Vector2( 0.5, 0.5 )

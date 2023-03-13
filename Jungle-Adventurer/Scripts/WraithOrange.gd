@@ -1,12 +1,11 @@
 extends KinematicBody2D
 
-# it doesn't wait after knockback
-# drops to die from idle to chase - fixed
-
 enum {IDLE, CHASE, DIE}
 
 
 const ACCELERATION = 500
+var IDLE_SPEED = rand_range(30, 50)
+var CHASE_SPEED = rand_range(80, 110)
 var GRAVITY = 1000
 
 var MAX_SPEED = 40
@@ -33,6 +32,7 @@ onready var sprite = $AnimatedSprite
 
 
 func _ready():
+	MAX_SPEED = IDLE_SPEED
 	state = IDLE
 	sprite.play("Idle")
 	$HealthBar.visible = false
@@ -127,14 +127,14 @@ func _sprite_left() -> void:
 
 func _idle_state(delta) -> void:
 	_can_collide()
-	MAX_SPEED = 40
+	MAX_SPEED = IDLE_SPEED
 	direction.x = _update_direction_x(delta)
 	
 	_basic_movement(delta)
 	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
-	if player_slime_distance.length() <= 400 and player.get_collision_mask_bit(1):
+	if player_slime_distance.length() <= 400 and not Globals.damaged:
 		sprite.play("Walking")
 		state = CHASE
 		return
@@ -146,7 +146,7 @@ func _chase_state(delta) -> void:
 		sprite.play("Idle")
 	else:
 		sprite.play("Walking")
-	MAX_SPEED = 100
+	MAX_SPEED = CHASE_SPEED
 	
 	direction.x = _update_direction_x(delta)
 	
@@ -155,7 +155,7 @@ func _chase_state(delta) -> void:
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
-	if player_slime_distance.length() >= 400 or player.get_collision_mask_bit(1) == false:
+	if player_slime_distance.length() >= 400 or Globals.damaged:
 		sprite.play("Walking")
 		if wait:
 			wait = false
@@ -250,9 +250,7 @@ func take_damage(damage) -> void:
 
 
 func _on_TopKillArea_body_entered(body: Node) -> void:
-	print("enter")
-	if body.is_in_group("Player") and player.velocity.y == 0:
-		print("entered")
+	if body.is_in_group("Player") and ((global_position.y - player.global_position.y) > 55):
 		GRAVITY = 0
 		knockback = true
 		if player.global_position.x - global_position.x < 0:
@@ -275,6 +273,3 @@ func _can_collide() -> void:
 	else:
 		$KinematicBody2D/PlayerCollision.disabled = false
 		$WraithArea/CollisionShape2D.disabled = false
-		#$TopKill/CollisionShape2D.disabled = false
-		#$TopKill/TopKillArea/CollisionShape2D.disabled = false
-		#$TileCollision.disabled = false
