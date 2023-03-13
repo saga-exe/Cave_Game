@@ -1,6 +1,6 @@
 extends Area2D
 
-const VELOCITY = 1000
+const VELOCITY = 500
 
 var direction := Vector2.ZERO
 

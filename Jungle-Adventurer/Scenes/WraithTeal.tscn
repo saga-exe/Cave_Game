@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Scripts/WraithTeal.gd" type="Script" id=1]
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_014.png" type="Texture" id=2]
@@ -60,7 +60,7 @@
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_001.png" type="Texture" id=58]
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 8, 17.5 )
+extents = Vector2( 7, 17 )
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
@@ -108,12 +108,21 @@ corner_radius_bottom_left = 1
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.133333, 0.0313726, 0.0313726, 1 )
 
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 9, 1.5 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 10, 3 )
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 8, 18 )
+
 [node name="WraithTeal" type="KinematicBody2D" groups=["Enemy", "Wraith", "WraithTeal"]]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 260
 script = ExtResource( 1 )
 
-[node name="CollisionBody" type="CollisionShape2D" parent="."]
+[node name="TileCollision" type="CollisionShape2D" parent="."]
 position = Vector2( -1, -13 )
 shape = SubResource( 5 )
 
@@ -126,15 +135,15 @@ animation = "Idle"
 [node name="CastPoint" type="Position2D" parent="."]
 position = Vector2( 10, -8 )
 
-[node name="Area2D" type="Area2D" parent="." groups=["Slime"]]
+[node name="WraithArea" type="Area2D" parent="." groups=["Slime"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WraithArea"]
 position = Vector2( -1, -13 )
 shape = SubResource( 6 )
 
 [node name="TerrainCheck" type="KinematicBody2D" parent="." groups=["TerrainCheck"]]
 position = Vector2( 30, 20 )
-collision_layer = 2
+collision_layer = 512
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck"]
@@ -149,7 +158,7 @@ shape = SubResource( 3 )
 
 [node name="TerrainCheck2" type="KinematicBody2D" parent="." groups=["TerrainCheck2"]]
 position = Vector2( -30, 20 )
-collision_layer = 2
+collision_layer = 512
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TerrainCheck2"]
@@ -175,9 +184,33 @@ custom_styles/fg = SubResource( 8 )
 custom_styles/bg = SubResource( 9 )
 percent_visible = false
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[node name="TopKill" type="KinematicBody2D" parent="."]
+collision_layer = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopKill"]
+position = Vector2( -1, -30.5 )
+shape = SubResource( 10 )
+one_way_collision = true
+
+[node name="TopKillArea" type="Area2D" parent="TopKill"]
+collision_layer = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopKill/TopKillArea"]
+position = Vector2( -1, -31 )
+shape = SubResource( 11 )
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="KinematicBody2D"]
+position = Vector2( -1, -13 )
+shape = SubResource( 12 )
+
+[connection signal="body_entered" from="WraithArea" to="." method="_on_WraithArea_body_entered"]
 [connection signal="body_entered" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_entered"]
 [connection signal="body_exited" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_exited"]
 [connection signal="body_entered" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_entered"]
 [connection signal="body_exited" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_exited"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
+[connection signal="body_entered" from="TopKill/TopKillArea" to="." method="_on_TopKillArea_body_entered"]

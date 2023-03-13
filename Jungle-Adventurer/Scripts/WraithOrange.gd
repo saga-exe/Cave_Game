@@ -194,7 +194,7 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 
 func _on_WraithArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
-		if (body.global_position.y - global_position.y) > 26:
+		if (body.global_position.y - global_position.y) > 26 and Globals.y_move == -1:
 			$TopKill/CollisionShape2D.disabled = true
 			$TopKill/TopKillArea/CollisionShape2D.disabled = true
 			$TileCollision.disabled = true

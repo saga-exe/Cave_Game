@@ -10,7 +10,9 @@ enum {IDLE, CHASE, DIE}
 
 
 const ACCELERATION = 500
-const GRAVITY = 1000
+var GRAVITY = 1000
+var IDLE_SPEED = rand_range(10, 30)
+var CHASE_SPEED = rand_range(40, 60)
 
 var MAX_SPEED = 20
 var velocity = Vector2.ZERO
@@ -28,7 +30,7 @@ var wait := false
 var knockback := false
 var can_check_right := true
 var can_check_left := true
-var can_attack := true
+var can_attack := false
 
 var bullet_scene = preload("res://Scenes/WraithBullet.tscn")
 
@@ -39,6 +41,7 @@ onready var sprite = $AnimatedSprite
 
 
 func _ready():
+	MAX_SPEED = IDLE_SPEED
 	state = IDLE
 	sprite.play("Idle")
 	$HealthBar.visible = false
@@ -134,25 +137,27 @@ func _sprite_left() -> void:
 
 
 func _idle_state(delta) -> void:
-	MAX_SPEED = 20
+	_can_collide()
+	MAX_SPEED = IDLE_SPEED
 	direction.x = _update_direction_x(delta)
 	
 	_basic_movement(delta)
 	
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
-	if player_slime_distance.length() <= 400 and player.get_collision_mask_bit(1):
+	if player_slime_distance.length() <= 400 and not Globals.damaged:
 		sprite.play("Walking")
 		state = CHASE
 		return
 # if cant check left and velocity < 0 wait = true
 
 func _chase_state(delta) -> void:
+	_can_collide()
 	if wait:
 		sprite.play("Idle")
 	else:
 		sprite.play("Walking")
-	MAX_SPEED = 50
+	MAX_SPEED = CHASE_SPEED
 	
 	direction.x = _update_direction_x(delta)
 	
@@ -162,7 +167,7 @@ func _chase_state(delta) -> void:
 	#vector så att det blir en båge
 	var player_slime_distance = player.global_position - global_position
 	
-	if player_slime_distance.length() >= 400 or player.get_collision_mask_bit(1) == false:
+	if player_slime_distance.length() >= 400 or Globals.damaged:
 		sprite.play("Walking")
 		if wait:
 			wait = false
@@ -176,6 +181,9 @@ func die() -> void:
 
 
 func _die_state(delta) -> void:
+	$KinematicBody2D/PlayerCollision.disabled = true
+	$WraithArea/CollisionShape2D.disabled = true
+	$TopKill/CollisionShape2D.disabled = true
 	set_collision_mask_bit(8, false)
 	velocity.x = 0
 	direction.x = 0
@@ -196,17 +204,22 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 
 
 
-func _on_Area2D_body_entered(body: Node) -> void:
+func _on_WraithArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
-		knockback = true
-		if player.global_position.x - global_position.x < 0:
-			knockback_direction = -1
+		if (body.global_position.y - global_position.y) > 24 and Globals.y_move == -1:
+			$TopKill/CollisionShape2D.disabled = true
+			$TopKill/TopKillArea/CollisionShape2D.disabled = true
+			$TileCollision.disabled = true
+			$KinematicBody2D/PlayerCollision.disabled = true
+			$WraithArea/CollisionShape2D.disabled = true
+			state = DIE
+			body.take_damage(25, 0)
 		else:
-			knockback_direction = 1
-		if (((global_position.y - 74.5) - player.global_position.y) < 5) and (((global_position.y - 74.5) - player.global_position.y) > -20) and player.velocity.y >= 0:
-			body.take_damage(0, knockback_direction)
-			die()
-		else:
+			knockback = true
+			if player.global_position.x - global_position.x < 0:
+				knockback_direction = -1
+			else:
+				knockback_direction = 1
 			set_collision_mask_bit(0, false)
 			body.take_damage(25, knockback_direction)
 			velocity.x = knockback_direction * -200
@@ -270,3 +283,31 @@ func take_damage(damage) -> void:
 		$HealthBar.visible = false
 	if hp <= 0:
 		state = DIE
+
+
+func _on_TopKillArea_body_entered(body):
+	if body.is_in_group("Player") and ((global_position.y - player.global_position.y) > 55) and Globals.y_move == 1:
+		GRAVITY = 0
+		knockback = true
+		if player.global_position.x - global_position.x < 0:
+			knockback_direction = -1
+		else:
+			knockback_direction = 1
+		body.take_damage(0, knockback_direction)
+		$TopKill/CollisionShape2D.disabled = true
+		$TopKill/TopKillArea/CollisionShape2D.disabled = true
+		$TileCollision.disabled = true
+		$KinematicBody2D/PlayerCollision.disabled = true
+		$WraithArea/CollisionShape2D.disabled = true
+		state = DIE
+
+
+func _can_collide() -> void:
+	if not Globals.can_collide:
+		$KinematicBody2D/PlayerCollision.disabled = true
+		$WraithArea/CollisionShape2D.disabled = true
+	else:
+		$KinematicBody2D/PlayerCollision.disabled = false
+		$WraithArea/CollisionShape2D.disabled = false
+	if Globals.y_move == -1:
+		$KinematicBody2D/PlayerCollision.disabled = true

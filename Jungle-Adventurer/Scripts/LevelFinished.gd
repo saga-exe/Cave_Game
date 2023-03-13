@@ -38,7 +38,6 @@ func _on_MainMenuButton_pressed() -> void:
 	$FireworkTimer2.stop()
 	$FireworkTimer3.stop()
 	$FireworkTimer4.stop()
-	$FireworkTimer5.stop()
 	Transition.load_scene("res://Scenes/MainMenu.tscn")
 
 
