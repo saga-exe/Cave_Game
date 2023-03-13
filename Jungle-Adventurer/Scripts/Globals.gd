@@ -7,3 +7,4 @@ var level_scene = preload("res://Scenes/Level1.tscn")
 var can_collide := true
 var damaged := false
 var y_move = 0
+var power = "none"

@@ -551,8 +551,10 @@ func power_up(power) -> void:
 	$PowerUpTimer.start()
 	if power == "speed":
 		speed_power = true
+		Globals.power = "speed"
 	elif power == "star":
 		speed_power = true
+		Globals.power = "star"
 		Globals.can_collide = false
 		$Effects.play("StarPower")
 
@@ -563,6 +565,7 @@ func _on_PowerUpTimer_timeout() -> void:
 	$PlayerArea.set_collision_mask_bit(1, true)
 	set_collision_mask_bit(1, true)
 	Globals.can_collide = true
+	Globals.power = "none"
 
 
 func heal(health):
