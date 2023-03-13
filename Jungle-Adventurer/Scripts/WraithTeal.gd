@@ -30,7 +30,7 @@ var wait := false
 var knockback := false
 var can_check_right := true
 var can_check_left := true
-var can_attack := false
+var can_attack := true
 
 var bullet_scene = preload("res://Scenes/WraithBullet.tscn")
 

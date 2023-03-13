@@ -17,7 +17,7 @@ func health_changed(hp) -> void:
 
 func gems_collected(coin) -> void:
 	coins += coin
-	cointext.text = ":  " + str(coins)
+	cointext.text = str(coins)
 
 func _power_up() -> void:
 	if Globals.power == "none":

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Environment/Items/000_0033_speed3.png" type="Texture" id=2]
@@ -89,6 +89,10 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="DynamicFont" id=7]
+size = 18
+font_data = ExtResource( 13 )
+
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
 
@@ -102,12 +106,12 @@ custom_styles/bg = SubResource( 2 )
 percent_visible = false
 
 [node name="CoinText" type="Label" parent="."]
-margin_left = 962.0
+margin_left = 976.0
 margin_top = 62.0
-margin_right = 1011.0
+margin_right = 1013.0
 margin_bottom = 82.0
 custom_fonts/font = SubResource( 5 )
-text = ":  0"
+text = "0"
 
 [node name="Label" type="Label" parent="."]
 margin_left = 757.0
@@ -121,8 +125,17 @@ position = Vector2( 786, 41 )
 scale = Vector2( 1.25, 1.25 )
 frames = SubResource( 4 )
 animation = "Star"
+frame = 3
 playing = true
 
 [node name="Coin" type="AnimatedSprite" parent="."]
 position = Vector2( 945, 71 )
 frames = SubResource( 6 )
+
+[node name="CoinThing" type="Label" parent="."]
+margin_left = 962.0
+margin_top = 61.0
+margin_right = 971.0
+margin_bottom = 80.0
+custom_fonts/font = SubResource( 7 )
+text = ":"

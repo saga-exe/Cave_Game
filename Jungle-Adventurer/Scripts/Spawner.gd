@@ -25,23 +25,23 @@ func _slime_collision(body, tile_number) -> void:
 	if body.is_in_group("WraithOrangeSpawn"):
 		var wraith_instance = wraith_orange_scene.instance()
 		get_tree().get_root().add_child(wraith_instance)
-		wraith_instance.global_position = Vector2(global_position.x, 32*tile_number - 10)
+		wraith_instance.global_position = Vector2(global_position.x + 32, 32*tile_number - 10)
 	elif body.is_in_group("WraithTealSpawn"):
 		var wraith_instance = wraith_teal_scene.instance()
 		get_tree().get_root().add_child(wraith_instance)
-		wraith_instance.global_position = Vector2(global_position.x, 32*tile_number - 10)
+		wraith_instance.global_position = Vector2(global_position.x + 32, 32*tile_number - 10)
 	elif body.is_in_group("CoinSpawn"):
 		var coin_instance = coin_scene.instance()
 		get_tree().get_root().add_child(coin_instance)
-		coin_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+		coin_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 10)
 	elif body.is_in_group("FireSmall"):
 		var fire_instance = firesmall_scene.instance()
 		get_tree().get_root().add_child(fire_instance)
-		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 15)
+		fire_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 15)
 	elif body.is_in_group("FireMedium"):
 		var fire_instance = firemedium_scene.instance()
 		get_tree().get_root().add_child(fire_instance)
-		fire_instance.global_position = Vector2(global_position.x, 32*tile_number + 5)
+		fire_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 5)
 	elif body.is_in_group("Lava"):
 		var lavalight_instance = lavalight_scene.instance()
 		get_tree().get_root().add_child(lavalight_instance)
@@ -49,15 +49,15 @@ func _slime_collision(body, tile_number) -> void:
 	elif body.is_in_group("SpeedSpawn"):
 		var speed_instance = speed_scene.instance()
 		get_tree().get_root().add_child(speed_instance)
-		speed_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+		speed_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 10)
 	elif body.is_in_group("StarSpawn"):
 		var star_instance = star_scene.instance()
 		get_tree().get_root().add_child(star_instance)
-		star_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+		star_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 10)
 	elif body.is_in_group("HeartSpawn"):
 		var heart_instance = heart_scene.instance()
 		get_tree().get_root().add_child(heart_instance)
-		heart_instance.global_position = Vector2(global_position.x, 32*tile_number + 10)
+		heart_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 10)
 
 
 func _on_Tile1_body_entered(body: Node) -> void:
@@ -131,3 +131,7 @@ func _on_Tile17_body_entered(body: Node) -> void:
 
 func _on_Tile18_body_entered(body: Node) -> void:
 	_slime_collision(body, 17)
+
+
+func _on_Tile19_body_entered(body):
+	_slime_collision(body, 18)
