@@ -88,7 +88,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	print(Globals.can_collide)
 	if velocity.y < 0:
 		Globals.y_move = -1
 	elif velocity. y > 0:
