@@ -1320,6 +1320,7 @@ format = 1
 tile_data = PoolIntArray( 393264, 0, 0 )
 
 [node name="NonVisible" type="Node2D" parent="."]
+visible = false
 
 [node name="CanClimbArea" type="TileMap" parent="NonVisible" groups=["ClimbArea"]]
 scale = Vector2( 0.5, 0.5 )

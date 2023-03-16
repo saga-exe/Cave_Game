@@ -8,12 +8,15 @@ extends KinematicBody2D
 #storyline
 #nice sprites
 #should i be able to sprint when already in the air?
+#light ska gå tillbaka efter starpower är slut
+#enemies ser mig inte då jag inte gjort något?
 
 #have sprite not continue playing when in air
 #chests
 #checkpoints
 #lava
 #extra attack and double jump
+#jump up into enemy when star power
 
 #stopper on bottom
 #deactivate collsision with tiles
@@ -85,6 +88,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	print(Globals.can_collide)
 	if velocity.y < 0:
 		Globals.y_move = -1
 	elif velocity. y > 0:
@@ -496,6 +500,8 @@ func _climb() -> void:
 
 
 func _on_DamageTimer_timeout() -> void:
+	if Globals.power == "none":
+		Globals.can_collide = true
 	Globals.damaged = false
 	set_collision_mask_bit(1, true)
 	$PlayerArea.set_collision_mask_bit(1, true)
@@ -535,6 +541,7 @@ func _finished_state(delta) -> void:
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
 	elif hp <= 0:
 		Transition.load_scene("res://Scenes/GameOver.tscn")
+		Globals.damaged = false
 	else:
 		anim_player.play("BlackOut")
 		yield(anim_player, "animation_finished")
@@ -560,12 +567,14 @@ func power_up(power) -> void:
 
 
 func _on_PowerUpTimer_timeout() -> void:
+	$Effects.play("Idle")
 	speed_power = false
 	difficulty = Globals.difficulty
 	$PlayerArea.set_collision_mask_bit(1, true)
 	set_collision_mask_bit(1, true)
 	Globals.can_collide = true
 	Globals.power = "none"
+	#$Light2D.scale = 1
 
 
 func heal(health):
