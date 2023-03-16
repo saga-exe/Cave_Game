@@ -9,7 +9,8 @@ extends KinematicBody2D
 #nice sprites
 #should i be able to sprint when already in the air?
 #light ska gå tillbaka efter starpower är slut
-#enemies ser mig inte då jag inte gjort något?
+#teal wraith not dying, should areas be on but only some of its function
+
 
 #have sprite not continue playing when in air
 #chests
@@ -85,9 +86,13 @@ func _ready() -> void:
 	global_position = Vector2(190,485)
 	$Effects.play("Idle")
 	difficulty = Globals.difficulty
+	Globals.damaged = false
+	Globals.can_collide = true
 
 
 func _physics_process(delta: float) -> void:
+	if not Globals.power == "star":
+		$Light2D.texture_scale = 1
 	if velocity.y < 0:
 		Globals.y_move = -1
 	elif velocity. y > 0:
@@ -545,6 +550,7 @@ func _finished_state(delta) -> void:
 		anim_player.play("BlackOut")
 		yield(anim_player, "animation_finished")
 		global_position = last_pos
+		_on_PowerUpTimer_timeout()
 		HUD.health_changed(hp)
 		anim_player.play_backwards("BlackOut")
 		
@@ -573,7 +579,6 @@ func _on_PowerUpTimer_timeout() -> void:
 	set_collision_mask_bit(1, true)
 	Globals.can_collide = true
 	Globals.power = "none"
-	#$Light2D.scale = 1
 
 
 func heal(health):
