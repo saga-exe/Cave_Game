@@ -37,3 +37,8 @@ texture = ExtResource( 5 )
 color = Color( 1, 0.760784, 0.423529, 1 )
 range_layer_min = -100
 script = ExtResource( 7 )
+
+[node name="FinishTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]

@@ -26,6 +26,10 @@ func _physics_process(delta: float) -> void:
 		lower = true
 	
 	if Globals.is_finished:
-		queue_free()
-	
+		$FinishTimer.start()
+
+
+func _on_FinishTimer_timeout():
+	queue_free()
+
 	

@@ -31,7 +31,11 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
-frame = 7
+frame = 5
 playing = true
 
+[node name="FinishTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [connection signal="body_entered" from="." to="." method="_on_Heart_body_entered"]
+[connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]

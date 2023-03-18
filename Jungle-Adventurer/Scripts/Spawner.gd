@@ -42,7 +42,7 @@ func _slime_collision(body, tile_number) -> void:
 		var fire_instance = firemedium_scene.instance()
 		get_tree().get_root().add_child(fire_instance)
 		fire_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 5)
-	elif body.is_in_group("Lava"):
+	elif body.is_in_group("LavaLightSpawn"):
 		var lavalight_instance = lavalight_scene.instance()
 		get_tree().get_root().add_child(lavalight_instance)
 		lavalight_instance.global_position = Vector2(global_position.x, 32*tile_number + 5)

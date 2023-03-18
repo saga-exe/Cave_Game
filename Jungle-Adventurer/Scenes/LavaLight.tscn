@@ -9,3 +9,8 @@ color = Color( 1, 0.733333, 0.447059, 1 )
 energy = 0.8
 range_layer_min = -100
 script = ExtResource( 2 )
+
+[node name="FinishTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]

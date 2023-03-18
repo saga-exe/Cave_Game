@@ -9,10 +9,17 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if Globals.is_finished:
-		queue_free()
+		$FinishTimer.start()
+
+
+func _on_FinishTimer_timeout():
+	queue_free()
+
 
 
 func _on_SpeedPowerUp_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		queue_free()
 		player.power_up("speed")
+
+

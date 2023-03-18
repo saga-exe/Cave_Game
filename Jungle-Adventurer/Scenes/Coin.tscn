@@ -35,4 +35,8 @@ frames = SubResource( 2 )
 animation = "Idle"
 frame = 8
 
+[node name="FinishTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [connection signal="body_entered" from="." to="." method="_on_Coin_body_entered"]
+[connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]
