@@ -164,11 +164,9 @@ func _chase_state(delta) -> void:
 		return
 
 
-func die() -> void:
-	state = DIE
-
-
 func _die_state(_delta) -> void:
+	$TopKill/TopKillArea/CollisionShape2D.disabled = true
+	$TileCollision.disabled = true
 	$KinematicBody2D/PlayerCollision.disabled = true
 	$WraithArea/CollisionShape2D.disabled = true
 	$TopKill/CollisionShape2D.disabled = true
@@ -263,11 +261,6 @@ func _on_TopKillArea_body_entered(body: Node) -> void:
 		else:
 			knockback_direction = 1
 		body.take_damage(0, knockback_direction)
-		$TopKill/CollisionShape2D.disabled = true
-		$TopKill/TopKillArea/CollisionShape2D.disabled = true
-		$TileCollision.disabled = true
-		$KinematicBody2D/PlayerCollision.disabled = true
-		$WraithArea/CollisionShape2D.disabled = true
 		state = DIE
 
 

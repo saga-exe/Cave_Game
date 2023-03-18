@@ -6,6 +6,6 @@ func _ready() -> void:
 	$AudioStreamPlayer.play()
 
 
-func _process(delta):
+func _process(_delta):
 	if not is_emitting():
 		queue_free()
