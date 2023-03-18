@@ -264,13 +264,14 @@ func _air_state(delta) -> void:
 	if Input.is_action_just_pressed("jump") and can_double_jump:
 		can_double_jump = false
 		velocity.y = -300
-		sprite.play("DoubleJump")
+		if can_shoot:
+			sprite.play("DoubleJump")
 	
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
 		_attack()
 	elif can_double_jump:
 		sprite.play("Jump")
-	else:
+	elif can_shoot:
 		sprite.play("DoubleJump")
 	
 	if Input.is_action_pressed("sprint") and not speed_power:
@@ -386,7 +387,7 @@ func _attack() -> void:
 	if velocity.x == 0:
 		sprite.play("Attack")
 		if state_changed:
-			sprite.set_frame(frame + 3)
+			sprite.set_frame(frame)
 	elif MAX_SPEED == 300 or MAX_SPEED == 500:
 		sprite.play("RunAttack")
 		if state_changed:
@@ -396,7 +397,7 @@ func _attack() -> void:
 		if state_changed:
 			sprite.set_frame(frame)
 	
-	if sprite.get_frame() == 4 and not shot:
+	if sprite.get_frame() >= 4 and not shot:
 		shot = true
 		var bullet_instance = _bullet_direction()
 		get_tree().get_root().add_child(bullet_instance)
@@ -515,24 +516,26 @@ func _airstate_switch() -> void:
 	state = AIR
 	can_jump = false
 	can_double_jump = true
-	if not can_shoot:
-		state_changed = true
+	#if not can_shoot:
+		#state_changed = true
 
 
 func _runstate_switch() -> void:
+	if not can_shoot and state != AIR:
+		state_changed = true
 	state = RUN
 	can_jump = true
 	can_double_jump = true
-	if not can_shoot:
-		state_changed = true
+	
 
 
 func _idlestate_switch() -> void:
+	if not can_shoot  and state != AIR:
+		state_changed = true
 	state = IDLE
 	can_jump = true
 	can_double_jump = true
-	if not can_shoot:
-		state_changed = true
+	
 
 
 func _finished_state(delta) -> void:
