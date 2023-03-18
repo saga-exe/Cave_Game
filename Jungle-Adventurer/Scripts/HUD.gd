@@ -9,7 +9,7 @@ onready var cointext = $CoinText
 func _ready() -> void:
 	healthbar.value = 100
 
-func _process(delta):
+func _process(_delta):
 	_power_up()
 
 func health_changed(hp) -> void:

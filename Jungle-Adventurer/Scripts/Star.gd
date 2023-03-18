@@ -7,7 +7,7 @@ func _ready() -> void:
 	$AnimatedSprite.play("default")
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Globals.is_finished:
 		$FinishTimer.start()
 

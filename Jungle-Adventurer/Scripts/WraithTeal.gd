@@ -60,7 +60,7 @@ func _physics_process(delta: float) -> void:
 			_die_state(delta)
 
 
-func _update_direction_x(delta) -> float:
+func _update_direction_x(_delta) -> float:
 	var player_slime_distance = player.global_position - global_position
 	if state == IDLE:
 		if turn:
@@ -180,7 +180,7 @@ func die() -> void:
 	state = DIE
 
 
-func _die_state(delta) -> void:
+func _die_state(_delta) -> void:
 	$KinematicBody2D/PlayerCollision.disabled = true
 	$WraithArea/CollisionShape2D.disabled = true
 	$TopKill/CollisionShape2D.disabled = true
