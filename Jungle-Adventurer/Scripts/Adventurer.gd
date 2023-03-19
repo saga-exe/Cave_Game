@@ -57,6 +57,9 @@ var knockback_direction_player = 0
 var difficulty = 0
 var last_pos = Vector2(0,0)
 
+var frame = 0
+var frame_number = 1
+
 var bullet_direction = Vector2.ZERO
 
 var state = IDLE
@@ -69,7 +72,6 @@ var ladder_area := false
 var climb_area := false
 var stopper_area := false
 var shot := false
-var state_changed := false
 var can_end := false
 var can_double_jump := false
 var speed_power := false
@@ -83,6 +85,8 @@ onready var HUD = get_node("/root/MainScene/HUD")
 onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
 
 func _ready() -> void:
+	if Globals.power != "none":
+		power_up(Globals.power)
 	global_position = Vector2(190,485)
 	$Effects.play("Idle")
 	difficulty = Globals.difficulty
@@ -379,43 +383,67 @@ func _bullet_direction() -> float:
 
 
 func _attack() -> void:
-	#if changes state continue anim where it was
-	var frame = sprite.get_frame() + 1
 	can_shoot = false
-	if Input.is_action_just_pressed("sprint") or Input.is_action_just_released("sprint"):
-		state_changed = true
 	if velocity.x == 0:
+		print(frame)
+		print("number: ", frame_number)
 		sprite.play("Attack")
-		if state_changed:
+		if frame_number <= 6:
 			sprite.set_frame(frame)
+		else:
+			frame_number = 0
+			frame += 1
+			sprite.set_frame(frame)
+		frame_number += 1
 	elif MAX_SPEED == 300 or MAX_SPEED == 500:
+		print(frame)
+		print("number: ", frame_number)
 		sprite.play("RunAttack")
-		if state_changed:
+		if frame_number <= 7:
 			sprite.set_frame(frame)
+		else:
+			frame_number = 0
+			frame += 1
+			sprite.set_frame(frame)
+		frame_number += 1
 	else:
+		print(frame)
+		print("number: ", frame_number)
 		sprite.play("WalkAttack")
-		if state_changed:
+		if frame_number <= 6:
 			sprite.set_frame(frame)
+		else:
+			frame_number = 0
+			frame += 1
+			sprite.set_frame(frame)
+		frame_number += 1
 	
 	if sprite.get_frame() >= 4 and not shot:
 		shot = true
 		var bullet_instance = _bullet_direction()
 		get_tree().get_root().add_child(bullet_instance)
 	
-	state_changed = false
-	
 	if velocity.x == 0:
-		if sprite.get_frame() == 6:
+		if frame >= 6 and frame_number >= 6:
+			print("idle: ", frame_number)
 			can_shoot = true
 			shot = false
+			frame = 0
+			frame_number = 1
 	elif MAX_SPEED == 300 or MAX_SPEED == 500:
-		if sprite.get_frame() == 7:
+		if frame >= 7 and frame_number >= 7:
+			print("run: ", frame_number)
 			can_shoot = true
 			shot = false
+			frame = 0
+			frame_number = 1
 	else:
-		if sprite.get_frame() == 5:
+		if frame >= 6 and frame_number >= 6:
+			print("walk: ", frame_number)
 			can_shoot = true
 			shot = false
+			frame = 0
+			frame_number = 1
 
 
 func take_damage(damage, knockback_direction) -> void:
@@ -516,13 +544,9 @@ func _airstate_switch() -> void:
 	state = AIR
 	can_jump = false
 	can_double_jump = true
-	#if not can_shoot:
-		#state_changed = true
 
 
 func _runstate_switch() -> void:
-	if not can_shoot and state != AIR:
-		state_changed = true
 	state = RUN
 	can_jump = true
 	can_double_jump = true
@@ -530,8 +554,6 @@ func _runstate_switch() -> void:
 
 
 func _idlestate_switch() -> void:
-	if not can_shoot  and state != AIR:
-		state_changed = true
 	state = IDLE
 	can_jump = true
 	can_double_jump = true
