@@ -221,7 +221,7 @@ func _run_state(delta) -> void:
 		
 		_attack()
 	else:
-		if MAX_SPEED == 300 or 500:
+		if MAX_SPEED == 300 or MAX_SPEED == 500:
 			sprite.play("Run")
 		else:
 			sprite.play("Walk")
@@ -385,8 +385,6 @@ func _bullet_direction() -> float:
 func _attack() -> void:
 	can_shoot = false
 	if velocity.x == 0:
-		print(frame)
-		print("number: ", frame_number)
 		sprite.play("Attack")
 		if frame_number <= 6:
 			sprite.set_frame(frame)
@@ -396,8 +394,6 @@ func _attack() -> void:
 			sprite.set_frame(frame)
 		frame_number += 1
 	elif MAX_SPEED == 300 or MAX_SPEED == 500:
-		print(frame)
-		print("number: ", frame_number)
 		sprite.play("RunAttack")
 		if frame_number <= 7:
 			sprite.set_frame(frame)
@@ -407,8 +403,6 @@ func _attack() -> void:
 			sprite.set_frame(frame)
 		frame_number += 1
 	else:
-		print(frame)
-		print("number: ", frame_number)
 		sprite.play("WalkAttack")
 		if frame_number <= 6:
 			sprite.set_frame(frame)
@@ -425,21 +419,18 @@ func _attack() -> void:
 	
 	if velocity.x == 0:
 		if frame >= 6 and frame_number >= 6:
-			print("idle: ", frame_number)
 			can_shoot = true
 			shot = false
 			frame = 0
 			frame_number = 1
 	elif MAX_SPEED == 300 or MAX_SPEED == 500:
 		if frame >= 7 and frame_number >= 7:
-			print("run: ", frame_number)
 			can_shoot = true
 			shot = false
 			frame = 0
 			frame_number = 1
 	else:
 		if frame >= 6 and frame_number >= 6:
-			print("walk: ", frame_number)
 			can_shoot = true
 			shot = false
 			frame = 0
