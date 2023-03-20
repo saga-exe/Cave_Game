@@ -36,6 +36,7 @@ Layer8: ClimbStoppers
 Layer9: Bullets
 Layer10: Noninteractive objects (terrainceck)
 Layer11: Enemy 2 (TopKill)
+Layer12: Bridges
 """
 
 enum {IDLE, RUN, AIR, CLIMB, FINISHED}
