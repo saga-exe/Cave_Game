@@ -49,6 +49,10 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
+	if Globals.power == "star":
+		can_attack = false
+	elif $ShootTimer.time_left <= 0:
+		can_attack = true
 	if Globals.is_finished:
 		queue_free()
 	match state:

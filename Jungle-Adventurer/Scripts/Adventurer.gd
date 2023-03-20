@@ -55,7 +55,7 @@ var input_x = 0
 var hp = 100
 var knockback_direction_player = 0
 var difficulty = 0
-var last_pos = Vector2(0,0)
+var last_pos = Vector2(190, 485)
 
 var frame = 0
 var frame_number = 1
@@ -87,7 +87,7 @@ onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
 func _ready() -> void:
 	if Globals.power != "none":
 		power_up(Globals.power)
-	global_position = Vector2(190,485)
+	global_position = Vector2(190, 485)
 	$Effects.play("Idle")
 	difficulty = Globals.difficulty
 	Globals.damaged = false
@@ -501,12 +501,12 @@ func _on_PlayerArea_body_exited(body):
 				return
 	elif body.is_in_group("ClimbStopper"):
 		stopper_area = false
-	elif body.is_in_group("Tile") and velocity.y <= 0:
-		last_pos = global_position
-		if last_action_pressed == "left":
-			last_pos.x += 80
-		else:
-			last_pos.x -= 80
+	#elif body.is_in_group("Tile") and velocity.y <= 0:
+		#last_pos = global_position
+		#if last_action_pressed == "left":
+			#last_pos.x += 80
+		#else:
+			#last_pos.x -= 80
 	elif body.is_in_group("End"):
 		can_end = false
 	if body.is_in_group("ClimbArea"):

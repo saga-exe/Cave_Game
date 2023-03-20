@@ -10,6 +10,7 @@ var lavalight_scene = preload("res://Scenes/LavaLight.tscn")
 var speed_scene = preload("res://Scenes/SpeedPowerUp.tscn")
 var star_scene = preload("res://Scenes/Star.tscn")
 var heart_scene = preload("res://Scenes/Heart.tscn")
+var checkpoint_scene = preload("res://Scenes/Checkpoint.tscn")
 
 
 func _physics_process(delta: float) -> void:
@@ -58,6 +59,10 @@ func _slime_collision(body, tile_number) -> void:
 		var heart_instance = heart_scene.instance()
 		get_tree().get_root().call_deferred("add_child", heart_instance)
 		heart_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 10)
+	elif body.is_in_group("Checkpoint"):
+		var checkpoint_instance = checkpoint_scene.instance()
+		get_tree().get_root().call_deferred("add_child", checkpoint_instance)
+		checkpoint_instance.global_position = Vector2(global_position.x + 32, 32*tile_number + 2)
 
 
 func _on_Tile1_body_entered(body: Node) -> void:
