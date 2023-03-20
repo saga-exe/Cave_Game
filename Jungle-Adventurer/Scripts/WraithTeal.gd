@@ -107,12 +107,8 @@ func _sprite_direction() -> void:
 	if knockback:
 		if knockback_direction > 0:
 			_sprite_right()
-			if velocity.x > 0:
-				knockback = false
 		else:
 			_sprite_left()
-			if velocity.x < 0:
-				knockback = false
 			
 	else:
 		if velocity.x == 0:
@@ -176,11 +172,11 @@ func _chase_state(delta) -> void:
 		return
 
 
-func die() -> void:
-	state = DIE
-
-
 func _die_state(_delta) -> void:
+	$HealthBar.visible = true
+	$HealthBar.value = 0
+	$TopKill/TopKillArea/CollisionShape2D.disabled = true
+	$TileCollision.disabled = true
 	$KinematicBody2D/PlayerCollision.disabled = true
 	$WraithArea/CollisionShape2D.disabled = true
 	$TopKill/CollisionShape2D.disabled = true
@@ -216,11 +212,11 @@ func _on_WraithArea_body_entered(body: Node) -> void:
 			body.take_damage(25, 0)
 		else:
 			knockback = true
+			$KnockBackTimer.start()
 			if player.global_position.x - global_position.x < 0:
 				knockback_direction = -1
 			else:
 				knockback_direction = 1
-			set_collision_mask_bit(0, false)
 			body.take_damage(25, knockback_direction)
 			velocity.x = knockback_direction * -200
 
@@ -294,11 +290,6 @@ func _on_TopKillArea_body_entered(body):
 		else:
 			knockback_direction = 1
 		body.take_damage(0, knockback_direction)
-		$TopKill/CollisionShape2D.disabled = true
-		$TopKill/TopKillArea/CollisionShape2D.disabled = true
-		$TileCollision.disabled = true
-		$KinematicBody2D/PlayerCollision.disabled = true
-		$WraithArea/CollisionShape2D.disabled = true
 		state = DIE
 
 
@@ -311,3 +302,7 @@ func _can_collide() -> void:
 		$WraithArea/CollisionShape2D.disabled = false
 	if Globals.y_move == -1:
 		$KinematicBody2D/PlayerCollision.disabled = true
+
+
+func _on_KnockBackTimer_timeout():
+	knockback = false

@@ -207,6 +207,8 @@ collision_mask = 4
 position = Vector2( -1, -13 )
 shape = SubResource( 12 )
 
+[node name="KnockBackTimer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="WraithArea" to="." method="_on_WraithArea_body_entered"]
 [connection signal="body_entered" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_entered"]
 [connection signal="body_exited" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_exited"]
@@ -214,3 +216,4 @@ shape = SubResource( 12 )
 [connection signal="body_exited" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_exited"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
 [connection signal="body_entered" from="TopKill/TopKillArea" to="." method="_on_TopKillArea_body_entered"]
+[connection signal="timeout" from="KnockBackTimer" to="." method="_on_KnockBackTimer_timeout"]

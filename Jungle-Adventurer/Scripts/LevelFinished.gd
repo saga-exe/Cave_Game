@@ -27,7 +27,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_FireworkTimer_timeout() -> void:
-	#print("ok")
 	var firework_instance = firework_scene.instance()
 	get_tree().get_root().add_child(firework_instance)
 	firework_instance.global_position = Vector2(rand_range(0, 1024), rand_range(0, 600))
