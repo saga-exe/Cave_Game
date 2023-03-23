@@ -46,7 +46,7 @@ const JUMP_STRENGTH = -450
 
 
 var GRAVITY = 1000
-var MAX_SPEED = 150
+var MAX_SPEED = 100
 var direction_x = "RIGHT"
 var velocity := Vector2.ZERO
 var direction := Vector2.ZERO
@@ -119,13 +119,13 @@ func _physics_process(delta: float) -> void:
 
 func _left_right_movement(delta) -> void:
 	if Input.is_action_pressed("sprint") and not speed_power:
-		MAX_SPEED = 300
+		MAX_SPEED = 140
 	elif Input.is_action_pressed("sprint"):
-		MAX_SPEED = 500
+		MAX_SPEED = 300
 	elif speed_power:
-		MAX_SPEED = 250
+		MAX_SPEED = 200
 	else:
-		MAX_SPEED = 150
+		MAX_SPEED = 100
 
 	if direction.x != 0:
 		velocity = velocity.move_toward(direction*MAX_SPEED, ACCELERATION*delta)
@@ -222,7 +222,7 @@ func _run_state(delta) -> void:
 		
 		_attack()
 	else:
-		if MAX_SPEED == 300 or MAX_SPEED == 500:
+		if Input.is_action_pressed("sprint"):
 			sprite.play("Run")
 		else:
 			sprite.play("Walk")
@@ -280,13 +280,13 @@ func _air_state(delta) -> void:
 		sprite.play("DoubleJump")
 	
 	if Input.is_action_pressed("sprint") and not speed_power:
-		MAX_SPEED = 300
+		MAX_SPEED = 140
 	elif Input.is_action_pressed("sprint"):
-		MAX_SPEED = 500
+		MAX_SPEED = 300
 	elif speed_power:
-		MAX_SPEED = 250
+		MAX_SPEED = 200
 	else:
-		MAX_SPEED = 150
+		MAX_SPEED = 100
 	
 	_climb()
 	
@@ -394,7 +394,7 @@ func _attack() -> void:
 			frame += 1
 			sprite.set_frame(frame)
 		frame_number += 1
-	elif MAX_SPEED == 300 or MAX_SPEED == 500:
+	elif Input.is_action_pressed("sprint"):
 		sprite.play("RunAttack")
 		if frame_number <= 7:
 			sprite.set_frame(frame)
@@ -424,7 +424,7 @@ func _attack() -> void:
 			shot = false
 			frame = 0
 			frame_number = 1
-	elif MAX_SPEED == 300 or MAX_SPEED == 500:
+	elif Input.is_action_pressed("sprint"):
 		if frame >= 7 and frame_number >= 7:
 			can_shoot = true
 			shot = false
