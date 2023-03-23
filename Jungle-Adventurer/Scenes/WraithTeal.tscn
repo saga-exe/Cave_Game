@@ -136,6 +136,7 @@ animation = "Idle"
 position = Vector2( 10, -8 )
 
 [node name="WraithArea" type="Area2D" parent="." groups=["Slime"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WraithArea"]
 position = Vector2( -1, -13 )
