@@ -119,7 +119,7 @@ func _physics_process(delta: float) -> void:
 
 func _left_right_movement(delta) -> void:
 	if Input.is_action_pressed("sprint") and not speed_power:
-		MAX_SPEED = 140
+		MAX_SPEED = 160
 	elif Input.is_action_pressed("sprint"):
 		MAX_SPEED = 300
 	elif speed_power:
@@ -280,7 +280,7 @@ func _air_state(delta) -> void:
 		sprite.play("DoubleJump")
 	
 	if Input.is_action_pressed("sprint") and not speed_power:
-		MAX_SPEED = 140
+		MAX_SPEED = 160
 	elif Input.is_action_pressed("sprint"):
 		MAX_SPEED = 300
 	elif speed_power:

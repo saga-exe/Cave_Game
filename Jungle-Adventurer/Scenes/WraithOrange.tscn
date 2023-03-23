@@ -247,6 +247,22 @@ shape = SubResource( 12 )
 wait_time = 0.385
 one_shot = true
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+modulate = Color( 0.054902, 1, 0, 1 )
+position = Vector2( 80, 20 )
+enabled = true
+cast_to = Vector2( 0, 800 )
+collision_mask = 4
+collide_with_areas = true
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+modulate = Color( 0.313726, 1, 0, 1 )
+position = Vector2( -80, 20 )
+enabled = true
+cast_to = Vector2( 0, 800 )
+collision_mask = 4
+collide_with_areas = true
+
 [connection signal="body_entered" from="WraithArea" to="." method="_on_WraithArea_body_entered"]
 [connection signal="body_entered" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_entered"]
 [connection signal="body_exited" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_exited"]

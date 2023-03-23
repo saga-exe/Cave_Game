@@ -4,7 +4,7 @@ enum {IDLE, CHASE, DIE}
 
 
 const ACCELERATION = 500
-var IDLE_SPEED = rand_range(30, 50)
+var IDLE_SPEED = rand_range(70, 90)
 var CHASE_SPEED = rand_range(80, 110)
 var GRAVITY = 1000
 
@@ -40,7 +40,9 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
-	if Globals.is_finished:
+	print(global_position.y)
+	print($RayCast2D.get_collision_point().y)
+	if Globals.is_finished or global_position.y > 600:
 		queue_free()
 	match state:
 		IDLE:
@@ -72,11 +74,15 @@ func _update_direction_x(_delta) -> float:
 			direction.x = 1
 		
 		if wait:
-			velocity.x = 0
-			if last_direction == direction.x:
-				direction.x = 0
-			else:
+			if (last_direction == 1 and (str($RayCast2D.get_collider()) != "[Object:null]")) or (last_direction == -1 and (str($RayCast2D2.get_collider()) != "[Object:null]")):
 				wait = false
+				print($RayCast2D.get_collider())
+			else:
+				velocity.x = 0
+				if last_direction == direction.x:
+					direction.x = 0
+				else:
+					wait = false
 
 	if direction.x != 0:
 		last_direction = direction.x
