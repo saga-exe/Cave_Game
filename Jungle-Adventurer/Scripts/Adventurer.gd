@@ -76,8 +76,10 @@ var shot := false
 var can_end := false
 var can_double_jump := false
 var speed_power := false
+var can_extra_attack = true
 
-var bullet_scene = preload("res://Scenes/PlayerFire.tscn")
+var playerfire_scene = preload("res://Scenes/PlayerFire.tscn")
+var playerfireextra_scene = preload("res://Scenes/PlayerFireExtra.tscn")
 
 onready var sprite = $AnimatedSprite
 onready var gunpoint = $GunPoint
@@ -190,9 +192,10 @@ func _idle_state(delta) -> void:
 	_left_right_movement(delta)
 	_climb()
 	
-	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
-		
+	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot and (can_extra_attack or $ExtraAttackTimer.time_left != 0)):
 		_attack()
+	elif $ExtraAttackTimer.time_left <= 0 and ((Input.is_action_just_pressed("extra_attack") and can_shoot and can_extra_attack) or (not can_extra_attack)):
+		_extra_attack()
 	else:
 		sprite.play("Idle")
 	
@@ -218,9 +221,10 @@ func _run_state(delta) -> void:
 	_left_right_movement(delta)
 	_climb()
 	
-	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
-		
+	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot and (can_extra_attack or $ExtraAttackTimer.time_left != 0)):
 		_attack()
+	elif $ExtraAttackTimer.time_left <= 0 and ((Input.is_action_just_pressed("extra_attack") and can_shoot and can_extra_attack) or (not can_extra_attack)):
+		_extra_attack()
 	else:
 		if Input.is_action_pressed("sprint"):
 			sprite.play("Run")
@@ -272,8 +276,10 @@ func _air_state(delta) -> void:
 		if can_shoot:
 			sprite.play("DoubleJump")
 	
-	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot):
+	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot and (can_extra_attack or $ExtraAttackTimer.time_left != 0)):
 		_attack()
+	elif $ExtraAttackTimer.time_left <= 0 and ((Input.is_action_just_pressed("extra_attack") and can_shoot and can_extra_attack) or (not can_extra_attack)):
+		_extra_attack()
 	elif can_double_jump:
 		sprite.play("Jump")
 	elif can_shoot:
@@ -375,8 +381,8 @@ func _bullet_direction() -> float:
 
 		bullet_target.y = -bullet_target.x*tan(angle)
 		bullet_target = gunpoint.global_position - bullet_target
-			
-	var bullet_instance = bullet_scene.instance()
+	
+	var bullet_instance = playerfire_scene.instance()
 	bullet_instance.global_position = gunpoint.global_position
 	bullet_instance.set_direction(gunpoint.global_position, bullet_target)
 
@@ -385,6 +391,12 @@ func _bullet_direction() -> float:
 
 func _attack() -> void:
 	can_shoot = false
+	
+	if global_position.x - get_global_mouse_position().x > 0:
+		last_action_pressed = "left"
+	else:
+		last_action_pressed = "right"
+	
 	if velocity.x == 0:
 		sprite.play("Attack")
 		if frame_number <= 6:
@@ -436,6 +448,48 @@ func _attack() -> void:
 			shot = false
 			frame = 0
 			frame_number = 1
+
+
+func _extra_attack() -> void:
+	can_shoot = false
+	can_extra_attack = false
+	direction.x = 0
+	sprite.play("AttackExtra")
+	
+	if global_position.x - get_global_mouse_position().x > 0:
+		last_action_pressed = "left"
+	else:
+		last_action_pressed = "right"
+	
+	if frame_number > 6:
+		frame_number = 0
+	else:
+		frame_number += 1
+		
+	if sprite.get_frame() >= 5 and not shot:
+		shot = true
+		var bullet_instance = playerfireextra_scene.instance()
+		
+		if last_action_pressed == "left":
+			var bullet_start = Vector2(gunpoint.global_position.x, gunpoint.global_position.y)
+			var bullet_target = Vector2(gunpoint.global_position.x, gunpoint.global_position.y)
+			bullet_instance.global_position = bullet_start
+			bullet_target.x -= 10
+			bullet_instance.set_direction(bullet_start, bullet_target)
+		else:
+			var bullet_start = Vector2(gunpoint.global_position.x, gunpoint.global_position.y - 15)
+			var bullet_target = Vector2(gunpoint.global_position.x, gunpoint.global_position.y - 15)
+			bullet_instance.global_position = bullet_start
+			bullet_target.x += 10
+			bullet_instance.set_direction(bullet_start, bullet_target)
+		get_tree().get_root().add_child(bullet_instance)
+	
+	if sprite.get_frame() >= 6 and frame_number >= 5:
+		can_shoot = true
+		shot = false
+		frame = 0
+		frame_number = 1
+		$ExtraAttackTimer.start()
 
 
 func take_damage(damage, knockback_direction) -> void:
@@ -601,3 +655,7 @@ func _on_PowerUpTimer_timeout() -> void:
 func heal(health):
 	hp += health * (2 - difficulty)
 	HUD.health_changed(hp)
+
+
+func _on_ExtraAttackTimer_timeout():
+	can_extra_attack = true

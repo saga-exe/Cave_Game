@@ -4,7 +4,7 @@ enum {IDLE, CHASE, DIE}
 
 
 const ACCELERATION = 500
-var IDLE_SPEED = rand_range(70, 90)
+var IDLE_SPEED = rand_range(50, 70)
 var CHASE_SPEED = rand_range(80, 110)
 var GRAVITY = 1000
 
@@ -40,8 +40,6 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
-	print(global_position.y)
-	print($RayCast2D.get_collision_point().y)
 	if Globals.is_finished or global_position.y > 600:
 		queue_free()
 	match state:
@@ -76,7 +74,6 @@ func _update_direction_x(_delta) -> float:
 		if wait:
 			if (last_direction == 1 and (str($RayCast2D.get_collider()) != "[Object:null]")) or (last_direction == -1 and (str($RayCast2D2.get_collider()) != "[Object:null]")):
 				wait = false
-				print($RayCast2D.get_collider())
 			else:
 				velocity.x = 0
 				if last_direction == direction.x:
@@ -197,11 +194,11 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 func _on_WraithArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		if (body.global_position.y - global_position.y) > 26 and Globals.y_move == -1:
-			$TopKill/CollisionShape2D.disabled = true
-			$TopKill/TopKillArea/CollisionShape2D.disabled = true
-			$TileCollision.disabled = true
-			$KinematicBody2D/PlayerCollision.disabled = true
-			$WraithArea/CollisionShape2D.disabled = true
+			$TopKill/CollisionShape2D.set_deferred("disabled", true)
+			$TopKill/TopKillArea/CollisionShape2D.set_deferred("disabled", true)
+			$TileCollision.set_deferred("disabled", true)
+			$KinematicBody2D/PlayerCollision.set_deferred("disabled", true)
+			$WraithArea/CollisionShape2D.set_deferred("disabled", true)
 			state = DIE
 			body.take_damage(25, 0)
 		else:
@@ -281,3 +278,9 @@ func _can_collide() -> void:
 
 func _on_KnockBackTimer_timeout():
 	knockback = false
+
+
+func _on_WraithArea_body_exited(body):
+	if body.is_in_group("Player"):
+		$TopKill/CollisionShape2D.set_deferred("disabled", false)
+		$TopKill/TopKillArea/CollisionShape2D.set_deferred("disabled", false)

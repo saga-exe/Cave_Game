@@ -1460,7 +1460,6 @@ format = 1
 tile_data = PoolIntArray( 720968, 0, 0, 720969, 1, 0, 720970, 1, 0, 720971, 1, 0, 720972, 1, 0, 720973, 1, 0, 720974, 1, 0, 720975, 1, 0, 720976, 1, 0, 720977, 1, 0, 720978, 1, 0, 720979, 1, 0, 720980, 1, 0, 720981, 1, 0, 720982, 1, 0, 720983, 1, 0, 720984, 1, 0, 720985, 2, 0 )
 
 [node name="NonVisible" type="Node2D" parent="."]
-visible = false
 
 [node name="CanClimbArea" type="TileMap" parent="NonVisible" groups=["ClimbArea"]]
 scale = Vector2( 0.5, 0.5 )
@@ -1484,7 +1483,7 @@ tile_set = SubResource( 2 )
 collision_layer = 8
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 524297, -1073741823, 0 )
+tile_data = PoolIntArray( 393236, 1, 0, 458826, 1, 0, 786460, 1, 0, 786462, 1, 0, 786464, 1, 0, 786467, 1, 0, 786469, 1, 0, 786472, 1, 0, 786474, 1, 0 )
 
 [node name="ClimbStopper" type="TileMap" parent="NonVisible" groups=["ClimbStopper"]]
 scale = Vector2( 0.5, 0.5 )

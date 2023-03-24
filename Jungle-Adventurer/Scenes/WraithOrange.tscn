@@ -149,10 +149,10 @@ corner_radius_bottom_left = 1
 bg_color = Color( 0.133333, 0.0313726, 0.0313726, 1 )
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 10, 1.5 )
+extents = Vector2( 11, 1.75 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 11, 3 )
+extents = Vector2( 12, 3 )
 
 [sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 9, 18.5 )
@@ -224,7 +224,7 @@ percent_visible = false
 collision_layer = 1024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopKill"]
-position = Vector2( -1, -31 )
+position = Vector2( -1, -31.25 )
 shape = SubResource( 10 )
 one_way_collision = true
 
@@ -248,7 +248,6 @@ wait_time = 0.385
 one_shot = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-modulate = Color( 0.054902, 1, 0, 1 )
 position = Vector2( 80, 20 )
 enabled = true
 cast_to = Vector2( 0, 800 )
@@ -256,7 +255,6 @@ collision_mask = 4
 collide_with_areas = true
 
 [node name="RayCast2D2" type="RayCast2D" parent="."]
-modulate = Color( 0.313726, 1, 0, 1 )
 position = Vector2( -80, 20 )
 enabled = true
 cast_to = Vector2( 0, 800 )
@@ -264,6 +262,7 @@ collision_mask = 4
 collide_with_areas = true
 
 [connection signal="body_entered" from="WraithArea" to="." method="_on_WraithArea_body_entered"]
+[connection signal="body_exited" from="WraithArea" to="." method="_on_WraithArea_body_exited"]
 [connection signal="body_entered" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_entered"]
 [connection signal="body_exited" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_exited"]
 [connection signal="body_entered" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_entered"]
