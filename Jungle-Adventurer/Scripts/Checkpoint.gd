@@ -11,7 +11,7 @@ func _on_Checkpoint_body_entered(body):
 	if body.is_in_group("Player"):
 		$Light2D.visible = true
 		$AnimatedSprite.play("Lit")
-		player.last_pos = player.global_position
+		player.last_pos = global_position
 
 
 func _physics_process(_delta: float) -> void:
