@@ -5,6 +5,7 @@ onready var animationplayer = $AnimationPlayer
 var level_scene = preload("res://Scenes/Level1.tscn")
 var level = 1
 
+
 func level(level_number) -> void:
 	level = level_number
 
@@ -17,8 +18,10 @@ func load_scene(path):
 	
 	get_tree().change_scene(path)
 	if path == "res://Scenes/MainScene.tscn":
-		if level == 1:
-			level_scene = preload("res://Scenes/Level1.tscn")
+		if level == 0:
+			level_scene = preload("res://Scenes/LevelTutorial.tscn")
+			Globals.start_pos = Vector2(190, 453)
+			Globals.camera_limit = 5220
 		elif level == 2:
 			level_scene = preload("res://Scenes/Level2.tscn")
 		var level_instance = level_scene.instance()

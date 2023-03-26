@@ -18,6 +18,8 @@ extends KinematicBody2D
 #lava
 #extra attack and double jump
 #jump up into enemy when star power
+#make it so enemies collide w/eo and then turn around/wait
+#extra attack bar to know when able to use
 
 #stopper on bottom
 #deactivate collsision with tiles
@@ -88,9 +90,10 @@ onready var HUD = get_node("/root/MainScene/HUD")
 onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
 
 func _ready() -> void:
+	$Camera2D.limit_right = Globals.camera_limit
 	if Globals.power != "none":
 		power_up(Globals.power)
-	global_position = Vector2(190, 485)
+	global_position = Vector2(Globals.start_pos)
 	$Effects.play("Idle")
 	difficulty = Globals.difficulty
 	Globals.damaged = false
@@ -98,7 +101,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not Globals.power == "star":
+	if Globals.level == 0:
+		$Light2D.texture_scale = 4
+	elif Globals.level != 0 and Globals.power != "star":
 		$Light2D.texture_scale = 1
 	if velocity.y < 0:
 		Globals.y_move = -1

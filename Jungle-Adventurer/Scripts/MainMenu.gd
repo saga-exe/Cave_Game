@@ -32,7 +32,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		difficulty_label.text = "Super Hard"
 	
-	if level == 1:
+	if level == 0:
+		level_label.text = "Tutorial"
+	elif level == 1:
 		level_label.text = "1"
 	else:
 		level_label.text = "2"
@@ -63,7 +65,7 @@ func _on_QuitButton_pressed() -> void:
 
 
 func _on_LowerLevel_pressed() -> void:
-	if level > 1:
+	if level > 0:
 		level -= 1
 
 
