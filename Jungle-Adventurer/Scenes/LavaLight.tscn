@@ -5,6 +5,7 @@
 
 [node name="LavaLight" type="Light2D"]
 texture = ExtResource( 1 )
+texture_scale = 1.5
 color = Color( 1, 0.733333, 0.447059, 1 )
 energy = 0.8
 range_layer_min = -100

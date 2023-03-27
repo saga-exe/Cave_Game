@@ -80,6 +80,7 @@ func _ready() -> void:
 	difficulty = Globals.difficulty
 	Globals.damaged = false
 	Globals.can_collide = true
+	last_pos = Globals.start_pos
 
 
 func _physics_process(delta: float) -> void:
