@@ -1816,6 +1816,7 @@ tile_data = PoolIntArray( 393237, 18, 0, 393238, 19, 0, 393239, 20, 0, 393240, 2
 
 [node name="Ladder" type="TileMap" parent="." groups=["Ladders"]]
 scale = Vector2( 0.5, 0.5 )
+z_index = 1
 tile_set = SubResource( 30 )
 collision_layer = 64
 collision_mask = 0
@@ -1834,8 +1835,8 @@ position = Vector2( 0, 10 )
 scale = Vector2( 0.5, 0.5 )
 tile_set = SubResource( 95 )
 show_collision = true
-collision_layer = 2048
-collision_mask = 0
+collision_layer = 68
+collision_mask = 2
 format = 1
 tile_data = PoolIntArray( 393255, 0, 0, 393256, 1, 0, 393257, 1, 0, 393258, 1, 0, 393259, 1, 0, 393260, 1, 0, 393261, 1, 0, 393262, 1, 0, 393263, 1, 0, 393264, 2, 0 )
 

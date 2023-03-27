@@ -297,6 +297,7 @@ func _climb_state(delta) -> void:
 	sprite.play("Climb")
 	var CLIMB_SPEED = 150
 	set_collision_mask_bit(2, false)
+	
 	direction.x = _get_input_x_update_direction()
 	if Input.is_action_pressed("down"):
 		direction.y = 1
