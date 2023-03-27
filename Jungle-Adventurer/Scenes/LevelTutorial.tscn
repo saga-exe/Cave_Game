@@ -2029,14 +2029,14 @@ to move"
 position = Vector2( 54, 73 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 100 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="A" type="AnimatedSprite" parent="Control/BasicMovement"]
 position = Vector2( 5, 120 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 101 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="S" type="AnimatedSprite" parent="Control/BasicMovement"]
@@ -2044,14 +2044,13 @@ visible = false
 position = Vector2( 54, 120 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 102 )
-frame = 1
 playing = true
 
 [node name="D" type="AnimatedSprite" parent="Control/BasicMovement"]
 position = Vector2( 104, 120 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 103 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="DoubleJump" type="GridContainer" parent="Control"]
@@ -2075,7 +2074,7 @@ again to double jump"
 position = Vector2( 125, 77 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 100 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Climb" type="GridContainer" parent="Control"]
@@ -2099,13 +2098,14 @@ to start climbing"
 position = Vector2( 53, 77 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 100 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="S" type="AnimatedSprite" parent="Control/Climb"]
 position = Vector2( 155, 77 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 117 )
+frame = 3
 playing = true
 
 [node name="Checkpoint" type="Label" parent="Control"]
@@ -2141,7 +2141,6 @@ text = "press and hold
 position = Vector2( 98, 77 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 102 )
-frame = 1
 playing = true
 
 [node name="TopKill" type="Label" parent="Control"]
@@ -2201,7 +2200,7 @@ to finish level"
 position = Vector2( 80, 77 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 118 )
-frame = 2
+frame = 1
 playing = true
 
 [connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]

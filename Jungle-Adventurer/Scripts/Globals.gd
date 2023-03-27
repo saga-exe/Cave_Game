@@ -8,5 +8,5 @@ var can_collide := true
 var damaged := false
 var y_move = 0
 var power = "none"
-var start_pos = Vector2(190, 485)
+var start_pos = Vector2(190, 453)
 var camera_limit = 3200

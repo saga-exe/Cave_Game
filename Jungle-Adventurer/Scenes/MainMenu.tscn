@@ -234,13 +234,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -26.0
+margin_left = -57.0
 margin_top = 75.0
-margin_right = 26.0
-margin_bottom = 15.5
+margin_right = 54.0
+margin_bottom = 94.0
 custom_colors/font_color = Color( 0.101961, 0.101961, 0.101961, 1 )
 custom_fonts/font = SubResource( 7 )
 text = "Normal"
+align = 1
 
 [node name="LevelLabel" type="Label" parent="."]
 anchor_left = 0.5
@@ -261,13 +262,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -1.5
+margin_left = -28.0
 margin_top = 155.0
-margin_right = 1.5
-margin_bottom = 9.5
+margin_right = 27.0
+margin_bottom = 174.0
 custom_colors/font_color = Color( 0.101961, 0.101961, 0.101961, 1 )
 custom_fonts/font = SubResource( 7 )
 text = "1"
+align = 1
 
 [node name="ShopButton" type="Button" parent="."]
 margin_right = 12.0

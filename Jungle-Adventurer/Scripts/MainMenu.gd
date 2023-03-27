@@ -1,7 +1,7 @@
 extends Control
 
 var difficulty = 1
-var level = 1
+var level = 0
 
 onready var difficulty_label = $Difficulty
 onready var level_label = $Level

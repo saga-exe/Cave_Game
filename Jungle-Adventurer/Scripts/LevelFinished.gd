@@ -13,6 +13,9 @@ onready var firework_scene = preload("res://Scenes/Fireworks.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if Globals.level == 2:
+		$NextLevelButton.disabled = true
+		$NextLevelButton.visible = false
 	Globals.is_finished = false
 	previous_level = Globals.level
 
@@ -41,6 +44,10 @@ func _on_MainMenuButton_pressed() -> void:
 
 
 func _on_NextLevelButton_pressed():
+	$FireworkTimer.stop()
+	$FireworkTimer2.stop()
+	$FireworkTimer3.stop()
+	$FireworkTimer4.stop()
 	if previous_level < 2:
 		Transition.level(previous_level + 1)
 		Transition.load_scene("res://Scenes/MainScene.tscn")

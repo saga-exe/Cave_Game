@@ -1,30 +1,12 @@
 extends KinematicBody2D
 
-#take damage when jumping up into slime
-#take damage and respawn when drop out of frame
-#HUD
-#game over screen
-#main menu
 #storyline
-#nice sprites
-#should i be able to sprint when already in the air?
-#light ska gå tillbaka efter starpower är slut
-#teal wraith not dying, should areas be on but only some of its function
 
-
-#have sprite not continue playing when in air
 #chests
-#checkpoints
-#lava
-#extra attack and double jump
 #jump up into enemy when star power
 #make it so enemies collide w/eo and then turn around/wait
 #extra attack bar to know when able to use
-
-#stopper on bottom
-#deactivate collsision with tiles
-#ladder_area and jump area on top with different tilemap
-
+#enemies drop coins or hearts?
 
 """
 Layer1: Adventurer
@@ -101,6 +83,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if $ExtraAttackTimer.time_left > 0:
+		HUD.mana_changed(8-$ExtraAttackTimer.time_left)
 	if Globals.level == 0:
 		$Light2D.texture_scale = 4
 	elif Globals.level != 0 and Globals.power != "star":
@@ -456,6 +440,7 @@ func _attack() -> void:
 
 
 func _extra_attack() -> void:
+	HUD.mana_changed(0)
 	can_shoot = false
 	can_extra_attack = false
 	direction.x = 0
