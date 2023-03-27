@@ -24,9 +24,8 @@ func load_scene(path):
 			Globals.camera_limit = 5220
 		elif level == 1:
 			level_scene = preload("res://Scenes/Level1.tscn")
-			Globals.start_pos = Vector2(5472, 125)
-			#Globals.start_pos = Vector2(190, 453)
-			Globals.camera_limit = 100000
+			Globals.start_pos = Vector2(190, 453)
+			Globals.camera_limit = 11808
 		elif level == 2:
 			level_scene = preload("res://Scenes/Level2.tscn")
 		var level_instance = level_scene.instance()

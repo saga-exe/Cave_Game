@@ -23,7 +23,7 @@ extents = Vector2( 6, 5.5 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 6 ), ExtResource( 14 ), ExtResource( 8 ), ExtResource( 16 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 12 ), ExtResource( 7 ), ExtResource( 11 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 14 ), ExtResource( 8 ), ExtResource( 16 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 10 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "default",
 "speed": 7.0
@@ -37,7 +37,7 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
-frame = 7
+frame = 1
 playing = true
 
 [node name="FinishTimer" type="Timer" parent="."]
