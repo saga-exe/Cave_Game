@@ -7,6 +7,7 @@ extends KinematicBody2D
 #make it so enemies collide w/eo and then turn around/wait
 #extra attack bar to know when able to use
 #enemies drop coins or hearts?
+#stop climbing animation
 
 """
 Layer1: Adventurer
@@ -603,7 +604,7 @@ func _finished_state(delta) -> void:
 	velocity.x = 0
 	velocity = move_and_slide(velocity, Vector2.UP)
 	sprite.play("Idle")
-
+	Globals.power = "none"
 	if can_end:
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
 	elif hp <= 0:
