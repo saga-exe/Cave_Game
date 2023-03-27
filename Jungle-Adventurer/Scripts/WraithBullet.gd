@@ -4,9 +4,6 @@ const VELOCITY = 500
 
 var direction := Vector2.ZERO
 
-onready var player = get_node("/root/MainScene/Adventurer")
-onready var cast_point = get_node("/root/WraithTeal/CastPoint")
-
 
 func _ready() -> void:
 	$Timer.start()

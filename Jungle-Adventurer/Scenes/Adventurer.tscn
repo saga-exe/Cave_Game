@@ -147,6 +147,11 @@ animations = [ {
 "name": "Eat",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 21 ), ExtResource( 33 ), ExtResource( 5 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Falling",
+"speed": 2.0
+}, {
 "frames": [ ExtResource( 8 ), ExtResource( 28 ), ExtResource( 30 ), ExtResource( 19 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ) ],
 "loop": true,
 "name": "Idle",
@@ -307,8 +312,8 @@ modulate = Color( 1, 0.862745, 0.447059, 1 )
 material = SubResource( 22 )
 position = Vector2( 19, -22 )
 frames = SubResource( 1 )
-animation = "AttackExtra"
-frame = 1
+animation = "Falling"
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

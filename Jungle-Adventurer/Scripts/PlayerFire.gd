@@ -34,6 +34,7 @@ func _on_FireTimer_timeout() -> void:
 func _on_PlayerFire_body_entered(body: Node) -> void:
 	var damage = 0
 	if body.is_in_group("Enemy"):
+		$CollisionShape2D.set_deferred("disabled", true)
 		if body.is_in_group("WraithOrange"):
 			damage = 50
 		elif body.is_in_group("WraithTeal"):

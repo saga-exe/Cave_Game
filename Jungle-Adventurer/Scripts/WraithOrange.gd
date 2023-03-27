@@ -24,6 +24,9 @@ var wait := false
 var knockback := false
 var can_check_right := true
 var can_check_left := true
+var can_drop_coin := true
+
+var coin_scene = preload("res://Scenes/Coin.tscn")
 
 onready var player = get_node("/root/MainScene/Adventurer")
 onready var TerrainCheck = $TerrainCheck
@@ -176,6 +179,11 @@ func _die_state(_delta) -> void:
 	direction.x = 0
 	sprite.play("Dying")
 	yield(sprite,"animation_finished")
+	if can_drop_coin:
+		var coin_instance = coin_scene.instance()
+		get_tree().get_root().call_deferred("add_child", coin_instance)
+		coin_instance.global_position = Vector2(global_position.x, global_position.y - 20)
+		can_drop_coin = false
 	queue_free()
 
 #turn behövs enbart då enemy ska vända vid slutet av en platform,

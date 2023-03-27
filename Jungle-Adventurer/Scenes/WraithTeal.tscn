@@ -60,7 +60,7 @@
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_001.png" type="Texture" id=58]
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 7, 17 )
+extents = Vector2( 8, 17 )
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
@@ -86,7 +86,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 9, 19 )
+extents = Vector2( 10, 19 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 9, 9 )
@@ -112,10 +112,10 @@ bg_color = Color( 0.133333, 0.0313726, 0.0313726, 1 )
 extents = Vector2( 9, 1.5 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 10, 3 )
+extents = Vector2( 9, 2 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 8, 18 )
+extents = Vector2( 9, 18 )
 
 [node name="WraithTeal" type="KinematicBody2D" groups=["Enemy", "Wraith", "WraithTeal"]]
 collision_layer = 0
@@ -197,7 +197,7 @@ one_way_collision = true
 collision_layer = 1024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopKill/TopKillArea"]
-position = Vector2( -1, -31 )
+position = Vector2( -1, -32 )
 shape = SubResource( 11 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]

@@ -3,10 +3,11 @@ extends KinematicBody2D
 #storyline
 
 #chests
-#jump up into enemy when star power
 #make it so enemies collide w/eo and then turn around/wait
-#extra attack bar to know when able to use
 #enemies drop coins or hearts?
+#pause menu
+#game finished menu
+#jump animation stop
 
 """
 Layer1: Adventurer
@@ -61,6 +62,7 @@ var can_end := false
 var can_double_jump := false
 var speed_power := false
 var can_extra_attack = true
+var drop_area = false
 
 var playerfire_scene = preload("res://Scenes/PlayerFire.tscn")
 var playerfireextra_scene = preload("res://Scenes/PlayerFireExtra.tscn")
@@ -80,9 +82,12 @@ func _ready() -> void:
 	difficulty = Globals.difficulty
 	Globals.damaged = false
 	Globals.can_collide = true
+	last_pos = Globals.start_pos
 
 
 func _physics_process(delta: float) -> void:
+	if not Globals.damaged and Globals.power != "star":
+		$Effects.play("Idle")
 	if $ExtraAttackTimer.time_left > 0:
 		HUD.mana_changed(8-$ExtraAttackTimer.time_left)
 	if Globals.level == 0:
@@ -176,7 +181,6 @@ func _sprite_right() -> void:
 
 
 func _idle_state(delta) -> void:
-	
 	direction.x = _get_input_x_update_direction()
 	_left_right_movement(delta)
 	_climb()
@@ -187,6 +191,11 @@ func _idle_state(delta) -> void:
 		_extra_attack()
 	else:
 		sprite.play("Idle")
+	
+	if Input.is_action_just_pressed("down") and drop_area:
+		set_collision_mask_bit(2, false)
+		_airstate_switch()
+		return
 	
 	if can_end and Input.is_action_just_pressed("E"):
 		state = FINISHED
@@ -220,6 +229,11 @@ func _run_state(delta) -> void:
 		else:
 			sprite.play("Walk")
 	
+	if Input.is_action_just_pressed("down") and drop_area:
+		set_collision_mask_bit(2, false)
+		_airstate_switch()
+		return
+	
 	if can_end and Input.is_action_just_pressed("E"):
 		state = FINISHED
 	
@@ -244,6 +258,7 @@ func _run_state(delta) -> void:
 
 
 func _air_state(delta) -> void:
+	#set_collision_mask_bit(2, true)
 	velocity.y = velocity.y + GRAVITY * delta if velocity.y + GRAVITY * delta < 500 else 500 
 	direction.x = _get_input_x_update_direction()
 	if direction.x != 0:
@@ -294,7 +309,10 @@ func _air_state(delta) -> void:
 
 func _climb_state(delta) -> void:
 	can_jump = false
-	sprite.play("Climb")
+	if velocity == Vector2(0,0):
+		sprite.stop()
+	else:
+		sprite.play("Climb")
 	var CLIMB_SPEED = 150
 	set_collision_mask_bit(2, false)
 	direction.x = _get_input_x_update_direction()
@@ -516,6 +534,8 @@ func _on_PlayerArea_body_entered(body):
 		state = FINISHED
 	elif body.is_in_group("ClimbArea"):
 		climb_area = true
+	elif body.is_in_group("DropArea"):
+		drop_area = true
 	elif body.is_in_group("ClimbStopper"):
 		stopper_area = true
 		if not is_on_floor():
@@ -546,16 +566,13 @@ func _on_PlayerArea_body_exited(body):
 				return
 	elif body.is_in_group("ClimbStopper"):
 		stopper_area = false
-	#elif body.is_in_group("Tile") and velocity.y <= 0:
-		#last_pos = global_position
-		#if last_action_pressed == "left":
-			#last_pos.x += 80
-		#else:
-			#last_pos.x -= 80
 	elif body.is_in_group("End"):
 		can_end = false
-	if body.is_in_group("ClimbArea"):
+	elif body.is_in_group("ClimbArea"):
 		climb_area = false
+	elif body.is_in_group("DropArea"):
+		drop_area = false
+		set_collision_mask_bit(2, true)
 		
 
 func _climb() -> void:
