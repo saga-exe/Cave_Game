@@ -49,6 +49,7 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
+	_can_collide()
 	if Globals.power == "star":
 		can_attack = false
 	elif $ShootTimer.time_left <= 0:
@@ -137,7 +138,6 @@ func _sprite_left() -> void:
 
 
 func _idle_state(delta) -> void:
-	_can_collide()
 	MAX_SPEED = IDLE_SPEED
 	direction.x = _update_direction_x(delta)
 	
@@ -152,7 +152,6 @@ func _idle_state(delta) -> void:
 # if cant check left and velocity < 0 wait = true
 
 func _chase_state(delta) -> void:
-	_can_collide()
 	if wait:
 		sprite.play("Idle")
 	else:
@@ -207,11 +206,9 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 func _on_WraithArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		if (body.global_position.y - global_position.y) > 24 and Globals.y_move == -1:
-			$TopKill/CollisionShape2D.disabled = true
-			$TopKill/TopKillArea/CollisionShape2D.disabled = true
-			$TileCollision.disabled = true
-			$KinematicBody2D/PlayerCollision.disabled = true
-			$WraithArea/CollisionShape2D.disabled = true
+			$TileCollision.set_deferred("disabled", true)
+			$KinematicBody2D/PlayerCollision.set_deferred("disabled", true)
+			$WraithArea/CollisionShape2D.set_deferred("disabled", true)
 			state = DIE
 			body.take_damage(25, 0)
 		else:
@@ -286,7 +283,7 @@ func take_damage(damage) -> void:
 
 
 func _on_TopKillArea_body_entered(body):
-	if body.is_in_group("Player") and ((global_position.y - player.global_position.y) > 55) and Globals.y_move == 1:
+	if body.is_in_group("Player"):
 		GRAVITY = 0
 		knockback = true
 		if player.global_position.x - global_position.x < 0:
@@ -298,6 +295,14 @@ func _on_TopKillArea_body_entered(body):
 
 
 func _can_collide() -> void:
+	if global_position.y - player.global_position.y >= 48 and Globals.y_move != -1:
+		$TopKill.set_collision_layer_bit(10, true)
+		$TopKill/CollisionShape2D.disabled = false
+		$TopKill/TopKillArea/CollisionShape2D.disabled = false
+	else:
+		$TopKill.set_collision_layer_bit(10, false)
+		$TopKill/CollisionShape2D.disabled = true
+		$TopKill/TopKillArea/CollisionShape2D.disabled = true
 	if not Globals.can_collide:
 		$KinematicBody2D/PlayerCollision.disabled = true
 		$WraithArea/CollisionShape2D.disabled = true
@@ -310,3 +315,9 @@ func _can_collide() -> void:
 
 func _on_KnockBackTimer_timeout():
 	knockback = false
+
+
+func _on_WraithArea_body_exited(body: Node) -> void:
+	if body.is_in_group("Player"):
+		$TopKill/CollisionShape2D.set_deferred("disabled", false)
+		$TopKill/TopKillArea/CollisionShape2D.set_deferred("disabled", false)

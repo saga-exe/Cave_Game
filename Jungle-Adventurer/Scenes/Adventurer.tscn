@@ -308,7 +308,7 @@ material = SubResource( 22 )
 position = Vector2( 19, -22 )
 frames = SubResource( 1 )
 animation = "AttackExtra"
-frame = 2
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

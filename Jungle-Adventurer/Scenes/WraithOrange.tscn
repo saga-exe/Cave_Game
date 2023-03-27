@@ -90,7 +90,7 @@
 [ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_002.png" type="Texture" id=88]
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 8, 17.5 )
+extents = Vector2( 9.5, 17.5 )
 
 [sub_resource type="SpriteFrames" id=7]
 animations = [ {
@@ -126,7 +126,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 10, 19 )
+extents = Vector2( 11, 19 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 9, 9 )
@@ -149,13 +149,13 @@ corner_radius_bottom_left = 1
 bg_color = Color( 0.133333, 0.0313726, 0.0313726, 1 )
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 11, 1.75 )
+extents = Vector2( 10, 1.75 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 12, 3 )
+extents = Vector2( 10, 2.5 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 9, 18.5 )
+extents = Vector2( 10, 18.5 )
 
 [node name="WraithOrange" type="KinematicBody2D" groups=["Enemy", "Wraith", "WraithOrange"]]
 collision_layer = 0
@@ -163,7 +163,7 @@ collision_mask = 260
 script = ExtResource( 1 )
 
 [node name="TileCollision" type="CollisionShape2D" parent="."]
-position = Vector2( -1, -13 )
+position = Vector2( -0.5, -13 )
 shape = SubResource( 5 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -232,7 +232,7 @@ one_way_collision = true
 collision_layer = 1024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopKill/TopKillArea"]
-position = Vector2( -1, -32 )
+position = Vector2( -1, -32.5 )
 shape = SubResource( 11 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]

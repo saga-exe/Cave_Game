@@ -30,6 +30,7 @@ onready var TerrainCheck = $TerrainCheck
 onready var TerrainCheck2 = $TerrainCheck2
 onready var sprite = $AnimatedSprite
 
+#topkill disabled unless player above wraith
 
 func _ready():
 	MAX_SPEED = IDLE_SPEED
@@ -40,6 +41,7 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
+	_can_collide()
 	if Globals.is_finished or global_position.y > 600:
 		queue_free()
 	match state:
@@ -125,7 +127,6 @@ func _sprite_left() -> void:
 
 
 func _idle_state(delta) -> void:
-	_can_collide()
 	MAX_SPEED = IDLE_SPEED
 	direction.x = _update_direction_x(delta)
 	
@@ -140,7 +141,6 @@ func _idle_state(delta) -> void:
 # if cant check left and velocity < 0 wait = true
 
 func _chase_state(delta) -> void:
-	_can_collide()
 	if wait:
 		sprite.play("Idle")
 	else:
@@ -194,14 +194,13 @@ _on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat pla
 func _on_WraithArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		if (body.global_position.y - global_position.y) > 26 and Globals.y_move == -1:
-			#$TopKill/CollisionShape2D.set_deferred("disabled", true)
-			#$TopKill/TopKillArea/CollisionShape2D.set_deferred("disabled", true)
 			$TileCollision.set_deferred("disabled", true)
 			$KinematicBody2D/PlayerCollision.set_deferred("disabled", true)
 			$WraithArea/CollisionShape2D.set_deferred("disabled", true)
 			state = DIE
 			body.take_damage(25, 0)
 		else:
+			
 			knockback = true
 			$KnockBackTimer.start()
 			if player.global_position.x - global_position.x < 0:
@@ -254,7 +253,7 @@ func take_damage(damage) -> void:
 
 
 func _on_TopKillArea_body_entered(body: Node) -> void:
-	if body.is_in_group("Player") and ((global_position.y - player.global_position.y) > 55) and Globals.y_move == 1:
+	if body.is_in_group("Player"):
 		GRAVITY = 0
 		knockback = true
 		if player.global_position.x - global_position.x < 0:
@@ -266,9 +265,18 @@ func _on_TopKillArea_body_entered(body: Node) -> void:
 
 
 func _can_collide() -> void:
+	if global_position.y - player.global_position.y >= 48 and Globals.y_move != -1:
+		$TopKill.set_collision_layer_bit(10, true)
+		$TopKill/CollisionShape2D.disabled = false
+		$TopKill/TopKillArea/CollisionShape2D.disabled = false
+	else:
+		$TopKill.set_collision_layer_bit(10, false)
+		$TopKill/CollisionShape2D.disabled = true
+		$TopKill/TopKillArea/CollisionShape2D.disabled = true
 	if not Globals.can_collide:
 		$KinematicBody2D/PlayerCollision.disabled = true
 		$WraithArea/CollisionShape2D.disabled = true
+		
 	else:
 		$KinematicBody2D/PlayerCollision.disabled = false
 		$WraithArea/CollisionShape2D.disabled = false

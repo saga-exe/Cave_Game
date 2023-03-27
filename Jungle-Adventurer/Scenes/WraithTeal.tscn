@@ -211,6 +211,7 @@ shape = SubResource( 12 )
 [node name="KnockBackTimer" type="Timer" parent="."]
 
 [connection signal="body_entered" from="WraithArea" to="." method="_on_WraithArea_body_entered"]
+[connection signal="body_exited" from="WraithArea" to="." method="_on_WraithArea_body_exited"]
 [connection signal="body_entered" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_entered"]
 [connection signal="body_exited" from="TerrainCheck/TerrainArea" to="." method="_on_TerrainArea_body_exited"]
 [connection signal="body_entered" from="TerrainCheck2/TerrainArea2" to="." method="_on_TerrainArea2_body_entered"]
