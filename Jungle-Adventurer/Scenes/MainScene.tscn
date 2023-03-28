@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Globals.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Coin.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/ParallaxBackground(game).tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Adventurer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Sound/music.wav" type="AudioStream" id=8]
 
 [sub_resource type="Animation" id=4]
 resource_name = "BlackOut"
@@ -85,3 +86,7 @@ anims/Reload = SubResource( 3 )
 margin_right = 1024.0
 margin_bottom = 600.0
 color = Color( 0.109804, 0.0117647, 0.270588, 0 )
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -10.0

@@ -74,6 +74,7 @@ onready var HUD = get_node("/root/MainScene/HUD")
 onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
 
 func _ready() -> void:
+	get_node("/root/MainScene/BackgroundMusic").playing = true
 	$Camera2D.limit_right = Globals.camera_limit
 	if Globals.power != "none":
 		power_up(Globals.power)
