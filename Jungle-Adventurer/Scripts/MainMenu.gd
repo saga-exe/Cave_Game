@@ -3,8 +3,8 @@ extends Control
 var difficulty = 1
 var level = 0
 
-onready var difficulty_label = $Difficulty
-onready var level_label = $Level
+onready var difficulty_label = $Center/Difficulty
+onready var level_label = $Center/Level
 onready var layer1 = $Node/ParallaxBackground/ParallaxLayer1
 onready var layer2 = $Node/ParallaxBackground/ParallaxLayer2
 onready var layer3 = $Node/ParallaxBackground/ParallaxLayer3
@@ -16,6 +16,7 @@ func _ready():
 	Globals.is_finished = false
 
 func _physics_process(delta: float) -> void:
+	$Light2D.global_position = get_global_mouse_position()
 	layer1.motion_offset.x += 40*delta
 	layer2.motion_offset.x += 30*delta
 	layer3.motion_offset.x += 20*delta

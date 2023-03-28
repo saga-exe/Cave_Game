@@ -40,7 +40,6 @@ func _on_MainMenuButton_pressed() -> void:
 	$FireworkTimer.stop()
 	$FireworkTimer2.stop()
 	$FireworkTimer3.stop()
-	$FireworkTimer4.stop()
 	Transition.load_scene("res://Scenes/MainMenu.tscn")
 
 
@@ -48,7 +47,6 @@ func _on_NextLevelButton_pressed():
 	$FireworkTimer.stop()
 	$FireworkTimer2.stop()
 	$FireworkTimer3.stop()
-	$FireworkTimer4.stop()
 	if previous_level < 2:
 		Transition.level(previous_level + 1)
 		Transition.load_scene("res://Scenes/MainScene.tscn")
