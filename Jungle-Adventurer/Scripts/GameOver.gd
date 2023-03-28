@@ -12,6 +12,7 @@ func _ready() -> void:
 	Globals.is_finished = false
 
 func _physics_process(delta: float) -> void:
+	$Light2D.global_position = get_global_mouse_position()
 	layer1.motion_offset.x += 5*delta
 	layer2.motion_offset.x += 10*delta
 	layer3.motion_offset.x += 15*delta
