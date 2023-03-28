@@ -5,6 +5,7 @@ extends KinematicBody2D
 
 func _ready():
 	$AnimatedSprite.play("default")
+	$AudioStreamPlayer2D.play()
 
 
 
