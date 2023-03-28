@@ -14,8 +14,8 @@ onready var firework_scene = preload("res://Scenes/Fireworks.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if Globals.level == 2:
-		$NextLevelButton.disabled = true
-		$NextLevelButton.visible = false
+		$VBoxContainer/NextLevelButton.disabled = true
+		$VBoxContainer/NextLevelButton.visible = false
 		$LevelFinishedText.text = "Game Completed"
 	Globals.is_finished = false
 	previous_level = Globals.level
