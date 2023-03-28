@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/Globals.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Coin.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Spawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/PauseMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/ParallaxBackground(game).tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Adventurer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=7]
@@ -70,6 +71,8 @@ z_index = 1
 color = Color( 0.0823529, 0.0823529, 0.0823529, 1 )
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
+
+[node name="Control" parent="HUD" instance=ExtResource( 4 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/BlackOut = SubResource( 4 )
