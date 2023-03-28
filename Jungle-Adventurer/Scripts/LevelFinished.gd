@@ -16,6 +16,7 @@ func _ready() -> void:
 	if Globals.level == 2:
 		$NextLevelButton.disabled = true
 		$NextLevelButton.visible = false
+		$LevelFinishedText.text = "Game Completed"
 	Globals.is_finished = false
 	previous_level = Globals.level
 

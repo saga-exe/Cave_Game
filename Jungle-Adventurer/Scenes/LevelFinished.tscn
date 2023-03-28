@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/LevelFinished.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/ParallaxBackground(menu).tscn" type="PackedScene" id=2]
@@ -7,6 +7,36 @@
 [sub_resource type="DynamicFont" id=1]
 size = 70
 font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+extra_spacing_top = 3
+extra_spacing_bottom = 3
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 40
+extra_spacing_top = 3
+extra_spacing_bottom = 3
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [node name="LevelFinished" type="Control"]
 anchor_right = 1.0
@@ -24,7 +54,7 @@ margin_left = -204.0
 margin_top = -35.5
 margin_right = 204.0
 margin_bottom = 35.5
-custom_colors/font_color = Color( 0.776471, 0.172549, 0.109804, 1 )
+custom_colors/font_color = Color( 0.776471, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 5
 custom_constants/shadow_offset_y = 5
@@ -46,23 +76,44 @@ autostart = true
 wait_time = 1.1
 autostart = true
 
-[node name="NextLevelButton" type="Button" parent="."]
-margin_left = 451.0
-margin_top = 364.0
-margin_right = 546.0
-margin_bottom = 409.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -63.0
+margin_top = 69.0
+margin_right = 63.0
+margin_bottom = 145.0
+
+[node name="NextLevelButton" type="Button" parent="VBoxContainer"]
+margin_right = 180.0
+margin_bottom = 46.0
+custom_colors/font_color = Color( 0.776471, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.776471, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.776471, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
 text = "Next Level"
 
-[node name="MainMenuButton" type="Button" parent="."]
-margin_left = 431.0
-margin_top = 450.0
-margin_right = 577.0
-margin_bottom = 514.0
+[node name="MainMenuButton" type="Button" parent="VBoxContainer"]
+margin_top = 50.0
+margin_right = 180.0
+margin_bottom = 96.0
+custom_colors/font_color = Color( 0.776471, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.776471, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.776471, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
 text = "Main Menu"
 
 [connection signal="timeout" from="FireworkTimer" to="." method="_on_FireworkTimer_timeout"]
 [connection signal="timeout" from="FireworkTimer2" to="." method="_on_FireworkTimer_timeout"]
 [connection signal="timeout" from="FireworkTimer3" to="." method="_on_FireworkTimer_timeout"]
 [connection signal="timeout" from="FireworkTimer4" to="." method="_on_FireworkTimer_timeout"]
-[connection signal="pressed" from="NextLevelButton" to="." method="_on_NextLevelButton_pressed"]
-[connection signal="pressed" from="MainMenuButton" to="." method="_on_MainMenuButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/NextLevelButton" to="." method="_on_NextLevelButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenuButton" to="." method="_on_MainMenuButton_pressed"]
