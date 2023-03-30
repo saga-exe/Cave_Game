@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=2]
+[gd_scene load_steps=109 format=2]
 
 [ext_resource path="res://Character Sprites/Mage/Attack/attack2.png" type="Texture" id=1]
 [ext_resource path="res://Character Sprites/Mage/Death/death8.png" type="Texture" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Character Sprites/Mage/Death/death10.png" type="Texture" id=4]
 [ext_resource path="res://Character Sprites/Mage/Jump/jump6.png" type="Texture" id=5]
 [ext_resource path="res://Character Sprites/Mage/Jump/jump3.png" type="Texture" id=6]
-[ext_resource path="res://Sound/Footsteps Cement.wav" type="AudioStream" id=7]
 [ext_resource path="res://Character Sprites/Mage/Idle/idle9.png" type="Texture" id=8]
 [ext_resource path="res://Character Sprites/Mage/Jump/jump7.png" type="Texture" id=9]
 [ext_resource path="res://Character Sprites/Mage/Attack/attack1.png" type="Texture" id=10]
@@ -171,12 +170,12 @@ animations = [ {
 "frames": [ ExtResource( 39 ), ExtResource( 40 ), ExtResource( 38 ), ExtResource( 32 ), ExtResource( 12 ), ExtResource( 18 ), ExtResource( 31 ), ExtResource( 37 ) ],
 "loop": true,
 "name": "Run",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [ ExtResource( 91 ), ExtResource( 82 ), ExtResource( 103 ), ExtResource( 92 ), ExtResource( 87 ), ExtResource( 93 ), ExtResource( 98 ), ExtResource( 104 ) ],
 "loop": true,
 "name": "RunAttack",
-"speed": 10.0
+"speed": 12.0
 }, {
 "frames": [ ExtResource( 35 ), ExtResource( 45 ), ExtResource( 59 ), ExtResource( 51 ) ],
 "loop": true,
@@ -313,9 +312,7 @@ modulate = Color( 1, 0.862745, 0.447059, 1 )
 material = SubResource( 22 )
 position = Vector2( 19, -22 )
 frames = SubResource( 1 )
-animation = "Walk"
-frame = 3
-playing = true
+animation = "Run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
@@ -358,10 +355,6 @@ one_shot = true
 [node name="ExtraAttackTimer" type="Timer" parent="."]
 wait_time = 8.0
 one_shot = true
-
-[node name="StepSounds" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 7 )
-volume_db = 20.0
 
 [connection signal="body_entered" from="PlayerArea" to="." method="_on_PlayerArea_body_entered"]
 [connection signal="body_exited" from="PlayerArea" to="." method="_on_PlayerArea_body_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/GameOver.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/ParallaxBackground(game).tscn" type="PackedScene" id=2]
@@ -15,27 +15,25 @@ size = 35
 extra_spacing_bottom = 6
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxEmpty" id=7]
 
-[sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxEmpty" id=8]
 
-[sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=10]
 
 [sub_resource type="DynamicFont" id=2]
 size = 35
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxEmpty" id=11]
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxEmpty" id=12]
 
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxEmpty" id=13]
+
+[sub_resource type="StyleBoxEmpty" id=14]
 
 [node name="GameOver" type="Control"]
 anchor_right = 1.0
@@ -79,7 +77,8 @@ custom_colors/font_color_pressed = Color( 0.356863, 0, 0, 1 )
 custom_fonts/font = SubResource( 6 )
 custom_styles/hover = SubResource( 7 )
 custom_styles/pressed = SubResource( 8 )
-custom_styles/normal = SubResource( 9 )
+custom_styles/focus = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
 text = "Restart"
 
 [node name="MainMenuButton" type="Button" parent="VBoxContainer"]
@@ -90,9 +89,10 @@ custom_colors/font_color = Color( 0.156863, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.356863, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.356863, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
-custom_styles/hover = SubResource( 3 )
-custom_styles/pressed = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 12 )
+custom_styles/focus = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
 text = "Main Menu"
 
 [node name="Light2D" type="Light2D" parent="."]

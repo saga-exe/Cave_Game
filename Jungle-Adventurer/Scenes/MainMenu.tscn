@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Fonts/Gothical.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/BlackFlag.ttf" type="DynamicFontData" id=2]
@@ -18,32 +18,57 @@ font_data = ExtResource( 1 )
 [sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 6 )
 
-[sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 0.584314, 0.0980392, 0.0980392, 0 )
-border_color = Color( 0.129412, 0, 0, 1 )
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+[sub_resource type="StyleBoxTexture" id=16]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 512, 301 )
 
-[sub_resource type="StyleBoxFlat" id=13]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 512, 301 )
 
-[sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 0.337255, 0, 0, 0 )
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+[sub_resource type="StyleBoxTexture" id=18]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 512, 301 )
+modulate_color = Color( 0.192157, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=14]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxTexture" id=19]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 512, 301 )
 
-[sub_resource type="StyleBoxFlat" id=12]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxTexture" id=20]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 512, 301 )
 
-[sub_resource type="StyleBoxFlat" id=15]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxTexture" id=21]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 512, 301 )
+modulate_color = Color( 0.192157, 0, 0, 1 )
+
+[sub_resource type="StyleBoxTexture" id=22]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 512, 301 )
+
+[sub_resource type="StyleBoxTexture" id=23]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 512, 301 )
+
+[sub_resource type="StyleBoxTexture" id=24]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 512, 301 )
+modulate_color = Color( 0.192157, 0, 0, 1 )
+
+[sub_resource type="StyleBoxTexture" id=25]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 512, 301 )
+
+[sub_resource type="StyleBoxTexture" id=26]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 512, 301 )
+
+[sub_resource type="StyleBoxTexture" id=27]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 512, 301 )
+modulate_color = Color( 0.192157, 0, 0, 1 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -51,26 +76,13 @@ extra_spacing_top = 4
 extra_spacing_bottom = 9
 font_data = ExtResource( 6 )
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.584314, 0.0980392, 0.0980392, 0 )
-border_color = Color( 0.290196, 0.00392157, 0.00392157, 1 )
-border_blend = true
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+[sub_resource type="StyleBoxEmpty" id=28]
 
-[sub_resource type="StyleBoxFlat" id=11]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="StyleBoxEmpty" id=29]
 
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.337255, 0, 0, 0 )
-border_color = Color( 0.141176, 0.00392157, 0.00392157, 1 )
-border_blend = true
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+[sub_resource type="StyleBoxEmpty" id=31]
+
+[sub_resource type="StyleBoxEmpty" id=30]
 
 [sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 2 )
@@ -85,6 +97,14 @@ corner_radius_bottom_left = 6
 
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 5 )
+
+[sub_resource type="StyleBoxEmpty" id=32]
+
+[sub_resource type="StyleBoxEmpty" id=33]
+
+[sub_resource type="StyleBoxEmpty" id=34]
+
+[sub_resource type="StyleBoxEmpty" id=35]
 
 [node name="MainMenu" type="Control"]
 margin_right = 1024.0
@@ -107,7 +127,7 @@ custom_fonts/font = SubResource( 3 )
 text = "Dungeon slayer"
 
 [node name="HigherLevel" type="Button" parent="."]
-modulate = Color( 0.172549, 0, 0, 1 )
+modulate = Color( 0.192157, 0, 0, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -119,13 +139,13 @@ margin_bottom = 456.0
 rect_scale = Vector2( 0.1, 0.1 )
 mouse_default_cursor_shape = 2
 custom_fonts/font = SubResource( 8 )
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 13 )
-custom_styles/normal = SubResource( 10 )
+custom_styles/hover = SubResource( 16 )
+custom_styles/pressed = SubResource( 17 )
+custom_styles/normal = SubResource( 18 )
 icon = ExtResource( 8 )
 
 [node name="HigherDifficulty" type="Button" parent="."]
-modulate = Color( 0.172549, 0, 0, 1 )
+modulate = Color( 0.192157, 0, 0, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -136,19 +156,14 @@ margin_right = 575.0
 margin_bottom = 399.0
 rect_scale = Vector2( 0.1, 0.1 )
 mouse_default_cursor_shape = 2
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 8 )
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 14 )
-custom_styles/normal = SubResource( 10 )
+custom_styles/hover = SubResource( 19 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/normal = SubResource( 21 )
 icon = ExtResource( 8 )
 
 [node name="LowerDifficulty" type="Button" parent="."]
-modulate = Color( 0.172549, 0, 0, 1 )
+modulate = Color( 0.192157, 0, 0, 1 )
 margin_left = 408.0
 margin_top = 398.0
 margin_right = 920.0
@@ -161,28 +176,21 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 8 )
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 12 )
-custom_styles/normal = SubResource( 10 )
+custom_styles/hover = SubResource( 22 )
+custom_styles/pressed = SubResource( 23 )
+custom_styles/normal = SubResource( 24 )
 icon = ExtResource( 7 )
 
 [node name="LowerLevel" type="Button" parent="."]
-modulate = Color( 0.172549, 0, 0, 1 )
+modulate = Color( 0.192157, 0, 0, 1 )
 margin_left = 408.0
 margin_top = 455.0
-margin_right = 958.0
+margin_right = 920.0
 margin_bottom = 756.0
 rect_scale = Vector2( 0.1, 0.1 )
-mouse_default_cursor_shape = 2
-custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
-custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 8 )
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 15 )
-custom_styles/normal = SubResource( 10 )
+custom_styles/hover = SubResource( 25 )
+custom_styles/pressed = SubResource( 26 )
+custom_styles/normal = SubResource( 27 )
 icon = ExtResource( 7 )
 
 [node name="Center" type="VBoxContainer" parent="."]
@@ -203,9 +211,10 @@ custom_colors/font_color = Color( 0.192157, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.298039, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.298039, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 11 )
-custom_styles/normal = SubResource( 2 )
+custom_styles/hover = SubResource( 28 )
+custom_styles/pressed = SubResource( 29 )
+custom_styles/focus = SubResource( 31 )
+custom_styles/normal = SubResource( 30 )
 text = "Start Game"
 
 [node name="DifficultyLabel" type="Label" parent="Center"]
@@ -257,8 +266,10 @@ custom_colors/font_color = Color( 0.0588235, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.184314, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.184314, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
-custom_styles/hover = SubResource( 4 )
-custom_styles/normal = SubResource( 2 )
+custom_styles/hover = SubResource( 32 )
+custom_styles/pressed = SubResource( 33 )
+custom_styles/focus = SubResource( 34 )
+custom_styles/normal = SubResource( 35 )
 text = "Quit"
 
 [node name="Light2D" type="Light2D" parent="."]
@@ -273,6 +284,5 @@ script = ExtResource( 10 )
 [connection signal="pressed" from="HigherLevel" to="." method="_on_HigherLevel_pressed"]
 [connection signal="pressed" from="HigherDifficulty" to="." method="_on_HigherDifficulty_pressed"]
 [connection signal="pressed" from="LowerDifficulty" to="." method="_on_LowerDifficulty_pressed"]
-[connection signal="pressed" from="LowerLevel" to="." method="_on_LowerLevel_pressed"]
 [connection signal="pressed" from="Center/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="Center/QuitButton" to="." method="_on_QuitButton_pressed"]

@@ -382,7 +382,6 @@ func _bullet_direction() -> float:
 		angle = deg2rad(-180 - rad2deg(angle))
 	
 	if last_action_pressed == "right":
-		
 		bullet_target.y = bullet_target.x*tan(angle)
 		bullet_target += gunpoint.global_position
 	else:
@@ -416,7 +415,7 @@ func _attack() -> void:
 		frame_number += 1
 	elif Input.is_action_pressed("sprint"):
 		sprite.play("RunAttack")
-		if frame_number <= 7:
+		if frame_number <= 4:
 			sprite.set_frame(frame)
 		else:
 			frame_number = 0
@@ -445,7 +444,7 @@ func _attack() -> void:
 			frame = 0
 			frame_number = 1
 	elif Input.is_action_pressed("sprint"):
-		if frame >= 7 and frame_number >= 7:
+		if frame >= 7 and frame_number >= 4:
 			can_shoot = true
 			shot = false
 			frame = 0
