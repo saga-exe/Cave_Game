@@ -8,6 +8,7 @@ var direction := Vector2.ZERO
 func _ready() -> void:
 	$FireTimer.start()
 	$AnimatedSprite.play("Travelling")
+	$AudioStreamPlayer.play()
 	
 
 

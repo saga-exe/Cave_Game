@@ -222,32 +222,7 @@ func _run_state(delta) -> void:
 	_left_right_movement(delta)
 	_climb()
 	
-	if Input.is_action_pressed("sprint"):
-		$Right.pitch_scale = 1.6
-		$Left.pitch_scale = 1.6
-	else:
-		sprite.play("Walk")
-		$Right.pitch_scale = 1.3
-		$Left.pitch_scale = 1.3
-	
-	if Input.is_action_pressed("sprint"):
-		if $AnimatedSprite.frame == 1 and not right_played:
-			$Right.play()
-			right_played = true
-		elif $AnimatedSprite.frame == 5 and not left_played:
-			$Left.play()
-			left_played = true
-	else:
-		if $AnimatedSprite.frame == 2 and not right_played:
-			$Right.play()
-			right_played = true
-		elif $AnimatedSprite.frame == 5 and not left_played:
-			$Left.play()
-			left_played = true
-	
-	if $AnimatedSprite.frame == 0:
-		right_played = false
-		left_played = false
+	_walking_sounds($AnimatedSprite.frame)
 	
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot and (can_extra_attack or $ExtraAttackTimer.time_left != 0)):
 		_attack()
@@ -428,6 +403,8 @@ func _bullet_direction() -> float:
 func _attack() -> void:
 	can_shoot = false
 	
+	_walking_sounds(frame)
+	
 	if global_position.x - get_global_mouse_position().x > 0:
 		last_action_pressed = "left"
 	else:
@@ -490,7 +467,7 @@ func _extra_attack() -> void:
 	HUD.mana_changed(0)
 	can_shoot = false
 	can_extra_attack = false
-	direction.x = 0
+	velocity.x = 0
 	sprite.play("AttackExtra")
 	
 	if global_position.x - get_global_mouse_position().x > 0:
@@ -693,3 +670,32 @@ func heal(health):
 
 func _on_ExtraAttackTimer_timeout():
 	can_extra_attack = true
+
+
+func _walking_sounds(current_frame):
+	if Input.is_action_pressed("sprint"):
+		$Right.pitch_scale = 1.6
+		$Left.pitch_scale = 1.6
+	else:
+		sprite.play("Walk")
+		$Right.pitch_scale = 1.3
+		$Left.pitch_scale = 1.3
+	
+	if Input.is_action_pressed("sprint"):
+		if current_frame == 1 and not right_played:
+			$Right.play()
+			right_played = true
+		elif current_frame == 5 and not left_played:
+			$Left.play()
+			left_played = true
+	else:
+		if current_frame == 2 and not right_played:
+			$Right.play()
+			right_played = true
+		elif current_frame == 5 and not left_played:
+			$Left.play()
+			left_played = true
+	
+	if current_frame == 0 or current_frame > 5:
+		right_played = false
+		left_played = false
