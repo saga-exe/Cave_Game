@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Fire Paper.wav-5ef5c3964648c5c79d858481c55e6555.sample"
+path="res://.import/Left_foot.wav-1c1391e4c401334340dbe04079a7270c.sample"
 
 [deps]
 
-source_file="res://Sound/Fire Paper.wav"
-dest_files=[ "res://.import/Fire Paper.wav-5ef5c3964648c5c79d858481c55e6555.sample" ]
+source_file="res://Sound/Left_foot.wav"
+dest_files=[ "res://.import/Left_foot.wav-1c1391e4c401334340dbe04079a7270c.sample" ]
 
 [params]
 
@@ -17,7 +17,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop_mode=2
+edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
 compress/mode=0
