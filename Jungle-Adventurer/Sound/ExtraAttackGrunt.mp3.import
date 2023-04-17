@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ExtraAttackGrunt.mp3-7ddb7b9d713270d544d3851852bec11f.mp3str"
+
+[deps]
+
+source_file="res://Sound/ExtraAttackGrunt.mp3"
+dest_files=[ "res://.import/ExtraAttackGrunt.mp3-7ddb7b9d713270d544d3851852bec11f.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -5,9 +5,8 @@ extends KinematicBody2D
 #chests
 #make it so enemies collide w/eo and then turn around/wait
 #enemies drop coins or hearts?
-#pause menu
-#game finished menu
 #jump animation stop
+#menu music
 
 """
 Layer1: Adventurer
@@ -402,8 +401,11 @@ func _bullet_direction() -> float:
 
 func _attack() -> void:
 	can_shoot = false
+	if not $Attack.playing:
+		$Attack.play()
 	
-	_walking_sounds(frame)
+	if velocity.x != 0:
+		_walking_sounds(frame)
 	
 	if global_position.x - get_global_mouse_position().x > 0:
 		last_action_pressed = "left"
@@ -437,6 +439,7 @@ func _attack() -> void:
 			frame += 1
 			sprite.set_frame(frame)
 		frame_number += 1
+		
 	
 	if sprite.get_frame() >= 4 and not shot:
 		shot = true
@@ -449,18 +452,21 @@ func _attack() -> void:
 			shot = false
 			frame = 0
 			frame_number = 1
+			$Attack.stop()
 	elif Input.is_action_pressed("sprint"):
 		if frame >= 7 and frame_number >= 4:
 			can_shoot = true
 			shot = false
 			frame = 0
 			frame_number = 1
+			$Attack.stop()
 	else:
 		if frame >= 6 and frame_number >= 6:
 			can_shoot = true
 			shot = false
 			frame = 0
 			frame_number = 1
+			$Attack.stop()
 
 
 func _extra_attack() -> void:
@@ -469,6 +475,9 @@ func _extra_attack() -> void:
 	can_extra_attack = false
 	velocity.x = 0
 	sprite.play("AttackExtra")
+	
+	if not $ExtraAttack.playing:
+		$ExtraAttack.play()
 	
 	if global_position.x - get_global_mouse_position().x > 0:
 		last_action_pressed = "left"
@@ -512,6 +521,7 @@ func take_damage(damage, knockback_direction) -> void:
 		_airstate_switch()
 		state = AIR
 	else:
+		$DamageSound.play()
 		Globals.damaged = true
 		Globals.can_collide = false
 		$DamageTimer.start()
