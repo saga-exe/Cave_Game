@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://Scripts/WraithTeal.gd" type="Script" id=1]
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_014.png" type="Texture" id=2]
@@ -58,6 +58,8 @@
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_003.png" type="Texture" id=56]
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_002.png" type="Texture" id=57]
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_001.png" type="Texture" id=58]
+[ext_resource path="res://Sound/WraithDefault.mp3" type="AudioStream" id=59]
+[ext_resource path="res://Sound/WraithDeath.mp3" type="AudioStream" id=60]
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 8, 17 )
@@ -209,6 +211,16 @@ position = Vector2( -1, -13 )
 shape = SubResource( 12 )
 
 [node name="KnockBackTimer" type="Timer" parent="."]
+
+[node name="Default" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 59 )
+volume_db = -22.0
+pitch_scale = 0.7
+
+[node name="Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 60 )
+volume_db = 3.0
+pitch_scale = 1.2
 
 [connection signal="body_entered" from="WraithArea" to="." method="_on_WraithArea_body_entered"]
 [connection signal="body_exited" from="WraithArea" to="." method="_on_WraithArea_body_exited"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/WraithDeath.mp3-507e7cb700542837be4a5d8caedf476e.mp3str"
+
+[deps]
+
+source_file="res://Sound/WraithDeath.mp3"
+dest_files=[ "res://.import/WraithDeath.mp3-507e7cb700542837be4a5d8caedf476e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

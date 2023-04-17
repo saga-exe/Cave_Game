@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=2]
+[gd_scene load_steps=101 format=2]
 
 [ext_resource path="res://Scripts/WraithOrange.gd" type="Script" id=1]
 [ext_resource path="res://Enemies/Wraith_Orange/Idle/Wraith_02_Idle_000.png" type="Texture" id=2]
@@ -88,6 +88,8 @@
 [ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_010.png" type="Texture" id=86]
 [ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_003.png" type="Texture" id=87]
 [ext_resource path="res://Enemies/Wraith_Orange/Dying/Wraith_02_Dying_002.png" type="Texture" id=88]
+[ext_resource path="res://Sound/WraithDefault.mp3" type="AudioStream" id=89]
+[ext_resource path="res://Sound/WraithDeath.mp3" type="AudioStream" id=90]
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 9.5, 17.5 )
@@ -260,6 +262,15 @@ enabled = true
 cast_to = Vector2( 0, 800 )
 collision_mask = 4
 collide_with_areas = true
+
+[node name="Default" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 89 )
+volume_db = -10.0
+pitch_scale = 0.6
+
+[node name="Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 90 )
+volume_db = 3.0
 
 [connection signal="body_entered" from="WraithArea" to="." method="_on_WraithArea_body_entered"]
 [connection signal="body_exited" from="WraithArea" to="." method="_on_WraithArea_body_exited"]

@@ -43,6 +43,7 @@ onready var sprite = $AnimatedSprite
 
 
 func _ready():
+	$Default.play()
 	MAX_SPEED = IDLE_SPEED
 	state = IDLE
 	sprite.play("Idle")
@@ -188,7 +189,10 @@ func _die_state(_delta) -> void:
 	set_collision_mask_bit(8, false)
 	velocity.x = 0
 	direction.x = 0
+	if not $Death.playing:
+		$Death.play()
 	sprite.play("Dying")
+	$Default.volume_db -= 1
 	yield(sprite,"animation_finished")
 	if can_drop_coin:
 		var coin_instance = coin_scene.instance()
