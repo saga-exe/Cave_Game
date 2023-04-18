@@ -1,14 +1,15 @@
 extends Area2D
 
 var velocity = 1000
-
 var direction := Vector2.ZERO
+
+var explosion_scene = preload("res://Scenes/BulletExplosion.tscn")
 
 
 func _ready() -> void:
 	$FireTimer.start()
 	$AnimatedSprite.play("Travelling")
-	$AudioStreamPlayer.play()
+	$Travel.play()
 	
 
 
@@ -35,6 +36,7 @@ func _on_FireTimer_timeout() -> void:
 func _on_PlayerFire_body_entered(body: Node) -> void:
 	var damage = 0
 	if body.is_in_group("Enemy"):
+		var explosion_instance = explosion_scene.instance()
 		$CollisionShape2D.set_deferred("disabled", true)
 		if body.is_in_group("WraithOrange"):
 			damage = 50
@@ -44,7 +46,8 @@ func _on_PlayerFire_body_entered(body: Node) -> void:
 		velocity = 0
 		if direction.x < 0:
 			$AnimatedSprite.set_flip_v(true)
-		$AnimatedSprite.play("Exlpodes")
-		yield($AnimatedSprite, "animation_finished")
+		$Travel.stop()
+		get_tree().get_root().call_deferred("add_child", explosion_instance)
+		explosion_instance.global_position = global_position
 		queue_free()
 

@@ -5,8 +5,7 @@ extends KinematicBody2D
 #chests
 #make it so enemies collide w/eo and then turn around/wait
 #enemies drop coins or hearts?
-#jump animation stop
-#menu music
+#power up and coin music / sound effects
 
 """
 Layer1: Adventurer
