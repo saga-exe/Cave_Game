@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-var coins = -1
+var coins = 0
 
 onready var healthbar = $HealthBar
 onready var cointext = $CoinText
