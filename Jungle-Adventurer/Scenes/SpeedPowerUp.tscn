@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Environment/Items/000_0028_speed8.png" type="Texture" id=1]
 [ext_resource path="res://Environment/Items/000_0027_speed9.png" type="Texture" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Environment/Items/000_0030_speed6.png" type="Texture" id=15]
 [ext_resource path="res://Environment/Items/000_0032_speed4.png" type="Texture" id=16]
 [ext_resource path="res://Scripts/SpeedPowerUp.gd" type="Script" id=17]
+[ext_resource path="res://Sound/Pickup.mp3" type="AudioStream" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6, 5.5 )
@@ -29,19 +30,75 @@ animations = [ {
 "speed": 7.0
 } ]
 
+[sub_resource type="Animation" id=3]
+resource_name = "Default"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Downsize"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ), Vector2( 1e-05, 1e-05 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1 ) ]
+}
+
 [node name="SpeedPowerUp" type="Area2D" groups=["SpeedPowerUp"]]
+z_index = 2
 script = ExtResource( 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 1e-05, 1 )
 frames = SubResource( 2 )
-frame = 1
+frame = 13
 playing = true
 
 [node name="FinishTimer" type="Timer" parent="."]
 wait_time = 0.1
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 18 )
+
+[node name="Size" type="AnimationPlayer" parent="."]
+anims/Default = SubResource( 3 )
+anims/Downsize = SubResource( 4 )
+anims/RESET = SubResource( 5 )
 
 [connection signal="body_entered" from="." to="." method="_on_SpeedPowerUp_body_entered"]
 [connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]

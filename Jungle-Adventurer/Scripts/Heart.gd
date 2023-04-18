@@ -5,6 +5,7 @@ onready var player = get_node("/root/MainScene/Adventurer")
 
 func _ready() -> void:
 	$AnimatedSprite.play("default")
+	$Size.play("Default")
 
 
 func _physics_process(_delta: float) -> void:
@@ -19,7 +20,10 @@ func _on_FinishTimer_timeout():
 
 func _on_Heart_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
+		$Pickup.play()
+		$Size.play("Downsize")
 		player.heal(25)
+		yield($Size, "animation_finished")
 		queue_free()
 		
 		

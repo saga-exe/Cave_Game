@@ -385,6 +385,8 @@ stream = ExtResource( 36 )
 volume_db = 18.0
 pitch_scale = 0.8
 
+[node name="Pickup" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="body_entered" from="PlayerArea" to="." method="_on_PlayerArea_body_entered"]
 [connection signal="body_exited" from="PlayerArea" to="." method="_on_PlayerArea_body_exited"]
 [connection signal="timeout" from="DamageTimer" to="." method="_on_DamageTimer_timeout"]

@@ -6,6 +6,7 @@ var coin = 1
 
 func _ready() -> void:
 	$AnimatedSprite.play("Idle")
+	$Size.play("Default")
 
 
 func _physics_process(_delta: float) -> void:
@@ -20,7 +21,11 @@ func _on_FinishTimer_timeout():
 
 func _on_Coin_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
-		queue_free()
+		$Pickup.play()
+		$Size.play("Downsize")
 		HUD.gems_collected(coin)
 		Globals.difficulty -= 0.004
+		yield($Size, "animation_finished")
+		queue_free()
+		
 

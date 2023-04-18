@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Coin.gd" type="Script" id=1]
 [ext_resource path="res://Environment/Items/000_0045_coin.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Environment/Items/000_0039_coin7.png" type="Texture" id=9]
 [ext_resource path="res://Environment/Items/000_0037_coin9.png" type="Texture" id=10]
 [ext_resource path="res://Environment/Items/000_0038_coin8.png" type="Texture" id=11]
+[ext_resource path="res://Sound/Pickup.mp3" type="AudioStream" id=12]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 13.0
@@ -23,7 +24,54 @@ animations = [ {
 "speed": 7.0
 } ]
 
+[sub_resource type="Animation" id=6]
+resource_name = "Default"
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Downsize"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ), Vector2( 1e-05, 1e-05 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1 ) ]
+}
+
 [node name="Coin" type="Area2D"]
+z_index = 2
 collision_layer = 16
 script = ExtResource( 1 )
 
@@ -31,12 +79,21 @@ script = ExtResource( 1 )
 shape = SubResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 1e-05, 1 )
 frames = SubResource( 2 )
 animation = "Idle"
 frame = 8
 
 [node name="FinishTimer" type="Timer" parent="."]
 wait_time = 0.1
+
+[node name="Pickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+
+[node name="Size" type="AnimationPlayer" parent="."]
+anims/Default = SubResource( 6 )
+anims/Downsize = SubResource( 4 )
+anims/RESET = SubResource( 5 )
 
 [connection signal="body_entered" from="." to="." method="_on_Coin_body_entered"]
 [connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]
