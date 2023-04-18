@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/SpeedPower.mp3-3b7147f7c74ece95384d2135a69bbacc.mp3str"
+
+[deps]
+
+source_file="res://Sound/SpeedPower.mp3"
+dest_files=[ "res://.import/SpeedPower.mp3-3b7147f7c74ece95384d2135a69bbacc.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
