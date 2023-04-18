@@ -1,11 +1,8 @@
 extends KinematicBody2D
 
-#storyline
-
-#chests
-#make it so enemies collide w/eo and then turn around/wait
-#enemies drop coins or hearts?
-#power up and coin music / sound effects
+#save file
+#cat was captured, das why go
+#collect animals
 
 """
 Layer1: Adventurer
@@ -17,7 +14,7 @@ Layer6: EnemySpawner
 Layer7: Ladders, End, Lava (PlayerArea interactions)
 Layer8: ClimbStoppers
 Layer9: Bullets
-Layer10: Noninteractive objects (terrainceck)
+Layer10: Noninteractive objects (terraincheck)
 Layer11: Enemy 2 (TopKill)
 Layer12: Bridges
 """
