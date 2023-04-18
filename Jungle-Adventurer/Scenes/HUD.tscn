@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scripts/HUD.gd" type="Script" id=1]
 [ext_resource path="res://Environment/Items/000_0033_speed3.png" type="Texture" id=2]
@@ -117,6 +117,26 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="DynamicFont" id=10]
+size = 18
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 18
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 18
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 18
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 12
+font_data = ExtResource( 13 )
+
 [node name="HUD" type="CanvasLayer"]
 layer = 2
 script = ExtResource( 1 )
@@ -150,6 +170,7 @@ position = Vector2( 786, 41 )
 scale = Vector2( 1.25, 1.25 )
 frames = SubResource( 4 )
 animation = "Star"
+frame = 7
 playing = true
 
 [node name="Coin" type="AnimatedSprite" parent="."]
@@ -173,3 +194,51 @@ custom_styles/fg = SubResource( 8 )
 custom_styles/bg = SubResource( 9 )
 max_value = 8.0
 percent_visible = false
+
+[node name="Seconds" type="Label" parent="."]
+margin_left = 99.0
+margin_top = 28.0
+margin_right = 126.0
+margin_bottom = 47.0
+custom_fonts/font = SubResource( 10 )
+text = "00"
+
+[node name="MilliSeconds" type="Label" parent="."]
+margin_left = 143.0
+margin_top = 28.0
+margin_right = 183.0
+margin_bottom = 47.0
+custom_fonts/font = SubResource( 11 )
+text = "00"
+
+[node name="Minutes" type="Label" parent="."]
+margin_left = 58.0
+margin_top = 28.0
+margin_right = 77.0
+margin_bottom = 47.0
+custom_fonts/font = SubResource( 12 )
+text = "00"
+
+[node name="TimeDivider1" type="Label" parent="."]
+margin_left = 85.0
+margin_top = 28.0
+margin_right = 92.0
+margin_bottom = 47.0
+custom_fonts/font = SubResource( 13 )
+text = ":"
+
+[node name="TimeDivider2" type="Label" parent="."]
+margin_left = 127.0
+margin_top = 28.0
+margin_right = 135.0
+margin_bottom = 47.0
+custom_fonts/font = SubResource( 13 )
+text = ":"
+
+[node name="highscore" type="Label" parent="."]
+margin_left = 58.0
+margin_top = 60.0
+margin_right = 98.0
+margin_bottom = 75.0
+custom_fonts/font = SubResource( 14 )
+text = "0"

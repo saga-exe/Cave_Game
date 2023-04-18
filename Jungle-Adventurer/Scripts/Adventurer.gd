@@ -633,6 +633,8 @@ func _finished_state(delta) -> void:
 	sprite.play("Idle")
 
 	if can_end:
+		if Globals.level != 0:
+			HUD.save_highscore()
 		background_music_fade.play_backwards("MusicFadeIn")
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
 	elif hp <= 0:
