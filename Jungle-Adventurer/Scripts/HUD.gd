@@ -14,6 +14,7 @@ const SAVE_FILE_LEVEL2 = "user://DungeonSlayer_2_File.save"
 onready var healthbar = $HealthBar
 onready var cointext = $CoinText
 onready var attackbar = $ExtraAttackBar
+onready var player = get_node("/root/MainScene/Adventurer")
 
 
 func _ready() -> void:
@@ -33,6 +34,10 @@ func _ready() -> void:
 func _process(delta):
 	_time(delta)
 	_power_up()
+	score = 360000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 500
+	if score <= 0:
+		Globals.score = 0
+		player._finished_state(delta)
 
 func health_changed(hp) -> void:
 	healthbar.value = hp
@@ -87,9 +92,10 @@ func _load_highscore() -> void:
 		save_file.close()
 	else:
 		highscore = 0
+	Globals.highscore = highscore
 
 func save_highscore() -> void:
-	score = minutes * 60 * 100 + seconds * 100 + milliseconds + coins * 500
+	score = 360000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 500
 	var FILE_PATH = SAVE_FILE_LEVEL1
 	if Globals.level == 1:
 		FILE_PATH = SAVE_FILE_LEVEL1
@@ -99,3 +105,4 @@ func save_highscore() -> void:
 	save_file.open(FILE_PATH, File.WRITE)
 	save_file.store_var(stepify(score, 1))
 	save_file.close()
+	Globals.score = stepify(score, 1)

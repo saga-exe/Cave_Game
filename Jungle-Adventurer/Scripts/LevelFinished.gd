@@ -19,6 +19,12 @@ func _ready() -> void:
 		$VBoxContainer/NextLevelButton.disabled = true
 		$VBoxContainer/NextLevelButton.visible = false
 		$LevelFinishedText.text = "Game Completed"
+	if Globals.level != 0:
+		$VBoxContainer2/Highscore.text = "Highscore: " + str(Globals.highscore)
+		$VBoxContainer2/Score.text = "Score: " + str(Globals.score)
+		$LevelFinishedText.rect_position.y = 170
+	else:
+		$LevelFinishedText.rect_position.y = 200
 	Globals.is_finished = false
 	previous_level = Globals.level
 

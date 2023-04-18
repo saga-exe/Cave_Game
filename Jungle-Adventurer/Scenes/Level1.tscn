@@ -1911,7 +1911,7 @@ tile_set = SubResource( 48 )
 collision_layer = 64
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 262326, 0, 0 )
+tile_data = PoolIntArray( 196617, 0, 0, 262326, 0, 0 )
 
 [node name="Bridge" type="TileMap" parent="." groups=["Bridge"]]
 position = Vector2( 0, 10 )

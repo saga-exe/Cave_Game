@@ -2,6 +2,9 @@ extends Control
 
 var difficulty = 1
 var level = 0
+var highscore = 0
+
+const FILE_PATH = "user://DungeonSlayer_1_File.save"
 
 onready var difficulty_label = $Center/Difficulty
 onready var level_label = $Center/Level
@@ -13,6 +16,7 @@ onready var layer5 = $Node/ParallaxBackground2/ParallaxLayer5
 onready var layer6 = $Node/ParallaxBackground2/ParallaxLayer6
 
 func _ready():
+	_load_highscore()
 	$Music.play()
 	Globals.is_finished = false
 
@@ -71,5 +75,16 @@ func _on_LowerLevel_pressed() -> void:
 
 
 func _on_HigherLevel_pressed() -> void:
-	if level < 2:
+	if level < 1:
 		level += 1
+	elif highscore > 0 and level < 2:
+		level += 1
+
+func _load_highscore() -> void:
+	var save_file = File.new()
+	if save_file.file_exists(FILE_PATH):
+		save_file.open(FILE_PATH, File.READ)
+		highscore = save_file.get_var()
+		save_file.close()
+	else:
+		highscore = 0

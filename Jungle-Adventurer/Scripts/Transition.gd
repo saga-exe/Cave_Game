@@ -5,6 +5,7 @@ onready var animationplayer = $AnimationPlayer
 var level_scene = preload("res://Scenes/Level1.tscn")
 var level = 1
 
+#it goes around bcos yield
 
 func level(level_number) -> void:
 	level = level_number
@@ -15,7 +16,6 @@ func load_scene(path):
 	if not path == "res://Scenes/MainScene.tscn":
 		Globals.is_finished = true
 	yield(animationplayer, "animation_finished")
-	
 	get_tree().change_scene(path)
 	if path == "res://Scenes/MainScene.tscn":
 		if level == 0:

@@ -3,6 +3,7 @@ extends KinematicBody2D
 #save file
 #cat was captured, das why go
 #collect animals
+#buttons light up on level completed
 
 """
 Layer1: Adventurer
@@ -637,10 +638,10 @@ func _finished_state(delta) -> void:
 			HUD.save_highscore()
 		background_music_fade.play_backwards("MusicFadeIn")
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
-	elif hp <= 0:
+	elif hp <= 0 or Globals.score <= 0:
 		background_music_fade.play_backwards("MusicFadeIn")
-		Transition.load_scene("res://Scenes/GameOver.tscn")
 		Globals.damaged = false
+		Transition.load_scene("res://Scenes/GameOver.tscn")
 	else:
 		anim_player.play("BlackOut")
 		yield(anim_player, "animation_finished")
