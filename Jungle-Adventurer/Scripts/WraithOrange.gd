@@ -179,6 +179,8 @@ func _die_state(_delta) -> void:
 	velocity.x = 0
 	direction.x = 0
 	if not $Death.playing:
+		$Death.volume_db = 3
+		$Death.pitch_scale = 1
 		$Death.play()
 	sprite.play("Dying")
 	$Default.volume_db -= 1
@@ -262,6 +264,11 @@ func take_damage(damage) -> void:
 		$HealthBar.visible = false
 	if hp <= 0:
 		state = DIE
+	else:
+		$Death.volume_db = -3
+		$Death.pitch_scale = 1.5
+		$Death.play()
+		
 
 
 func _on_TopKillArea_body_entered(body: Node) -> void:

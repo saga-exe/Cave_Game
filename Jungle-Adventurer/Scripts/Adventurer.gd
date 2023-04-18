@@ -73,9 +73,12 @@ onready var gunpoint = $GunPoint
 onready var player_area = $PlayerArea
 onready var HUD = get_node("/root/MainScene/HUD")
 onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
+onready var background_music = get_node("/root/MainScene/BackgroundMusic")
+onready var background_music_fade = get_node("/root/MainScene/SoundPlayer")
 
 func _ready() -> void:
-	get_node("/root/MainScene/BackgroundMusic").playing = true
+	background_music.playing = true
+	background_music_fade.play("MusicFadeIn")
 	$Camera2D.limit_right = Globals.camera_limit
 	if Globals.power != "none":
 		power_up(Globals.power)
@@ -634,8 +637,10 @@ func _finished_state(delta) -> void:
 	sprite.play("Idle")
 
 	if can_end:
+		background_music_fade.play_backwards("MusicFadeIn")
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
 	elif hp <= 0:
+		background_music_fade.play_backwards("MusicFadeIn")
 		Transition.load_scene("res://Scenes/GameOver.tscn")
 		Globals.damaged = false
 	else:

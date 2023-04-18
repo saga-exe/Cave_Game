@@ -13,6 +13,7 @@ onready var layer5 = $Node/ParallaxBackground2/ParallaxLayer5
 onready var layer6 = $Node/ParallaxBackground2/ParallaxLayer6
 
 func _ready():
+	$Music.play()
 	Globals.is_finished = false
 
 func _physics_process(delta: float) -> void:
@@ -43,12 +44,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_StartButton_pressed():
+	$AnimationPlayer.play("LowerMusic")
 	Globals.difficulty = difficulty
 	Globals.level = level
 	Transition.level(level)
 	Transition.load_scene("res://Scenes/MainScene.tscn")
-	
-	
 
 
 func _on_LowerDifficulty_pressed() -> void:

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/WraithBullet.mp3-da6fb2eb3094b96fd970c26735cc5a8f.mp3str"
+
+[deps]
+
+source_file="res://Sound/WraithBullet.mp3"
+dest_files=[ "res://.import/WraithBullet.mp3-da6fb2eb3094b96fd970c26735cc5a8f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=2]
+[gd_scene load_steps=114 format=2]
 
 [ext_resource path="res://Character Sprites/Mage/Attack/attack2.png" type="Texture" id=1]
 [ext_resource path="res://Character Sprites/Mage/Death/death8.png" type="Texture" id=2]
@@ -308,9 +308,6 @@ tracks/0/keys = {
 "values": [ 1.0, 4.0, 4.0, 2.5, 4.0, 2.5, 4.0, 2.5, 3.0, 1.0 ]
 }
 
-[sub_resource type="Animation" id=29]
-resource_name = "Walking"
-
 [node name="Adventurer" type="KinematicBody2D" groups=["Player"]]
 collision_mask = 2054
 script = ExtResource( 54 )
@@ -364,9 +361,6 @@ one_shot = true
 [node name="ExtraAttackTimer" type="Timer" parent="."]
 wait_time = 8.0
 one_shot = true
-
-[node name="SoundPlayer" type="AnimationPlayer" parent="."]
-anims/Walking = SubResource( 29 )
 
 [node name="Right" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 15 )

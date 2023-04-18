@@ -59,7 +59,7 @@
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_002.png" type="Texture" id=57]
 [ext_resource path="res://Enemies/Wraith_Teal/Dying/Wraith_01_Dying_001.png" type="Texture" id=58]
 [ext_resource path="res://Sound/WraithDefault.mp3" type="AudioStream" id=59]
-[ext_resource path="res://Sound/WraithDeath.mp3" type="AudioStream" id=60]
+[ext_resource path="res://Sound/WraithDeath.wav" type="AudioStream" id=60]
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 8, 17 )

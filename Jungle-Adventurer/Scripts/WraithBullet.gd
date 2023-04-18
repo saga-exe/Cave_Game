@@ -7,6 +7,7 @@ var direction := Vector2.ZERO
 
 func _ready() -> void:
 	$Timer.start()
+	$Sound.play()
 
 
 func _physics_process(delta: float) -> void:

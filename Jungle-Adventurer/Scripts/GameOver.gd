@@ -10,6 +10,7 @@ onready var layer6 = $Node/ParallaxBackground2/ParallaxLayer6
 
 func _ready() -> void:
 	Globals.is_finished = false
+	$Trombone.play()
 
 func _physics_process(delta: float) -> void:
 	$Light2D.global_position = get_global_mouse_position()

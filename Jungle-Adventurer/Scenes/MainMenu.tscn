@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Fonts/Gothical.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/BlackFlag.ttf" type="DynamicFontData" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Fonts/Arrows/Arrow_right_white.png" type="Texture" id=8]
 [ext_resource path="res://Light/Light_texture.webp" type="Texture" id=9]
 [ext_resource path="res://Scripts/LightFlicker.gd" type="Script" id=10]
+[ext_resource path="res://Sound/MenuMusic.mp3" type="AudioStream" id=11]
 
 [sub_resource type="DynamicFont" id=3]
 size = 100
@@ -92,6 +93,36 @@ font_data = ExtResource( 5 )
 [sub_resource type="StyleBoxEmpty" id=34]
 
 [sub_resource type="StyleBoxEmpty" id=35]
+
+[sub_resource type="Animation" id=36]
+resource_name = "LowerMusic"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -20.0, -80.0 ]
+}
+
+[sub_resource type="Animation" id=37]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [node name="MainMenu" type="Control"]
 margin_right = 1024.0
@@ -267,6 +298,13 @@ energy = 1.4
 range_layer_min = -100
 range_layer_max = 100
 script = ExtResource( 10 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/LowerMusic = SubResource( 36 )
+anims/RESET = SubResource( 37 )
 
 [connection signal="pressed" from="HigherDifficulty" to="." method="_on_HigherDifficulty_pressed"]
 [connection signal="pressed" from="HigherLevel" to="." method="_on_HigherLevel_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/WraithBullet.gd" type="Script" id=1]
 [ext_resource path="res://Light/Light_texture.webp" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Bullets/WraithAmmo/6.png" type="Texture" id=6]
 [ext_resource path="res://Bullets/WraithAmmo/4.png" type="Texture" id=7]
 [ext_resource path="res://Bullets/WraithAmmo/2.png" type="Texture" id=8]
+[ext_resource path="res://Sound/WraithBullet.mp3" type="AudioStream" id=9]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -46,6 +47,9 @@ position = Vector2( 4, 0 )
 texture = ExtResource( 2 )
 color = Color( 1, 0.843137, 0.596078, 1 )
 range_layer_min = -100
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
 
 [connection signal="body_entered" from="." to="." method="_on_WraithBullet_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

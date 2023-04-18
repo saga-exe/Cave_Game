@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/wah-wah-sad-trombone.mp3-25c835dce5e623f916768c155870fe80.mp3str"
+
+[deps]
+
+source_file="res://Sound/wah-wah-sad-trombone.mp3"
+dest_files=[ "res://.import/wah-wah-sad-trombone.mp3-25c835dce5e623f916768c155870fe80.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
