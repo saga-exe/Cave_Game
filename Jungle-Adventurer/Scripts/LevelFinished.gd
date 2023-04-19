@@ -15,6 +15,8 @@ onready var firework_scene = preload("res://Scenes/Fireworks.tscn")
 func _ready() -> void:
 	$Music.play()
 	$SoundPlayer.play("MusicFadeIn")
+	if Globals.score > Globals.highscore:
+		Globals.highscore = Globals.score
 	if Globals.level == 2:
 		$VBoxContainer/NextLevelButton.disabled = true
 		$VBoxContainer/NextLevelButton.visible = false

@@ -25,6 +25,9 @@ func _ready() -> void:
 		$Minutes.visible = false
 		$MilliSeconds.visible = false
 		$Seconds.visible = false
+		$highscoretext.visible = false
+		$score.visible = false
+		$scoretext.visible = false
 	else:
 		_load_highscore()
 	$highscore.text = str(highscore)
@@ -34,10 +37,11 @@ func _ready() -> void:
 func _process(delta):
 	_time(delta)
 	_power_up()
-	score = 360000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 500
+	score = 180000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 500 - (100 - healthbar.value) * 500
 	if score <= 0:
 		Globals.score = 0
 		player._finished_state(delta)
+	$score.text = str(stepify(score, 1))
 
 func health_changed(hp) -> void:
 	healthbar.value = hp
@@ -95,14 +99,13 @@ func _load_highscore() -> void:
 	Globals.highscore = highscore
 
 func save_highscore() -> void:
-	score = 360000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 500
-	var FILE_PATH = SAVE_FILE_LEVEL1
-	if Globals.level == 1:
-		FILE_PATH = SAVE_FILE_LEVEL1
-	elif Globals.level == 2:
-		FILE_PATH = SAVE_FILE_LEVEL2
-	var save_file = File.new()
-	save_file.open(FILE_PATH, File.WRITE)
-	save_file.store_var(stepify(score, 1))
-	save_file.close()
-	Globals.score = stepify(score, 1)
+	score = 180000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 500 - (100 - healthbar.value) * 500
+	if score > Globals.highscore:
+		var FILE_PATH = SAVE_FILE_LEVEL1
+		if Globals.level == 2:
+			FILE_PATH = SAVE_FILE_LEVEL2
+		var save_file = File.new()
+		save_file.open(FILE_PATH, File.WRITE)
+		save_file.store_var(stepify(score, 1))
+		save_file.close()
+		Globals.score = stepify(score, 1)

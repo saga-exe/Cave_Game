@@ -388,7 +388,7 @@ pitch_scale = 0.8
 
 [node name="Pickup" type="AudioStreamPlayer2D" parent="."]
 
-[node name="Power" type="AudioStreamPlayer2D" parent="."]
+[node name="Power" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 44 )
 
 [connection signal="body_entered" from="PlayerArea" to="." method="_on_PlayerArea_body_entered"]

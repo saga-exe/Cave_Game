@@ -43,7 +43,8 @@ script = ExtResource( 7 )
 [node name="FinishTimer" type="Timer" parent="."]
 wait_time = 0.1
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="Fire" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
+volume_db = 4.0
 
 [connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]

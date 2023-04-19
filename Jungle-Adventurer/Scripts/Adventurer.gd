@@ -1,10 +1,5 @@
 extends KinematicBody2D
 
-#save file
-#cat was captured, das why go
-#collect animals
-#buttons light up on level completed
-
 """
 Layer1: Adventurer
 Layer2: Enemy (slime, wraith)
@@ -88,6 +83,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if Globals.power == "none":
+		$Power.stop()
+		if not Globals.damaged:
+			$Effects.play("Idle")
+		speed_power = false
 	if not Globals.damaged and Globals.power != "star":
 		$Effects.play("Idle")
 	if $ExtraAttackTimer.time_left > 0:
@@ -640,7 +640,7 @@ func _finished_state(delta) -> void:
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
 	elif hp <= 0 or Globals.score <= 0:
 		background_music_fade.play_backwards("MusicFadeIn")
-		Globals.damaged = false
+		Globals.power = "none"
 		Transition.load_scene("res://Scenes/GameOver.tscn")
 	else:
 		anim_player.play("BlackOut")
@@ -672,7 +672,8 @@ func power_up(power) -> void:
 
 
 func _on_PowerUpTimer_timeout() -> void:
-	$Effects.play("Idle")
+	if not Globals.damaged:
+		$Effects.play("Idle")
 	speed_power = false
 	difficulty = Globals.difficulty
 	$PlayerArea.set_collision_mask_bit(1, true)
