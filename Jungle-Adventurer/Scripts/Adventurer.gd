@@ -638,13 +638,18 @@ func _finished_state(delta) -> void:
 			HUD.save_highscore()
 		background_music_fade.play_backwards("MusicFadeIn")
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
+		$PowerUpTimer.stop()
+		print($PowerUpTimer.time_left)
 	elif hp <= 0 or Globals.score <= 0:
 		background_music_fade.play_backwards("MusicFadeIn")
-		Globals.power = "none"
+		$PowerUpTimer.stop()
+		print($PowerUpTimer.time_left)
 		Transition.load_scene("res://Scenes/GameOver.tscn")
 	else:
 		anim_player.play("BlackOut")
 		yield(anim_player, "animation_finished")
+		$PowerUpTimer.stop()
+		print($PowerUpTimer.time_left)
 		global_position = last_pos
 		_on_PowerUpTimer_timeout()
 		HUD.health_changed(hp)

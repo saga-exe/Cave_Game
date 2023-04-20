@@ -30,6 +30,15 @@ func _ready() -> void:
 		$scoretext.visible = false
 	else:
 		_load_highscore()
+		$highscore.visible = true
+		$TimeDivider2.visible = true
+		$TimeDivider1.visible = true
+		$Minutes.visible = true
+		$MilliSeconds.visible = true
+		$Seconds.visible = true
+		$highscoretext.visible = true
+		$score.visible = true
+		$scoretext.visible = true
 	$highscore.text = str(highscore)
 	healthbar.value = 100
 	attackbar.value = 8
