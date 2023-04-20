@@ -545,7 +545,8 @@ func _on_PlayerArea_body_entered(body):
 	elif body.is_in_group("Lava"):
 		velocity.y = -250
 		velocity.x = 0
-		take_damage(25, 0)
+		if not Globals.damaged:
+			take_damage(25, 0)
 		$PlayerArea.set_collision_mask_bit(6, false)
 		state = FINISHED
 	elif body.is_in_group("ClimbArea"):
@@ -639,17 +640,14 @@ func _finished_state(delta) -> void:
 		background_music_fade.play_backwards("MusicFadeIn")
 		Transition.load_scene("res://Scenes/LevelFinished.tscn")
 		$PowerUpTimer.stop()
-		print($PowerUpTimer.time_left)
 	elif hp <= 0 or Globals.score <= 0:
 		background_music_fade.play_backwards("MusicFadeIn")
 		$PowerUpTimer.stop()
-		print($PowerUpTimer.time_left)
 		Transition.load_scene("res://Scenes/GameOver.tscn")
 	else:
 		anim_player.play("BlackOut")
 		yield(anim_player, "animation_finished")
 		$PowerUpTimer.stop()
-		print($PowerUpTimer.time_left)
 		global_position = last_pos
 		_on_PowerUpTimer_timeout()
 		HUD.health_changed(hp)
