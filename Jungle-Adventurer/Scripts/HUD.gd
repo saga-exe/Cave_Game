@@ -46,7 +46,7 @@ func _ready() -> void:
 func _process(delta):
 	_time(delta)
 	_power_up()
-	score = 180000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 500 - (100 - healthbar.value) * 500
+	score = 180000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 1500 - (100 - healthbar.value) * 250
 	if score <= 0:
 		Globals.score = 0
 		player._finished_state(delta)
@@ -108,7 +108,7 @@ func _load_highscore() -> void:
 	Globals.highscore = highscore
 
 func save_highscore() -> void:
-	score = 180000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 500 - (100 - healthbar.value) * 500
+	score = 180000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 1500 - (100 - healthbar.value) * 250
 	if score > Globals.highscore:
 		var FILE_PATH = SAVE_FILE_LEVEL1
 		if Globals.level == 2:
