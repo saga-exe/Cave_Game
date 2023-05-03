@@ -68,6 +68,10 @@ onready var anim_player = get_node("/root/MainScene/AnimationPlayer")
 onready var background_music = get_node("/root/MainScene/BackgroundMusic")
 onready var background_music_fade = get_node("/root/MainScene/SoundPlayer")
 
+
+"""
+
+"""
 func _ready() -> void:
 	background_music.playing = true
 	background_music_fade.play("MusicFadeIn")
