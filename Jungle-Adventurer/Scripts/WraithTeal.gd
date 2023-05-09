@@ -57,7 +57,7 @@ func _physics_process(delta: float) -> void:
 		can_attack = false
 	elif $ShootTimer.time_left <= 0:
 		can_attack = true
-	if Globals.is_finished or global_position.y > 600:
+	if Globals.is_finished or global_position.y > 600: #Då leveln avslutas (avklaras eller game over) så tas wraithen bort
 		queue_free()
 	match state:
 		IDLE:

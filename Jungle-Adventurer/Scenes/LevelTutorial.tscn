@@ -1,84 +1,8 @@
-[gd_scene load_steps=174 format=2]
+[gd_scene load_steps=98 format=2]
 
-[ext_resource path="res://Environment/Rock_Tiles/Basic_UnderTile.png" type="Texture" id=1]
-[ext_resource path="res://Enemies/Wraith_Orange/Idle/Wraith_02_Idle_000.png" type="Texture" id=2]
-[ext_resource path="res://Environment/Items/000_0045_coin.png" type="Texture" id=3]
-[ext_resource path="res://Environment/Rock_Tiles/Basic_Tile.png" type="Texture" id=4]
-[ext_resource path="res://Environment/Rock_Tiles/Basic_Platform.png" type="Texture" id=5]
-[ext_resource path="res://Environment/Interactive_objects/Ladder.png" type="Texture" id=6]
-[ext_resource path="res://Environment/Interactive_objects/ClimbArea.png" type="Texture" id=7]
-[ext_resource path="res://Environment/Interactive_objects/LadderSmall.png" type="Texture" id=8]
-[ext_resource path="res://Environment/Interactive_objects/ClimbStopper.png" type="Texture" id=9]
-[ext_resource path="res://Enemies/Wraith_Teal/Idle/Wraith_01_Idle_000.png" type="Texture" id=10]
-[ext_resource path="res://Environment/Objects/Fires/torch1_1.png" type="Texture" id=11]
-[ext_resource path="res://Environment/Objects/Fires/torch2_1.png" type="Texture" id=12]
-[ext_resource path="res://Environment/Details/door.png" type="Texture" id=13]
-[ext_resource path="res://Environment/Lava_Tiles/Top_lava_layer.png" type="Texture" id=14]
-[ext_resource path="res://Environment/Lava_Tiles/Under_lava_layer.png" type="Texture" id=15]
-[ext_resource path="res://Environment/Items/000_0033_speed3.png" type="Texture" id=16]
-[ext_resource path="res://Environment/Items/000_0017_star3.png" type="Texture" id=17]
 [ext_resource path="res://Scripts/Levels.gd" type="Script" id=18]
-[ext_resource path="res://Environment/Items/000_0064_heart2.png" type="Texture" id=19]
-[ext_resource path="res://Character Sprites/Mage/Fire/fire5.png" type="Texture" id=20]
-[ext_resource path="res://Environment/Interactive_objects/Checkpoint_Unlit.png" type="Texture" id=21]
-[ext_resource path="res://Environment/Interactive_objects/Bridge.png" type="Texture" id=22]
-[ext_resource path="res://Fonts/Keys/D_pressed.png" type="Texture" id=23]
-[ext_resource path="res://Fonts/Keys/D.png" type="Texture" id=24]
-[ext_resource path="res://Fonts/Keys/S.png" type="Texture" id=25]
-[ext_resource path="res://Fonts/Keys/A.png" type="Texture" id=26]
-[ext_resource path="res://Fonts/Keys/W.png" type="Texture" id=27]
-[ext_resource path="res://Fonts/Keys/A_pressed.png" type="Texture" id=28]
-[ext_resource path="res://Fonts/Keys/W_pressed.png" type="Texture" id=29]
-[ext_resource path="res://Fonts/Keys/S_pressed.png" type="Texture" id=30]
 [ext_resource path="res://Fonts/Gothical.ttf" type="DynamicFontData" id=31]
 [ext_resource path="res://Scripts/Tutorial.gd" type="Script" id=32]
-[ext_resource path="res://Fonts/Keys/SHIFT.png" type="Texture" id=33]
-[ext_resource path="res://Fonts/Keys/SHIFT_pressed.png" type="Texture" id=34]
-[ext_resource path="res://Fonts/Keys/E_pressed.png" type="Texture" id=35]
-[ext_resource path="res://Fonts/Keys/E.png" type="Texture" id=36]
-[ext_resource path="res://Environment/Items/000_0001_crystal9.png" type="Texture" id=37]
-[ext_resource path="res://Environment/Items/000_0041_coin5.png" type="Texture" id=38]
-[ext_resource path="res://Environment/Items/000_0008_crystal2.png" type="Texture" id=39]
-[ext_resource path="res://Environment/Items/000_0009_crystal.png" type="Texture" id=40]
-[ext_resource path="res://Environment/Items/000_0007_crystal3.png" type="Texture" id=41]
-[ext_resource path="res://Environment/Items/000_0043_coin3.png" type="Texture" id=42]
-[ext_resource path="res://Environment/Items/000_0003_crystal7.png" type="Texture" id=43]
-[ext_resource path="res://Environment/Items/000_0038_coin8.png" type="Texture" id=44]
-[ext_resource path="res://Environment/Items/000_0006_crystal4.png" type="Texture" id=45]
-[ext_resource path="res://Environment/Items/000_0004_crystal6.png" type="Texture" id=46]
-[ext_resource path="res://Environment/Items/000_0005_crystal5.png" type="Texture" id=47]
-[ext_resource path="res://Environment/Items/000_0037_coin9.png" type="Texture" id=48]
-[ext_resource path="res://Environment/Items/000_0039_coin7.png" type="Texture" id=49]
-[ext_resource path="res://Environment/Items/000_0044_coin2.png" type="Texture" id=50]
-[ext_resource path="res://Environment/Items/000_0036_coin10.png" type="Texture" id=51]
-[ext_resource path="res://Environment/Items/000_0002_crystal8.png" type="Texture" id=52]
-[ext_resource path="res://Environment/Items/000_0000_crystal10.png" type="Texture" id=53]
-[ext_resource path="res://Environment/Items/000_0042_coin4.png" type="Texture" id=54]
-[ext_resource path="res://Environment/Items/000_0040_coin6.png" type="Texture" id=55]
-[ext_resource path="res://Environment/Items/000_0015_star5.png" type="Texture" id=56]
-[ext_resource path="res://Environment/Items/000_0021_speed15.png" type="Texture" id=57]
-[ext_resource path="res://Environment/Items/000_0027_speed9.png" type="Texture" id=58]
-[ext_resource path="res://Environment/Items/000_0014_star6.png" type="Texture" id=59]
-[ext_resource path="res://Environment/Items/000_0024_speed12.png" type="Texture" id=60]
-[ext_resource path="res://Environment/Items/000_0034_speed2.png" type="Texture" id=61]
-[ext_resource path="res://Environment/Items/000_0031_speed5.png" type="Texture" id=62]
-[ext_resource path="res://Environment/Items/000_0029_speed7.png" type="Texture" id=63]
-[ext_resource path="res://Environment/Items/000_0030_speed6.png" type="Texture" id=64]
-[ext_resource path="res://Environment/Items/000_0020_speed16.png" type="Texture" id=65]
-[ext_resource path="res://Environment/Items/000_0019_star1.png" type="Texture" id=66]
-[ext_resource path="res://Environment/Items/000_0010_star10.png" type="Texture" id=67]
-[ext_resource path="res://Environment/Items/000_0018_star2.png" type="Texture" id=68]
-[ext_resource path="res://Environment/Items/000_0013_star7.png" type="Texture" id=69]
-[ext_resource path="res://Environment/Items/000_0028_speed8.png" type="Texture" id=70]
-[ext_resource path="res://Environment/Items/000_0023_speed13.png" type="Texture" id=71]
-[ext_resource path="res://Environment/Items/000_0035_speed1.png" type="Texture" id=72]
-[ext_resource path="res://Environment/Items/000_0026_speed10.png" type="Texture" id=73]
-[ext_resource path="res://Environment/Items/000_0022_speed14.png" type="Texture" id=74]
-[ext_resource path="res://Environment/Items/000_0032_speed4.png" type="Texture" id=75]
-[ext_resource path="res://Environment/Items/000_0016_star4.png" type="Texture" id=76]
-[ext_resource path="res://Environment/Items/000_0012_star8.png" type="Texture" id=77]
-[ext_resource path="res://Environment/Items/000_0025_speed11.png" type="Texture" id=78]
-[ext_resource path="res://Environment/Items/000_0011_star9.png" type="Texture" id=79]
 
 [sub_resource type="ConvexPolygonShape2D" id=72]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 42, 64, 42 )
@@ -130,7 +54,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=57]
 0/name = "Top_lava_layer.png 0"
-0/texture = ExtResource( 14 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -151,7 +74,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 0/z_index = 0
 1/name = "Top_lava_layer.png 1"
-1/texture = ExtResource( 14 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 64, 0, 64, 64 )
@@ -172,7 +94,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 1/z_index = 0
 2/name = "Top_lava_layer.png 2"
-2/texture = ExtResource( 14 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 128, 0, 64, 64 )
@@ -193,7 +114,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 2/z_index = 0
 3/name = "Top_lava_layer.png 3"
-3/texture = ExtResource( 14 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 192, 0, 64, 64 )
@@ -214,7 +134,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 3/z_index = 0
 4/name = "Top_lava_layer.png 4"
-4/texture = ExtResource( 14 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 0, 64, 64, 64 )
@@ -235,7 +154,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 4/z_index = 0
 5/name = "Top_lava_layer.png 5"
-5/texture = ExtResource( 14 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
 5/region = Rect2( 64, 64, 64, 64 )
@@ -256,7 +174,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 5/z_index = 0
 6/name = "Top_lava_layer.png 6"
-6/texture = ExtResource( 14 )
 6/tex_offset = Vector2( 0, 0 )
 6/modulate = Color( 1, 1, 1, 1 )
 6/region = Rect2( 128, 64, 64, 64 )
@@ -277,7 +194,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 6/z_index = 0
 7/name = "Top_lava_layer.png 7"
-7/texture = ExtResource( 14 )
 7/tex_offset = Vector2( 0, 0 )
 7/modulate = Color( 1, 1, 1, 1 )
 7/region = Rect2( 192, 64, 64, 64 )
@@ -298,7 +214,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 7/z_index = 0
 8/name = "Under_lava_layer.png 8"
-8/texture = ExtResource( 15 )
 8/tex_offset = Vector2( 0, 0 )
 8/modulate = Color( 1, 1, 1, 1 )
 8/region = Rect2( 0, 0, 64, 64 )
@@ -319,7 +234,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 8/z_index = 0
 9/name = "Under_lava_layer.png 9"
-9/texture = ExtResource( 15 )
 9/tex_offset = Vector2( 0, 0 )
 9/modulate = Color( 1, 1, 1, 1 )
 9/region = Rect2( 64, 0, 64, 64 )
@@ -340,7 +254,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 9/z_index = 0
 10/name = "Under_lava_layer.png 10"
-10/texture = ExtResource( 15 )
 10/tex_offset = Vector2( 0, 0 )
 10/modulate = Color( 1, 1, 1, 1 )
 10/region = Rect2( 128, 0, 64, 64 )
@@ -361,7 +274,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 10/z_index = 0
 11/name = "Under_lava_layer.png 11"
-11/texture = ExtResource( 15 )
 11/tex_offset = Vector2( 0, 0 )
 11/modulate = Color( 1, 1, 1, 1 )
 11/region = Rect2( 192, 0, 64, 64 )
@@ -382,7 +294,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 11/z_index = 0
 12/name = "Under_lava_layer.png 12"
-12/texture = ExtResource( 15 )
 12/tex_offset = Vector2( 0, 0 )
 12/modulate = Color( 1, 1, 1, 1 )
 12/region = Rect2( 0, 64, 64, 64 )
@@ -403,7 +314,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 12/z_index = 0
 13/name = "Under_lava_layer.png 13"
-13/texture = ExtResource( 15 )
 13/tex_offset = Vector2( 0, 0 )
 13/modulate = Color( 1, 1, 1, 1 )
 13/region = Rect2( 64, 64, 64, 64 )
@@ -424,7 +334,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 13/z_index = 0
 14/name = "Under_lava_layer.png 14"
-14/texture = ExtResource( 15 )
 14/tex_offset = Vector2( 0, 0 )
 14/modulate = Color( 1, 1, 1, 1 )
 14/region = Rect2( 128, 64, 64, 64 )
@@ -445,7 +354,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 14/z_index = 0
 15/name = "Under_lava_layer.png 15"
-15/texture = ExtResource( 15 )
 15/tex_offset = Vector2( 0, 0 )
 15/modulate = Color( 1, 1, 1, 1 )
 15/region = Rect2( 192, 64, 64, 64 )
@@ -504,7 +412,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 
 [sub_resource type="TileSet" id=104]
 0/name = "Basic_Tile.png 0"
-0/texture = ExtResource( 4 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -525,7 +432,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 0/z_index = 0
 1/name = "Basic_Tile.png 1"
-1/texture = ExtResource( 4 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 64, 0, 64, 64 )
@@ -546,7 +452,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 1/z_index = 0
 2/name = "Basic_Tile.png 2"
-2/texture = ExtResource( 4 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 128, 0, 64, 64 )
@@ -567,7 +472,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 2/z_index = 0
 3/name = "Basic_Tile.png 3"
-3/texture = ExtResource( 4 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 192, 0, 64, 64 )
@@ -588,7 +492,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 3/z_index = 0
 4/name = "Basic_Tile.png 4"
-4/texture = ExtResource( 4 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 256, 0, 64, 64 )
@@ -609,7 +512,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 4/z_index = 0
 5/name = "Basic_Tile.png 5"
-5/texture = ExtResource( 4 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
 5/region = Rect2( 320, 0, 64, 64 )
@@ -630,7 +532,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 5/z_index = 0
 6/name = "Basic_UnderTile.png 6"
-6/texture = ExtResource( 1 )
 6/tex_offset = Vector2( 0, 0 )
 6/modulate = Color( 1, 1, 1, 1 )
 6/region = Rect2( 0, 0, 64, 64 )
@@ -644,7 +545,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 6/shapes = [  ]
 6/z_index = 0
 7/name = "Basic_UnderTile.png 7"
-7/texture = ExtResource( 1 )
 7/tex_offset = Vector2( 0, 0 )
 7/modulate = Color( 1, 1, 1, 1 )
 7/region = Rect2( 64, 0, 64, 64 )
@@ -658,7 +558,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 7/shapes = [  ]
 7/z_index = 0
 8/name = "Basic_UnderTile.png 8"
-8/texture = ExtResource( 1 )
 8/tex_offset = Vector2( 0, 0 )
 8/modulate = Color( 1, 1, 1, 1 )
 8/region = Rect2( 128, 0, 64, 64 )
@@ -672,7 +571,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 8/shapes = [  ]
 8/z_index = 0
 9/name = "Basic_UnderTile.png 9"
-9/texture = ExtResource( 1 )
 9/tex_offset = Vector2( 0, 0 )
 9/modulate = Color( 1, 1, 1, 1 )
 9/region = Rect2( 192, 0, 64, 64 )
@@ -686,7 +584,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 9/shapes = [  ]
 9/z_index = 0
 10/name = "Basic_UnderTile.png 10"
-10/texture = ExtResource( 1 )
 10/tex_offset = Vector2( 0, 0 )
 10/modulate = Color( 1, 1, 1, 1 )
 10/region = Rect2( 256, 0, 64, 64 )
@@ -700,7 +597,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 10/shapes = [  ]
 10/z_index = 0
 11/name = "Basic_UnderTile.png 11"
-11/texture = ExtResource( 1 )
 11/tex_offset = Vector2( 0, 0 )
 11/modulate = Color( 1, 1, 1, 1 )
 11/region = Rect2( 320, 0, 64, 64 )
@@ -714,7 +610,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 11/shapes = [  ]
 11/z_index = 0
 12/name = "Basic_Platform.png 12"
-12/texture = ExtResource( 5 )
 12/tex_offset = Vector2( 0, 0 )
 12/modulate = Color( 1, 1, 1, 1 )
 12/region = Rect2( 0, 0, 64, 64 )
@@ -735,7 +630,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 12/z_index = 0
 13/name = "Basic_Platform.png 13"
-13/texture = ExtResource( 5 )
 13/tex_offset = Vector2( 0, 0 )
 13/modulate = Color( 1, 1, 1, 1 )
 13/region = Rect2( 64, 0, 64, 64 )
@@ -756,7 +650,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 13/z_index = 0
 14/name = "Basic_Platform.png 14"
-14/texture = ExtResource( 5 )
 14/tex_offset = Vector2( 0, 0 )
 14/modulate = Color( 1, 1, 1, 1 )
 14/region = Rect2( 128, 0, 64, 64 )
@@ -777,7 +670,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 14/z_index = 0
 15/name = "Basic_Platform.png 15"
-15/texture = ExtResource( 5 )
 15/tex_offset = Vector2( 0, 0 )
 15/modulate = Color( 1, 1, 1, 1 )
 15/region = Rect2( 192, 0, 64, 64 )
@@ -798,7 +690,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 15/z_index = 0
 16/name = "Basic_Platform.png 16"
-16/texture = ExtResource( 5 )
 16/tex_offset = Vector2( 0, 0 )
 16/modulate = Color( 1, 1, 1, 1 )
 16/region = Rect2( 256, 0, 64, 64 )
@@ -819,7 +710,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 16/z_index = 0
 17/name = "Basic_Platform.png 17"
-17/texture = ExtResource( 5 )
 17/tex_offset = Vector2( 0, 0 )
 17/modulate = Color( 1, 1, 1, 1 )
 17/region = Rect2( 320, 0, 64, 64 )
@@ -878,7 +768,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 
 [sub_resource type="TileSet" id=3]
 0/name = "Basic_Tile.png 0"
-0/texture = ExtResource( 4 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -899,7 +788,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 0/z_index = 0
 1/name = "Basic_Tile.png 1"
-1/texture = ExtResource( 4 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 64, 0, 64, 64 )
@@ -920,7 +808,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 1/z_index = 0
 2/name = "Basic_Tile.png 2"
-2/texture = ExtResource( 4 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 128, 0, 64, 64 )
@@ -941,7 +828,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 2/z_index = 0
 3/name = "Basic_Tile.png 3"
-3/texture = ExtResource( 4 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 192, 0, 64, 64 )
@@ -962,7 +848,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 3/z_index = 0
 4/name = "Basic_Tile.png 4"
-4/texture = ExtResource( 4 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 256, 0, 64, 64 )
@@ -983,7 +868,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 4/z_index = 0
 5/name = "Basic_Tile.png 5"
-5/texture = ExtResource( 4 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
 5/region = Rect2( 320, 0, 64, 64 )
@@ -1004,7 +888,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 5/z_index = 0
 6/name = "Basic_UnderTile.png 6"
-6/texture = ExtResource( 1 )
 6/tex_offset = Vector2( 0, 0 )
 6/modulate = Color( 1, 1, 1, 1 )
 6/region = Rect2( 0, 0, 64, 64 )
@@ -1018,7 +901,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 6/shapes = [  ]
 6/z_index = 0
 7/name = "Basic_UnderTile.png 7"
-7/texture = ExtResource( 1 )
 7/tex_offset = Vector2( 0, 0 )
 7/modulate = Color( 1, 1, 1, 1 )
 7/region = Rect2( 64, 0, 64, 64 )
@@ -1032,7 +914,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 7/shapes = [  ]
 7/z_index = 0
 8/name = "Basic_UnderTile.png 8"
-8/texture = ExtResource( 1 )
 8/tex_offset = Vector2( 0, 0 )
 8/modulate = Color( 1, 1, 1, 1 )
 8/region = Rect2( 128, 0, 64, 64 )
@@ -1046,7 +927,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 8/shapes = [  ]
 8/z_index = 0
 9/name = "Basic_UnderTile.png 9"
-9/texture = ExtResource( 1 )
 9/tex_offset = Vector2( 0, 0 )
 9/modulate = Color( 1, 1, 1, 1 )
 9/region = Rect2( 192, 0, 64, 64 )
@@ -1060,7 +940,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 9/shapes = [  ]
 9/z_index = 0
 10/name = "Basic_UnderTile.png 10"
-10/texture = ExtResource( 1 )
 10/tex_offset = Vector2( 0, 0 )
 10/modulate = Color( 1, 1, 1, 1 )
 10/region = Rect2( 256, 0, 64, 64 )
@@ -1074,7 +953,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 10/shapes = [  ]
 10/z_index = 0
 11/name = "Basic_UnderTile.png 11"
-11/texture = ExtResource( 1 )
 11/tex_offset = Vector2( 0, 0 )
 11/modulate = Color( 1, 1, 1, 1 )
 11/region = Rect2( 320, 0, 64, 64 )
@@ -1088,7 +966,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 11/shapes = [  ]
 11/z_index = 0
 12/name = "Basic_Platform.png 12"
-12/texture = ExtResource( 5 )
 12/tex_offset = Vector2( 0, 0 )
 12/modulate = Color( 1, 1, 1, 1 )
 12/region = Rect2( 0, 0, 64, 64 )
@@ -1109,7 +986,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 12/z_index = 0
 13/name = "Basic_Platform.png 13"
-13/texture = ExtResource( 5 )
 13/tex_offset = Vector2( 0, 0 )
 13/modulate = Color( 1, 1, 1, 1 )
 13/region = Rect2( 64, 0, 64, 64 )
@@ -1130,7 +1006,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 13/z_index = 0
 14/name = "Basic_Platform.png 14"
-14/texture = ExtResource( 5 )
 14/tex_offset = Vector2( 0, 0 )
 14/modulate = Color( 1, 1, 1, 1 )
 14/region = Rect2( 128, 0, 64, 64 )
@@ -1151,7 +1026,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 14/z_index = 0
 15/name = "Basic_Platform.png 15"
-15/texture = ExtResource( 5 )
 15/tex_offset = Vector2( 0, 0 )
 15/modulate = Color( 1, 1, 1, 1 )
 15/region = Rect2( 192, 0, 64, 64 )
@@ -1172,7 +1046,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 15/z_index = 0
 16/name = "Basic_Platform.png 16"
-16/texture = ExtResource( 5 )
 16/tex_offset = Vector2( 0, 0 )
 16/modulate = Color( 1, 1, 1, 1 )
 16/region = Rect2( 256, 0, 64, 64 )
@@ -1193,7 +1066,6 @@ points = PoolVector2Array( 43, 64, 0, 64, 0, 0, 44, 0 )
 } ]
 16/z_index = 0
 17/name = "Basic_Platform.png 17"
-17/texture = ExtResource( 5 )
 17/tex_offset = Vector2( 0, 0 )
 17/modulate = Color( 1, 1, 1, 1 )
 17/region = Rect2( 320, 0, 64, 64 )
@@ -1243,7 +1115,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=30]
 1/name = "Ladder.png 1"
-1/texture = ExtResource( 6 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 64, 64, 64 )
@@ -1264,7 +1135,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 1/z_index = 0
 2/name = "Ladder.png 2"
-2/texture = ExtResource( 6 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 0, 128, 64, 64 )
@@ -1285,7 +1155,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 2/z_index = 0
 3/name = "Ladder.png 3"
-3/texture = ExtResource( 6 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 0, 192, 64, 64 )
@@ -1306,7 +1175,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 3/z_index = 0
 4/name = "Ladder.png 4"
-4/texture = ExtResource( 6 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 0, 256, 64, 64 )
@@ -1327,7 +1195,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 4/z_index = 0
 5/name = "Ladder.png 5"
-5/texture = ExtResource( 6 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
 5/region = Rect2( 0, 320, 64, 64 )
@@ -1348,7 +1215,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 5/z_index = 0
 6/name = "Ladder.png 0"
-6/texture = ExtResource( 6 )
 6/tex_offset = Vector2( 0, 0 )
 6/modulate = Color( 1, 1, 1, 1 )
 6/region = Rect2( 0, 0, 64, 64 )
@@ -1369,7 +1235,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 6/z_index = 0
 7/name = "LadderSmall.png 7"
-7/texture = ExtResource( 8 )
 7/tex_offset = Vector2( 0, 0 )
 7/modulate = Color( 1, 1, 1, 1 )
 7/region = Rect2( 0, 0, 64, 64 )
@@ -1390,7 +1255,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 7/z_index = 0
 8/name = "LadderSmall.png 8"
-8/texture = ExtResource( 8 )
 8/tex_offset = Vector2( 0, 0 )
 8/modulate = Color( 1, 1, 1, 1 )
 8/region = Rect2( 0, 64, 64, 64 )
@@ -1411,7 +1275,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 } ]
 8/z_index = 0
 9/name = "LadderSmall.png 9"
-9/texture = ExtResource( 8 )
 9/tex_offset = Vector2( 0, 0 )
 9/modulate = Color( 1, 1, 1, 1 )
 9/region = Rect2( 0, 128, 64, 64 )
@@ -1437,7 +1300,6 @@ points = PoolVector2Array( 52.0505, 98.6495, 17.7235, 97.8122, 18.5607, 33.0653,
 
 [sub_resource type="TileSet" id=48]
 0/name = "door.png 0"
-0/texture = ExtResource( 13 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 32, 0, 64, 128 )
@@ -1469,7 +1331,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 32, 64, 32 )
 
 [sub_resource type="TileSet" id=95]
 0/name = "Bridge.png 0"
-0/texture = ExtResource( 22 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -1490,7 +1351,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 32, 64, 32 )
 } ]
 0/z_index = 0
 1/name = "Bridge.png 1"
-1/texture = ExtResource( 22 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 64, 0, 64, 64 )
@@ -1511,7 +1371,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 32, 64, 32 )
 } ]
 1/z_index = 0
 2/name = "Bridge.png 2"
-2/texture = ExtResource( 22 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 128, 0, 64, 64 )
@@ -1537,7 +1396,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=33]
 0/name = "ClimbArea.png 0"
-0/texture = ExtResource( 7 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -1563,7 +1421,6 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=17]
 0/name = "000_0045_coin.png 0"
-0/texture = ExtResource( 3 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 32 )
@@ -1589,7 +1446,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=2]
 1/name = "Wraith_02_Idle_000.png 1"
-1/texture = ExtResource( 2 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 288, 160, 64, 64 )
@@ -1615,7 +1471,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=38]
 1/name = "ClimbStopper.png 1"
-1/texture = ExtResource( 9 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 64, 64 )
@@ -1641,7 +1496,6 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 
 [sub_resource type="TileSet" id=42]
 0/name = "Wraith_01_Idle_000.png 0"
-0/texture = ExtResource( 10 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 288, 160, 64, 64 )
@@ -1667,7 +1521,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=44]
 0/name = "torch1_1.png 0"
-0/texture = ExtResource( 11 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -1693,7 +1546,6 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 
 [sub_resource type="TileSet" id=46]
 0/name = "torch2_1.png 0"
-0/texture = ExtResource( 12 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 64, 64 )
@@ -1719,7 +1571,6 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=67]
 0/name = "000_0033_speed3.png 0"
-0/texture = ExtResource( 16 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 32 )
@@ -1745,7 +1596,6 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=69]
 0/name = "000_0017_star3.png 0"
-0/texture = ExtResource( 17 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 32 )
@@ -1771,7 +1621,6 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=71]
 0/name = "000_0064_heart2.png 0"
-0/texture = ExtResource( 19 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 32 )
@@ -1797,7 +1646,6 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=89]
 0/name = "fire5.png 0"
-0/texture = ExtResource( 20 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 32 )
@@ -1823,7 +1671,6 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 
 [sub_resource type="TileSet" id=91]
 0/name = "Checkpoint_Unlit.png 0"
-0/texture = ExtResource( 21 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 32, 32, 64, 64 )
@@ -1850,7 +1697,7 @@ font_data = ExtResource( 31 )
 
 [sub_resource type="SpriteFrames" id=100]
 animations = [ {
-"frames": [ ExtResource( 27 ), ExtResource( 29 ), ExtResource( 29 ), ExtResource( 27 ) ],
+"frames": [ null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 3.0
@@ -1858,7 +1705,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=101]
 animations = [ {
-"frames": [ ExtResource( 26 ), ExtResource( 28 ), ExtResource( 28 ), ExtResource( 26 ) ],
+"frames": [ null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 3.0
@@ -1866,7 +1713,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=103]
 animations = [ {
-"frames": [ ExtResource( 24 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 24 ) ],
+"frames": [ null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 3.0
@@ -1874,7 +1721,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=117]
 animations = [ {
-"frames": [ ExtResource( 30 ), ExtResource( 25 ), ExtResource( 25 ), ExtResource( 30 ) ],
+"frames": [ null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 3.0
@@ -1882,7 +1729,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=102]
 animations = [ {
-"frames": [ ExtResource( 34 ), ExtResource( 33 ), ExtResource( 33 ), ExtResource( 34 ) ],
+"frames": [ null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 3.0
@@ -1890,7 +1737,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=118]
 animations = [ {
-"frames": [ ExtResource( 35 ), ExtResource( 36 ), ExtResource( 36 ), ExtResource( 35 ) ],
+"frames": [ null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 3.0
@@ -1898,7 +1745,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=119]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 50 ), ExtResource( 42 ), ExtResource( 54 ), ExtResource( 38 ), ExtResource( 55 ), ExtResource( 49 ), ExtResource( 44 ), ExtResource( 48 ), ExtResource( 51 ) ],
+"frames": [ null, null, null, null, null, null, null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 7.0
@@ -1906,7 +1753,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=120]
 animations = [ {
-"frames": [ ExtResource( 40 ), ExtResource( 39 ), ExtResource( 41 ), ExtResource( 45 ), ExtResource( 47 ), ExtResource( 46 ), ExtResource( 43 ), ExtResource( 52 ), ExtResource( 37 ), ExtResource( 53 ) ],
+"frames": [ null, null, null, null, null, null, null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 7.0
@@ -1914,7 +1761,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=121]
 animations = [ {
-"frames": [ ExtResource( 72 ), ExtResource( 61 ), ExtResource( 16 ), ExtResource( 75 ), ExtResource( 62 ), ExtResource( 64 ), ExtResource( 63 ), ExtResource( 70 ), ExtResource( 58 ), ExtResource( 73 ), ExtResource( 78 ), ExtResource( 60 ), ExtResource( 71 ), ExtResource( 74 ), ExtResource( 57 ), ExtResource( 65 ) ],
+"frames": [ null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 7.0
@@ -1922,7 +1769,7 @@ animations = [ {
 
 [sub_resource type="SpriteFrames" id=122]
 animations = [ {
-"frames": [ ExtResource( 66 ), ExtResource( 68 ), ExtResource( 17 ), ExtResource( 76 ), ExtResource( 56 ), ExtResource( 59 ), ExtResource( 69 ), ExtResource( 77 ), ExtResource( 79 ), ExtResource( 67 ) ],
+"frames": [ null, null, null, null, null, null, null, null, null, null ],
 "loop": true,
 "name": "default",
 "speed": 7.0
@@ -2290,7 +2137,7 @@ text = "coins gradually make
 position = Vector2( 144, -18 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 119 )
-frame = 4
+frame = 3
 playing = true
 
 [node name="Gem" type="GridContainer" parent="Control"]
@@ -2313,7 +2160,7 @@ more powerful"
 position = Vector2( 116, -15 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 120 )
-frame = 3
+frame = 2
 playing = true
 
 [node name="SpeedPower" type="GridContainer" parent="Control"]
@@ -2336,7 +2183,7 @@ make you faster"
 position = Vector2( 109, -12 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 121 )
-frame = 8
+frame = 7
 playing = true
 
 [node name="StarPower" type="GridContainer" parent="Control"]
@@ -2360,7 +2207,7 @@ text = "stars make you faster and enemies
 position = Vector2( 230.667, -18.6667 )
 scale = Vector2( 1.3, 1.3 )
 frames = SubResource( 122 )
-frame = 4
+frame = 3
 playing = true
 
 [connection signal="timeout" from="FinishTimer" to="." method="_on_FinishTimer_timeout"]

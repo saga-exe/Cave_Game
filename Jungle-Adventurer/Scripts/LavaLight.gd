@@ -25,10 +25,11 @@ func _physics_process(delta: float) -> void:
 	else:
 		lower = true
 	
-	if Globals.is_finished:
+	if Globals.is_finished: #då leveln avslutas (avklarad eller game over) startas en timer för att leveln och allt i den inte ska försvinna direkt. Då timern tar slut så försvinner allt
 		$FinishTimer.start()
 
 
+#Då timern stannar så tas ljuset bort
 func _on_FinishTimer_timeout():
 	queue_free()
 

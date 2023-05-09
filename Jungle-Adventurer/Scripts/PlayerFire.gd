@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	global_position += velocity * delta * direction
-	if Globals.is_finished:
+	if Globals.is_finished: #Då leveln avslutas (avklaras eller game over) så tas elden bort
 		queue_free()
 
 
