@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-enum {IDLE, CHASE, DIE}
+enum {IDLE, CHASE, DIE} #states
 
 
 const ACCELERATION = 500
@@ -18,10 +18,10 @@ var hp = 100
 var difficulty = 0
 
 var turn := false #om true så ska wraithen vända om och gå tillbaka andra hållet
-var wait := false #är bara true i CHASE state då wraithen kommer till slutet av en platform och det inte finns en platform under att hopp ner til
-var knockback := false #är true då wraithen har colliderat med spelaren och slås tillbaka
-var can_check_right := true #används för att se om wraithen kan lita på den högra TerrainCheck
-var can_check_left := true #används för att se om wraithen kan lita på den vänstra TerrainCheck
+var wait := false #är bara true i CHASE state då wraithen kommer till slutet av en platform och det inte detekteras en platform under att hopp ner til
+var knockback := false #är true då wraithen har kolliderat med spelaren och slås tillbaka
+var can_check_right := true #är true om den högra TerrainChecken är i en platform
+var can_check_left := true #är true om den vänstra TerrainChecken är i en platform
 var can_drop_coin := true #används för att endast en peng ska spawna då wraithen dör
 
 var coin_scene = preload("res://Scenes/Coin.tscn")
@@ -48,7 +48,7 @@ func _ready():
 
 """
 _can_collide() ser till så att rätt areor och CollisionShapes är enabled
-oavsett vad som händer. FUnktionen matchar också states så att det blir rätt.
+oavsett vad som händer. Funktionen matchar också states så att det blir rätt.
 """
 func _physics_process(delta: float) -> void:
 	_can_collide()

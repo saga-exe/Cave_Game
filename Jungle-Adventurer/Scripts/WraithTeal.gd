@@ -1,11 +1,5 @@
 extends KinematicBody2D
 
-# it doesn't wait after knockback
-# drops to die from idle to chase - fixed
-
-#fix jump on head
-#fix direction change after knockback
-
 enum {IDLE, CHASE, DIE}
 
 
@@ -26,8 +20,8 @@ var difficulty = 0
 var turn := false  #om true så ska wraithen vända om och gå tillbaka andra hållet
 var wait := false #är bara true i CHASE state då wraithen kommer till slutet av en platform
 var knockback := false #är true då wraithen har colliderat med spelaren och slås tillbaka
-var can_check_right := true #används för att se om wraithen kan lita på den högra TerrainCheck
-var can_check_left := true #används för att se om wraithen kan lita på den vänstra TerrainCheck
+var can_check_right := true #är true om den högra TerrainChecken är i en platform
+var can_check_left := true #är true om den vänstra TerrainChecken är i en platform
 var can_attack := true #för att wraithen inte ska attackera hela tiden så har den en cooldown timer. då can_attack är true så kan den attackera
 var can_drop_coin := true #används för att endast en peng ska spawna då wraithen dör
 
@@ -56,7 +50,7 @@ func _ready():
 
 """
 _can_collide() ser till så att rätt areor och CollisionShapes är enabled
-oavsett vad som händer. FUnktionen matchar också states så att det blir rätt.
+oavsett vad som händer. Funktionen matchar också states så att det blir rätt.
 
 Då spelaren plockat upp en star powerup så kan wraithen inte skjuta, men om spelaren
 inte har det och attacktimern inte har någon tid kvar så kan den det.
@@ -107,13 +101,13 @@ func _update_direction_x(_delta) -> float:
 		
 		if wait:
 			"""
-			om wraithen står stilla vid kanten av en platform och en raycast känner
+			Om wraithen står stilla vid kanten av en platform och en raycast känner
 			av en platform under så kan wraithen gå av kanten och veta att den
-			kommer att landa på mark, alltså sätts wait till false
+			kommer att landa på mark, alltså sätts wait till false.
 			"""
 			velocity.x = 0
 			"""
-			eftersom direction.x räknas ut varje gång så har vi ett värde på
+			Eftersom direction.x räknas ut varje gång så har vi ett värde på
 			direction.x != 0. om det är samma som last_direction betyder det
 			att wraithen ska stå kvar på samma ställe, och direction.x blir
 			0, eftersom det betyder att den inte kommer att röra på sig.
