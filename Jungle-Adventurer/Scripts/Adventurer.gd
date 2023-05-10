@@ -61,7 +61,7 @@ onready var sprite = $AnimatedSprite #spelarens sprite
 onready var gunpoint = $GunPoint #en punkt hos spelarkaraktären som används för att bestämma var kulan ska komma ifrån.
 onready var player_area = $PlayerArea #spelarkaraktärens area
 onready var HUD = get_node("/root/MainScene/HUD") #spelarens HUD
-onready var anim_player = get_node("/root/MainScene/AnimationPlayer") #används för att kalla på en AnimationPlayer i MainScene som spelar övergångar.
+onready var anim_player = get_node("/root/MainScene/AnimationPlayer") #används för att anropa en AnimationPlayer i MainScene som spelar övergångar.
 onready var background_music = get_node("/root/MainScene/BackgroundMusic") #används för att starta/stoppa backgrundsmusiken
 onready var background_music_fade = get_node("/root/MainScene/SoundPlayer") #används för att göra övergångar i musiken mindre hackiga. då denna används antingen tonar musiken in eller ut.
 
@@ -147,7 +147,7 @@ func _left_right_movement(delta) -> void:
 
 
 """
-Denna funktion bestämmer vilket håll spelkaraktären ska vändas (vänster/höger). den loggar också det
+Denna funktion bestämmer vilket håll spelkaraktären ska vändas (vänster/höger). Den loggar också det
 senaste hållet spelaren klickade på (vänster/höger) i last_action_pressed. Den sätter också knockback till false då
 knockback är klart. Funktionen returnerar input_x som sedan används för att spelkaraktären ska
 röra sig åt rätt håll.
@@ -219,15 +219,15 @@ Funktionen anropar en annan funktion för rörelse (_left_right_movement(delta))
 ifall spelaren börjar klättra. Den ändrar state ifall krav för annat state uppfylls. Funktionen sätter state till
 finished ifall spelaren klarat av level eller spelkaraktären faller ur bild.
 
-Om spelaren skjuter vanlig eller extraattack och den kan skjuta så startars processen här genom
-att kalla på respektive funtion. annars spelas en idle-animation
+Om spelaren försöker skjuta vanlig eller extraattack och den kan skjuta så startars processen här genom
+att anropa respektive funtion. Annars spelas en idle-animation.
 """
 func _idle_state(delta) -> void:
 	_left_right_movement(delta)
 	_climb()
 	
 	#om spelaren skjuter vanlig eller extraattack och den kan skjuta så startars processen här genom
-	#att kalla på respektive funtion. annars spelas idle-animation
+	#att anropa respektive funtion. annars spelas idle-animation
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot and (can_extra_attack or $ExtraAttackTimer.time_left != 0)):
 		_attack()
 	elif $ExtraAttackTimer.time_left <= 0 and ((Input.is_action_just_pressed("extra_attack") and can_shoot and can_extra_attack) or (not can_extra_attack)):
@@ -260,8 +260,8 @@ ifall spelaren börjar klättra. Ändrar state ifall krav för annat state uppfy
 finished ifall spelaren klarat av level eller spelkaraktären faller ur bild. Anropar funktion för
 att ljud ska spelas eftersom karaktären rör på sig (_walking_sounds($AnimatedSprite.frame)).
 
-Om spelaren skjuter vanlig eller extraattack och den kan skjuta så startars processen här genom
-att kalla på respektive funtion. annars spelas animation beroende på om spelaren sprintar eller ej
+Om spelaren skjuter vanlig eller extraattack och om den kan skjuta så startars processen här genom
+att anropa respektive funtion. annars spelas animation beroende på om spelaren sprintar eller ej
 """
 func _run_state(delta) -> void:
 	_left_right_movement(delta)
@@ -270,7 +270,7 @@ func _run_state(delta) -> void:
 	_walking_sounds($AnimatedSprite.frame)
 	
 	#om spelaren skjuter vanlig eller extraattack och den kan skjuta så startars processen här genom
-	#att kalla på respektive funtion. annars spelas animation beroende på om spelaren sprintar eller ej
+	#att anropa respektive funtion. annars spelas animation beroende på om spelaren sprintar eller ej
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot and (can_extra_attack or $ExtraAttackTimer.time_left != 0)):
 		_attack()
 	elif $ExtraAttackTimer.time_left <= 0 and ((Input.is_action_just_pressed("extra_attack") and can_shoot and can_extra_attack) or (not can_extra_attack)):
@@ -305,8 +305,8 @@ func _run_state(delta) -> void:
 """
 state då spelaren är i luften. 
 
-_air_state() har kod för rörelse i luft samt hur snabb spelkaraktären är. Denna funktion ser också
-till så att double jump fungerar.
+_air_state() har kod för rörelse i luft samt hur snabb spelkaraktären är. I denna funktion finns
+också double jump. Om spelkaraktären är i luften och can_double_jump == true så kan den hoppa i luften.
 
 Anropar funktion (climb()) som kollar ifall spelaren börjar klättra. Ändrar state ifall krav för
 annat state uppfylls. Sätter state till finished ifall spelaren klarat av level eller spelkaraktären
@@ -314,7 +314,7 @@ faller ur bild. Anropar funktion för att ljud ska spelas eftersom karaktären r
 (_walking_sounds($AnimatedSprite.frame)).
 
 Om spelaren skjuter vanlig eller extraattack och den kan skjuta så startars processen här genom
-att kalla på respektive funtion. annars spelas en jump-animation
+att anropa respektive funtion. Annars spelas en jump-animation.
 """
 func _air_state(delta) -> void:
 	velocity.y = velocity.y + GRAVITY * delta if velocity.y + GRAVITY * delta < 500 else 500 
@@ -339,7 +339,7 @@ func _air_state(delta) -> void:
 			sprite.play("DoubleJump")
 	
 	#om spelaren skjuter vanlig eller extraattack och den kan skjuta så startars processen här genom
-	#att kalla på respektive funtion. annars spelas en jump-animation
+	#att anropa respektive funtion. annars spelas en jump-animation
 	if (Input.is_action_just_pressed("shoot") and can_shoot) or (not can_shoot and (can_extra_attack or $ExtraAttackTimer.time_left != 0)):
 		_attack()
 	elif $ExtraAttackTimer.time_left <= 0 and ((Input.is_action_just_pressed("extra_attack") and can_shoot and can_extra_attack) or (not can_extra_attack)):
@@ -366,49 +366,46 @@ func _air_state(delta) -> void:
 
 
 """
-state för när spelkaraktären klättrar på en stege.
+State för när spelkaraktären klättrar på en stege.
 
 Sätter state till finished ifall spelaren klarat av level eller spelkaraktären faller ur bild.
 
-när karaktären klättrar, så kan den inte kollidera med plattformar så att den kan klättra ner genom
-dem, vilket är varför det finns "climb stoppers". de går inte att klättra igenom och finns under
+När karaktären klättrar så kan den inte kollidera med plattformar för att kunna klättra ner genom
+dem, vilket är varför det finns "climb stoppers". Climb stoppers går inte att klättra igenom och finns under
 stegar för att stoppa spelaren från att klättra för långt.
-
-Ifall spelaren rör på sig i climb_state() så spelas den klättrande animationen, annars står
-animationen still.
 
 climb_state() använder sina egna fysiklagar, då gravitationen är "avstängd" för att kunna klättra
 upp och ner.
-
-Då spelaren inte längre är i ladder_area eller climb_area så byts state till det som matchar.
 """
 func _climb_state(delta) -> void:
 	can_jump = false
 	var CLIMB_SPEED = 150
 	set_collision_mask_bit(2, false)
 	
+	#Ifall spelaren rör på sig i climb_state() så spelas den klättrande animationen, annars står animationen still.
 	if velocity == Vector2(0,0):
 		sprite.stop()
 	else:
 		sprite.play("Climb")
 	
-	if Input.is_action_pressed("down"):
+	if Input.is_action_pressed("down"): #klättra ner
 		direction.y = 1
-	elif Input.is_action_pressed("jump"):
+	elif Input.is_action_pressed("jump"): #klättra upp
 		direction.y = -1
-	else:
+	else: #stå still på stegen
 		direction.y = 0
 
 	velocity = velocity.move_toward(direction*CLIMB_SPEED, ACCELERATION*delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
-	if can_end and Input.is_action_just_pressed("E"):
+	if can_end and Input.is_action_just_pressed("E"): #avklarad level
 		state = FINISHED
 	
-	if global_position.y > 620:
+	if global_position.y > 620: #om spelkaraktären trillat ur bild blir state FINISHED
 		state = FINISHED
 		hp -= 25
 	
+	#Då spelaren inte längre är i ladder_area eller climb_area så byts state till det som matchar.
 	if not ladder_area and climb_area:
 		if Input.is_action_pressed("down"):
 			return
@@ -429,15 +426,15 @@ func _climb_state(delta) -> void:
 """
 Denna funktion är till för att eldkulan i spelkaraktärens vanliga attack ska riktas åt rätt håll.
  – bullet_target är positionen eldkulan ska skjutas mot
- – bullet_target.x är riktad åt det håll musen är i förhållande till spelaren, men om state är RUN
-   så byts bullet_target.x om det inte är samma som det håll spelkaraktären springer åt
+ – bullet_target.x är riktad åt det håll musen är i förhållande till spelaren. Om state är RUN
+   så blir bullet_target.x tvärtom om det inte är samma som det håll spelkaraktären springer åt
 """
 func _bullet_direction() -> float:
 	var bullet_target = Vector2.ZERO
 	var angle = 0
 	
 	#ifall spelaren står still så byter spelkaraktären håll baserat på vilket håll spelaren skjuter åt,
-	#men om spelaren inte står still så skjuter den åt det håll spelkaraktären rör sig åt.
+	#men om spelkaraktären inte står still så skjuter den åt det håll den rör sig åt.
 	if state == IDLE:
 		if gunpoint.global_position.x - get_global_mouse_position().x <= 0:
 			last_action_pressed = "right"
@@ -485,7 +482,7 @@ Denna funktion står för den vanliga attacken.
 """
 func _attack() -> void:
 	can_shoot = false
-	if not $Attack.playing:
+	if not $Attack.playing: #animatioin
 		$Attack.play()
 	
 	#anropar funktion som spelar upp gåljud 
@@ -590,7 +587,7 @@ func _extra_attack() -> void:
 		last_action_pressed = "right"
 	
 	"""
-	frame_number för att kunna skjuta eldkulan vid rätt tillfälle i
+	frame_number används för att kunna skjuta eldkulan vid rätt tillfälle i
 	animationen. frame är vilken frame i animationen som spelas, medan frame_number är hur många
 	gånger funktionen ska köras innan nästa frame i animationen ska spelas. frame_number varierar
 	beroende på vilken animation som spelas (idle, walk, run)
@@ -631,13 +628,15 @@ func _extra_attack() -> void:
 
 """
 take_damage() är en funktion som anropas från fiendernas script eller då spelaren trillar ner i lava.
-den används både då spelaren går in i en fiende och tar damage, men även då spelaren dödar en fiende
+Den används både då spelaren går in i en fiende och tar damage, men även då spelaren dödar en fiende
 genom att hoppa på den. Då anropas funktionen med damage = 0, vilket ger en form av "knockback" men 
 uppåt, och state byter till AIR.
 
-Ifall spelaren tar damage så spelas ljudeffekt samt en damage-effekt på spelaren. Spelkaraktären kan
-heller inte ta skada igen eller kollidera med fiender då denna effekt spelas. Det tar slut då
-DamageTimer stoppar. Det ger också knockback samt gör hp lägre och ändrar det i HUDen. Om spelaren
+Ifall spelaren tar damage så spelas ljudeffekt samt en visuell damage-effekt på spelkaraktären. Spelkaraktären kan
+heller inte ta skada igen eller kollidera med fiender då denna effekt spelas. Den tar slut då
+DamageTimer stoppar.
+
+take_damage() ger också knockback samt ger lägre hp och ändrar det i HUDen. Om spelaren
 efter det har hp <= 0 så blir det game over.
 """
 func take_damage(damage, knockback_direction) -> void:
