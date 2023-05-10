@@ -4,27 +4,25 @@ enum {IDLE, CHASE, DIE}
 
 
 const ACCELERATION = 500
-var IDLE_SPEED = rand_range(50, 70)
-var CHASE_SPEED = rand_range(80, 110)
+var IDLE_SPEED = rand_range(50, 70) #randomiserad hastighet då fienden inte jagar efter spelaren
+var CHASE_SPEED = rand_range(80, 110) #randomiserad hastighet då fienden jagar efter spelaren
 var GRAVITY = 1000
 
 var MAX_SPEED = 40
 var velocity = Vector2.ZERO
 var direction = Vector2.LEFT
 var state = IDLE
-var last_direction = 1
-var turn_direction = 1
-var knockback_direction = 1
+var last_direction = 1 #sista hållet wraithen var vänd åt, men räknas inte om direction.x var 0
+var knockback_direction = 1 #det håll spelaren åker åt när de kolliderar. alltså åker wraithen åt-knockback_direction då de kolliderar
 var hp = 100
 var difficulty = 0
 
-var air := true
-var turn := false
-var wait := false
-var knockback := false
-var can_check_right := true
-var can_check_left := true
-var can_drop_coin := true
+var turn := false #om true så ska wraithen vända om och gå tillbaka andra hållet
+var wait := false #är bara true i CHASE state då wraithen kommer till slutet av en platform och det inte finns en platform under att hopp ner til
+var knockback := false #är true då wraithen har colliderat med spelaren och slås tillbaka
+var can_check_right := true #används för att se om wraithen kan lita på den högra TerrainCheck
+var can_check_left := true #används för att se om wraithen kan lita på den vänstra TerrainCheck
+var can_drop_coin := true #används för att endast en peng ska spawna då wraithen dör
 
 var coin_scene = preload("res://Scenes/Coin.tscn")
 
@@ -33,7 +31,6 @@ onready var TerrainCheck = $TerrainCheck
 onready var TerrainCheck2 = $TerrainCheck2
 onready var sprite = $AnimatedSprite
 
-#topkill disabled unless player above wraith
 
 func _ready():
 	$Default.play()

@@ -11,7 +11,6 @@ onready var layer6 = $Node/ParallaxBackground2/ParallaxLayer6
 onready var firework_scene = preload("res://Scenes/Fireworks.tscn")
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Music.play()
 	$SoundPlayer.play("MusicFadeIn")
@@ -31,7 +30,7 @@ func _ready() -> void:
 	previous_level = Globals.level
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta: float) -> void: #_physics_process() får bakgrunden att röra sig genom att röra på de olika lagren olika snabbt.
 	layer1.motion_offset.x += 40*delta
 	layer2.motion_offset.x += 30*delta
 	layer3.motion_offset.x += 20*delta
@@ -40,12 +39,20 @@ func _physics_process(delta: float) -> void:
 	layer6.motion_offset.x += 5*delta
 
 
+"""
+Då en timer för fyrverkerierna tar slut så instansieras en ny fyrverkeri-scen på
+en randomiserad positition.
+"""
 func _on_FireworkTimer_timeout() -> void:
 	var firework_instance = firework_scene.instance()
 	get_tree().get_root().add_child(firework_instance)
 	firework_instance.global_position = Vector2(rand_range(0, 1024), rand_range(0, 600))
 
 
+"""
+Då knappen för startmenyn trycks så stoppas alla fyverkeritimers och musiken
+fadear ut. Sedan laddas startmenyn genom transition-scenen.
+"""
 func _on_MainMenuButton_pressed() -> void:
 	$FireworkTimer.stop()
 	$FireworkTimer2.stop()
@@ -54,6 +61,10 @@ func _on_MainMenuButton_pressed() -> void:
 	Transition.load_scene("res://Scenes/MainMenu.tscn")
 
 
+"""
+Då knappen för nästa level trycks så stoppas alla fyverkeritimers och musiken
+fadear ut. Sedan laddas nästa level genom transition-scenen.
+"""
 func _on_NextLevelButton_pressed():
 	$FireworkTimer.stop()
 	$FireworkTimer2.stop()

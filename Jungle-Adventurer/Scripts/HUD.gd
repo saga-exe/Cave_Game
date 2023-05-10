@@ -17,8 +17,12 @@ onready var attackbar = $ExtraAttackBar
 onready var player = get_node("/root/MainScene/Adventurer")
 
 
+"""
+Då tutorial (level == 0) spelas så finns ej score, highscore eller tid, vilket
+gör att de då inte är synliga. Då en level 1 0ch 2 spelas så ska de visas.
+"""
 func _ready() -> void:
-	if Globals.level == 0:
+	if Globals.level == 0: #då tut
 		$highscore.visible = false
 		$TimeDivider2.visible = false
 		$TimeDivider1.visible = false
@@ -40,9 +44,18 @@ func _ready() -> void:
 		$score.visible = true
 		$scoretext.visible = true
 	$highscore.text = str(highscore)
-	healthbar.value = 100
-	attackbar.value = 8
+	healthbar.value = 100 #fyller healthbar då leveln startar
+	attackbar.value = 8 #fyller manabar då leveln startar
 
+
+"""
+Denna funktion kallar på funktioner för att hålla HUDen uppdaterad för spelaren.
+_time() uppdaterar tiden och _power_up() uppdaterar så att spelaren kan se på 
+HUDen om den har en powerup. 
+
+Här uppdateras även score och ändrar så att spelaren ser den uppdaterade scoren
+hela tiden.
+"""
 func _process(delta):
 	_time(delta)
 	_power_up()
@@ -52,16 +65,26 @@ func _process(delta):
 		player._finished_state(delta)
 	$score.text = str(stepify(score, 1))
 
-func health_changed(hp) -> void:
+func health_changed(hp) -> void: #denna funktion kallas från Advenurer-scriptet då hp förändras
 	healthbar.value = hp
 
-func mana_changed(mana) -> void:
+func mana_changed(mana) -> void: #denna funktion kallas i _physics_process i Adventurer-scriptet och uppdaterar attackbaren hela tiden
 	attackbar.value = mana
 
-func gems_collected(coin) -> void:
-	coins += coin
-	cointext.text = str(coins)
+func gems_collected(coin) -> void: #gems_collected() anropas av Coin-scriptet då spelaren går in i dess area och plockar upp den
+	coins += coin                  #antal coins tagna ökar då med 1 och HUDen uppdateras
+	cointext.text = str(coins) 
 
+
+"""
+_time() - funktionen uppdaterar tiden som spelaren ser. Det används variabler för
+varje "tidsdel" (sek, min etc.) för att underlätta att skriva ut tiden i samma
+font som de andra sakerna i HUDen. varje del skrivs då ut för sig själv. 
+
+Då t.ex. sekunder når 60 så återställs sekunder och minuter blir 1 större.
+
+Denna funktion skriver även ut ändringarna i HUDen.
+"""
 func _time(delta) -> void:
 	milliseconds += delta * 100
 	if milliseconds >= 100:
@@ -83,6 +106,12 @@ func _time(delta) -> void:
 	else:
 		$Minutes.text = str(minutes)
 
+
+"""
+_power_up() visar en animation av powerupen som är tagen på HUDen för att
+förtydliga för spelaren. Då spelaren inte har en powerup spelas animation
+"default", vilken inte visar någonting alls.
+"""
 func _power_up() -> void:
 	if Globals.power == "none":
 		$PowerUp.play("default")
@@ -92,11 +121,16 @@ func _power_up() -> void:
 		$PowerUp.play("Speed")
 
 
+"""
+Den här funktionen laddar highscore från en save file. Först definierar den
+FILE_PATH, och sedan ändras den till rätt file path beroende på vilken level som
+spelas. Efter det öppnas filen för att läsa in highscore, och sedan stängs filen.
+
+Den laddas i av _ready() - funktionen och uppdaterar även den globala highscore-variabeln.
+"""
 func _load_highscore() -> void:
 	var FILE_PATH = SAVE_FILE_LEVEL1
-	if Globals.level == 1:
-		FILE_PATH = SAVE_FILE_LEVEL1
-	elif Globals.level == 2:
+	if Globals.level == 2:
 		FILE_PATH = SAVE_FILE_LEVEL2
 	var save_file = File.new()
 	if save_file.file_exists(FILE_PATH):
@@ -107,6 +141,15 @@ func _load_highscore() -> void:
 		highscore = 0
 	Globals.highscore = highscore
 
+
+"""
+Den här funktionen spara highscore i en save file. Först definierar den
+FILE_PATH, och sedan ändras den till rätt file path beroende på vilken level som
+spelas. Efter det öppnas filen för att spara highscore, och sedan stängs filen.
+
+Den anropas av Adventurer-scriptet då en level är aklarad och spelaren fick ett
+högre score än det nuvarande highscoret.
+"""
 func save_highscore() -> void:
 	score = 180000 - minutes * 60 * 100 - seconds * 100 - milliseconds + coins * 1500 - (100 - healthbar.value) * 250
 	if score > Globals.highscore:

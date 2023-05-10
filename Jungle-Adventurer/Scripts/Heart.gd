@@ -20,9 +20,9 @@ func _on_FinishTimer_timeout():
 
 func _on_Heart_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"): #då spelaren plockar upp hjärtat spelas ett ljud, hp går upp och en effekt spelas. Då effekten är klar tas scenen bort
-		$Pickup.play()
-		$Size.play("Downsize")
-		player.heal(25)
+		$Pickup.play() #ljud
+		$Size.play("Downsize") #effekt som gör att hjärtat minskar i storlek tills den försvinner
+		player.heal(25) #ökar hp med 25
 		yield($Size, "animation_finished")
 		queue_free()
 		

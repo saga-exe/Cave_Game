@@ -1,17 +1,11 @@
 extends CPUParticles2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready(): #startar visuellt explosionen och ljudeffekten
 	emitting = true
 	$Sound.play()
 
 
 func _physics_process(_delta):
-	if not emitting:
+	if not emitting: #då explosionen är över så raderas scenen från scenträdet
 		queue_free()
