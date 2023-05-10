@@ -121,6 +121,11 @@ func _update_direction_x(_delta) -> float:
 	return direction.x
 
 
+"""
+Denna funktion tar hand om de grundläggande rörelserna. Den får wraithen att gå
+eller stanna in beroende på direction.x, vilken bestäms i _update_direction_x().
+Funktionen anropar även en annan funktion som ser till så att sprites är åt rätt håll.
+"""
 func _basic_movement(delta) -> void:
 	if direction.x != 0:
 		velocity = velocity.move_toward(direction*MAX_SPEED, ACCELERATION*delta)
@@ -131,61 +136,68 @@ func _basic_movement(delta) -> void:
 	
 	_sprite_direction()
 
+
+"""
+Som hörs på namnet så bestämmer denna funktion åt vilket håll sprites ska vara.
+
+Om knockback är true så är sprites i knockback_directions riktning.
+Om wraithen står still så är sprites i last_directions riktning, och om den rör
+sig utan knockback så är det åt vilket håll den rör sig som avgör åt vilket håll
+sprites ska vara.
+"""
 func _sprite_direction() -> void:
 	if knockback:
 		if knockback_direction > 0:
-			_sprite_right()
+			sprite.set_flip_h(false)
 		else:
-			_sprite_left()
+			sprite.set_flip_h(true)
 			
 	else:
 		if velocity.x == 0:
 			if last_direction < 0:
-				_sprite_left()
+				sprite.set_flip_h(true)
 			else:
-				_sprite_right()
+				sprite.set_flip_h(false)
 		elif velocity.x < 0:
-			_sprite_left()
+			sprite.set_flip_h(true)
 		else:
-			_sprite_right()
-
-
-func _sprite_right() -> void:
-	sprite.set_flip_h(false)
-
-
-func _sprite_left() -> void:
-	sprite.set_flip_h(true)
+			sprite.set_flip_h(false)
 
 
 func _idle_state(delta) -> void:
+	#sätter rätt hastighet för _idle_state samt kör funktionen för direction.x och rörelse
 	MAX_SPEED = IDLE_SPEED
 	direction.x = _update_direction_x(delta)
-	
 	_basic_movement(delta)
 	
-	#vector så att det blir en båge
+	"""
+	om spelaren är tillräckligt nära och inte nyss har tagit skada så ändras state
+	"""
 	var player_slime_distance = player.global_position - global_position
 	if player_slime_distance.length() <= 400 and not Globals.damaged:
 		sprite.play("Walking")
 		state = CHASE
 		return
-# if cant check left and velocity < 0 wait = true
+
 
 func _chase_state(delta) -> void:
+	#sätter rätt hastighet för _idle_state samt kör funktionen för direction.x och rörelse
+	MAX_SPEED = CHASE_SPEED
+	direction.x = _update_direction_x(delta)
+	_basic_movement(delta)
+	
+	#beroende på om wraithen står still eller ej så spelas olika animationer
 	if wait:
 		sprite.play("Idle")
 	else:
 		sprite.play("Walking")
-	MAX_SPEED = CHASE_SPEED
 	
-	direction.x = _update_direction_x(delta)
-	
-	_basic_movement(delta)
-	
-	#vector så att det blir en båge
+	"""
+	om spelaren är för långt bort eller nyss har tagit skada så kan wraithen
+	inte göra skada och övergår därför till _idle_state() igen. Den vänder då
+	direkt om.
+	"""
 	var player_slime_distance = player.global_position - global_position
-	
 	if player_slime_distance.length() >= 400 or Globals.damaged:
 		sprite.play("Walking")
 		if wait:
@@ -195,6 +207,17 @@ func _chase_state(delta) -> void:
 		return
 
 
+"""
+Denna funktion anropas på olika ställen i detta script. Det anropas då hp <= 0,
+då spelaren har hoppat på toppen av dess huvud eller hoppat upp i den underifrån.AABB
+
+I funktionen så stängs flera olika CollisionShapes så att inget ska kollidera
+med wraithen då den dör. Så fort hp <= så anses wraithen död. Därför sätts
+direction.x och velocity.x till 0.
+
+Då wraithen dör spelas ett döende ljud samt en döende animation. Sedan instansieras
+en Coinscen, och då animationen av döendet så tas wraithen bort från scenträdet.
+"""
 func _die_state(_delta) -> void:
 	$HealthBar.visible = true
 	$HealthBar.value = 0
@@ -203,7 +226,7 @@ func _die_state(_delta) -> void:
 	$KinematicBody2D/PlayerCollision.disabled = true
 	$WraithArea/CollisionShape2D.disabled = true
 	$TopKill/CollisionShape2D.disabled = true
-	set_collision_mask_bit(8, false)
+	set_collision_mask_bit(8, false) #spelarens eld kommer inte att stoppas av denna wraith längre
 	velocity.x = 0
 	direction.x = 0
 	if not $Death.playing:
@@ -220,21 +243,20 @@ func _die_state(_delta) -> void:
 		can_drop_coin = false
 	queue_free()
 
-#turn behövs enbart då enemy ska vända vid slutet av en platform,
-#ej då spelaren hamnar på andra sidan
 
 """
-_on_Area2D_body_exited() kollar ifall TerrainCheck/TerrainCheck2 har lämnat platformen, aka slimen är påväg att åka av
-- ifall state == IDLE ska turn vara true, wait false och can_drop false
-- ifall state == CHASE ska turn vara false, och sedan cecka för platformar under och då bestämma om wait eller drop är true
-- då drop == true så är (turn och wait) == false
-- den droppar eftersom den aldrig kommer in på platformen och därför går inte terraincheck ut och stoppar slimen från att trilla
+WraithArean kontrollerar enbart om det är spelaren som kommer in.
 """
-
-
-
 func _on_WraithArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
+		"""
+		om avståndet mellan wraiths och spelares global_position är större än
+		26 om spelaren rör sig uppåt in i WraithArea så betyder det att spelaren
+		kommer underifrån. Då dör wraithen och spelaren tar skada.
+		
+		annars så har spelaren kolliderat med wraithen från sidan, i vilket fall
+		de båda knockas tillbaka och spelarens damage-funktion anropas.
+		"""
 		if (body.global_position.y - global_position.y) > 26 and Globals.y_move == -1:
 			$TileCollision.set_deferred("disabled", true)
 			$KinematicBody2D/PlayerCollision.set_deferred("disabled", true)
@@ -242,7 +264,6 @@ func _on_WraithArea_body_entered(body: Node) -> void:
 			state = DIE
 			body.take_damage(25, 0)
 		else:
-			
 			knockback = true
 			$KnockBackTimer.start()
 			if player.global_position.x - global_position.x < 0:
@@ -252,18 +273,33 @@ func _on_WraithArea_body_entered(body: Node) -> void:
 			body.take_damage(25, knockback_direction)
 			velocity.x = knockback_direction * -200
 
-# terraincheck decides if turn or not, then state decides if turn or wait
-
+"""
+då TerrainCheck är i tiles, allså plattformar, så betyder det att wraithen inte
+är påväg att trilla av plattformen, och den kan även märka om TerrainChecken på
+den sidan åker ur plattformen. Denna kontrollerar höger sida.
+"""
 func _on_TerrainArea_body_entered(body):
 	if body.is_in_group("Tile"):
 		can_check_right = true
 
 
+"""
+då TerrainCheck är i tiles, allså plattformar, så betyder det att wraithen inte
+är påväg att trilla av plattformen, och den kan även märka om TerrainChecken på
+den sidan åker ur plattformen. Denna kontrollerar vänster sida.
+"""
 func _on_TerrainArea2_body_entered(body):
 	if body.is_in_group("Tile"):
 		can_check_left = true
 
 
+"""
+Då TerrainCheck åker ur tiles så betyder det att det antingen är dags att vända,
+stanna eller kolla om det finns plattformar under den nuvarande för att se om
+det går att hoppa ner. Om state == IDLE så vänder wraithen, annars stannar den
+'och det bestämms i en annan funktion ifall den ska fortsätta eller stå kvar.
+Denna är för höger TerrainCheck.
+"""
 func _on_TerrainArea_body_exited(body):
 	if body.is_in_group("Tile"):
 		if state == IDLE:
@@ -274,6 +310,13 @@ func _on_TerrainArea_body_exited(body):
 	can_check_right = false
 
 
+"""
+Då TerrainCheck åker ur tiles så betyder det att det antingen är dags att vända,
+stanna eller kolla om det finns plattformar under den nuvarande för att se om
+det går att hoppa ner. Om state == IDLE så vänder wraithen, annars stannar den
+'och det bestämms i en annan funktion ifall den ska fortsätta eller stå kvar.
+Denna är för vänster TerrainCheck.
+"""
 func _on_TerrainArea2_body_exited(body):
 	if body.is_in_group("Tile"):
 		if state == IDLE:
@@ -283,6 +326,12 @@ func _on_TerrainArea2_body_exited(body):
 	can_check_left = false
 
 
+"""
+Denna funktion anropas då wraithen tar skada. Wraithens hp minskar och healthbaren
+uppdateras. Om den inte var synlig tidigare så blir den det nu.
+Om hp är mindre eller lika med 0 så övergår state till DIE. OM den inte dör så
+spelas ljudeffekter som visar att den tar skada.
+"""
 func take_damage(damage) -> void:
 	hp -= damage * (2 - difficulty)
 	$HealthBar.value = hp
@@ -298,7 +347,12 @@ func take_damage(damage) -> void:
 		$Death.play()
 		
 
-
+"""
+Om spelaren kommer in i TopKillArean så betyder det att spelaren har hoppat på
+wratihens huvud, och den ska nu dö. Spelaren kommer då att bli knockad upp i
+luften, då take_damage()-funktionen anropas men damage är 0. Wraithen går in i
+state DIE.
+"""
 func _on_TopKillArea_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		GRAVITY = 0
@@ -312,6 +366,8 @@ func _on_TopKillArea_body_entered(body: Node) -> void:
 
 
 func _can_collide() -> void:
+	#då spelaren rör sig tillräckligt högt upp och rör sig nedåt så är topkill enabled.
+	#annars är den disabled för att annars dör wraithen då spelaren krockar in i den från sidan
 	if global_position.y - player.global_position.y >= 48 and Globals.y_move != -1:
 		$TopKill.set_collision_layer_bit(10, true)
 		$TopKill/CollisionShape2D.disabled = false
@@ -320,21 +376,30 @@ func _can_collide() -> void:
 		$TopKill.set_collision_layer_bit(10, false)
 		$TopKill/CollisionShape2D.disabled = true
 		$TopKill/TopKillArea/CollisionShape2D.disabled = true
+	#om spelaren inte ska kunna kollidera med wraiths så stänger wraithen av sina collisionshapes.
 	if not Globals.can_collide:
 		$KinematicBody2D/PlayerCollision.disabled = true
 		$WraithArea/CollisionShape2D.disabled = true
-		
 	else:
 		$KinematicBody2D/PlayerCollision.disabled = false
 		$WraithArea/CollisionShape2D.disabled = false
+	#Då spelaren rör sig uppåt så är denna SHape disabled för att spelaren ska
+	#kunna hoppa upp genom wraithen och inte fastna under.
 	if Globals.y_move == -1:
 		$KinematicBody2D/PlayerCollision.disabled = true
 
 
+"""
+Då denna timer stannar så är knockback över, och wraithen fortsätter som den
+gjorde innan.
+"""
 func _on_KnockBackTimer_timeout():
 	knockback = false
 
 
+"""
+Om spelaren går ur WraithArean så blir TopKill enabled igen.
+"""
 func _on_WraithArea_body_exited(body):
 	if body.is_in_group("Player"):
 		$TopKill/CollisionShape2D.set_deferred("disabled", false)
