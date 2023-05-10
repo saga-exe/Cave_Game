@@ -123,8 +123,12 @@ func _update_direction_x(_delta) -> float:
 
 """
 Denna funktion tar hand om de grundläggande rörelserna. Den får wraithen att gå
-eller stanna in beroende på direction.x, vilken bestäms i _update_direction_x().
-Funktionen anropar även en annan funktion som ser till så att sprites är åt rätt håll.
+eller stanna in beroende på direction.x, vilken bestäms i _update_direction_x()
+(direction.x == 0 gör att den stannar och direction.x != 0 gör att den går).
+Gravitationen tas också om hand här.
+
+Funktionen anropar även en annan funktion (_sprite_direction()) som ser till så
+att sprites är åt rätt håll.
 """
 func _basic_movement(delta) -> void:
 	if direction.x != 0:
@@ -172,6 +176,7 @@ func _idle_state(delta) -> void:
 	
 	"""
 	om spelaren är tillräckligt nära och inte nyss har tagit skada så ändras state
+	till CHASE
 	"""
 	var player_slime_distance = player.global_position - global_position
 	if player_slime_distance.length() <= 400 and not Globals.damaged:

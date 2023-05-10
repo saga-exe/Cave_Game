@@ -20,7 +20,7 @@ onready var layer6 = $Node/ParallaxBackground2/ParallaxLayer6
 func _ready():
 	_load_highscore()
 	$Music.play() #startar musiken
-	Globals.is_finished = false #återställer en global variebel så att spelet går att spela igen. om den inte återställs kommer allt att tas bort då spelet startas.
+	Globals.is_finished = false #återställer en global variebel så att spelet går att spela igen. om den inte återställs kommer allt att tas bort direkt då spelet startas.
 
 func _physics_process(delta: float) -> void: 
 	#sätter ljus på musen samt gör att de olika lagren i bakgrunden rör på sig
