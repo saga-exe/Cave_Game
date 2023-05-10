@@ -40,6 +40,11 @@ onready var TerrainCheck2 = $TerrainCheck2
 onready var sprite = $AnimatedSprite
 
 
+"""
+_ready()-funktionen startar wraithens ylande ljud, sätter högsta fart till det
+den ska ha i IDLE state. Den sätter också state till IDLE och spelar animationen
+för IDLE. Eftersom den inte har tagit skada så har den ingen synlig healthbar.
+"""
 func _ready():
 	$Default.play()
 	MAX_SPEED = IDLE_SPEED
@@ -49,6 +54,13 @@ func _ready():
 	difficulty = Globals.difficulty
 
 
+"""
+_can_collide() ser till så att rätt areor och CollisionShapes är enabled
+oavsett vad som händer. FUnktionen matchar också states så att det blir rätt.
+
+Då spelaren plockat upp en star powerup så kan wraithen inte skjuta, men om spelaren
+inte har det och attacktimern inte har någon tid kvar så kan den det.
+"""
 func _physics_process(delta: float) -> void:
 	_can_collide()
 	if Globals.power == "star":
@@ -66,8 +78,15 @@ func _physics_process(delta: float) -> void:
 			_die_state(delta)
 
 
+"""
+Denna funktion returnerar direction.x.
+"""
 func _update_direction_x(_delta) -> float:
 	var player_slime_distance = player.global_position - global_position
+	"""
+	Då state == IDLE så gör funktionen ingenting om inte turn är true, i vilket
+	fall den byter direction.x till det motsatta, vilket gör att wraithen vänder om.
+	"""
 	if state == IDLE:
 		if turn:
 			if last_direction > 0:
@@ -77,22 +96,37 @@ func _update_direction_x(_delta) -> float:
 			turn = false
 			
 	elif state == CHASE:
-		if (not can_check_left and velocity.x < 0) or (not can_check_right and velocity.x > 0):
+		if (not can_check_left and velocity.x < 0) or (not can_check_right and velocity.x > 0): #ifall TerrainCheck är utanför plattformen åt det håll wraithen åker så stannar den
 			wait = true
-		if player_slime_distance.x < 5 and player_slime_distance.x > -5:
+		if player_slime_distance.x < 5 and player_slime_distance.x > -5: #då spelaren är rakt ovanför eller under wraithen så står den stilla utan att byta riktning
 			direction.x = 0
-		elif player_slime_distance.x < 0:
+		elif player_slime_distance.x < 0: #om spelaren är till vänster om wraithen så åker den till vänster mot spelaren
 			direction.x = -1
-		else:
+		else: #om spelaren är till höger om wraithen så åker den till höger mot spelaren
 			direction.x = 1
 		
 		if wait:
+			"""
+			om wraithen står stilla vid kanten av en platform och en raycast känner
+			av en platform under så kan wraithen gå av kanten och veta att den
+			kommer att landa på mark, alltså sätts wait till false
+			"""
 			velocity.x = 0
+			"""
+			eftersom direction.x räknas ut varje gång så har vi ett värde på
+			direction.x != 0. om det är samma som last_direction betyder det
+			att wraithen ska stå kvar på samma ställe, och direction.x blir
+			0, eftersom det betyder att den inte kommer att röra på sig.
+			
+			Om de inte är samma betyder det att wraithen ska vända på sig
+			och därför blir wait false
+			"""
 			if last_direction == direction.x:
 				direction.x = 0
 			else:
 				wait = false
-
+	
+	#last_direction kan inte vara noll, men den uppdateras om den kan
 	if direction.x != 0:
 		last_direction = direction.x
 
