@@ -297,7 +297,7 @@ func _on_TerrainArea2_body_entered(body):
 Då TerrainCheck åker ur tiles så betyder det att det antingen är dags att vända,
 stanna eller kolla om det finns plattformar under den nuvarande för att se om
 det går att hoppa ner. Om state == IDLE så vänder wraithen, annars stannar den
-'och det bestämms i en annan funktion ifall den ska fortsätta eller stå kvar.
+och det bestämms i en annan funktion ifall den ska fortsätta eller stå kvar.
 Denna är för höger TerrainCheck.
 """
 func _on_TerrainArea_body_exited(body):
@@ -314,7 +314,7 @@ func _on_TerrainArea_body_exited(body):
 Då TerrainCheck åker ur tiles så betyder det att det antingen är dags att vända,
 stanna eller kolla om det finns plattformar under den nuvarande för att se om
 det går att hoppa ner. Om state == IDLE så vänder wraithen, annars stannar den
-'och det bestämms i en annan funktion ifall den ska fortsätta eller stå kvar.
+och det bestämms i en annan funktion ifall den ska fortsätta eller stå kvar.
 Denna är för vänster TerrainCheck.
 """
 func _on_TerrainArea2_body_exited(body):
@@ -383,7 +383,7 @@ func _can_collide() -> void:
 	else:
 		$KinematicBody2D/PlayerCollision.disabled = false
 		$WraithArea/CollisionShape2D.disabled = false
-	#Då spelaren rör sig uppåt så är denna SHape disabled för att spelaren ska
+	#Då spelaren rör sig uppåt så är denna Shape disabled för att spelaren ska
 	#kunna hoppa upp genom wraithen och inte fastna under.
 	if Globals.y_move == -1:
 		$KinematicBody2D/PlayerCollision.disabled = true

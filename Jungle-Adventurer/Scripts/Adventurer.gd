@@ -25,8 +25,8 @@ var GRAVITY = 1000
 var MAX_SPEED = 100
 var velocity := Vector2.ZERO
 var direction := Vector2.ZERO
-var last_action_pressed = "right" #den senaste håll spelaren klickade på (höger/vänster)
-var input_x = 0 #den håll spelkaraktären ska röra sig åt i x-led
+var last_action_pressed = "right" #det senaste håll spelaren klickade på (höger/vänster)
+var input_x = 0 #det håll spelkaraktären ska röra sig åt i x-led
 var hp = 100
 var knockback_direction_player = 0 #det håll knockback ska gå åt (höger/vänster)
 var difficulty = 0 #svårighetsgrad som tas från Globals
@@ -54,8 +54,6 @@ var can_extra_attack := true #är true när spelkaraktären kan använda sin ext
 var right_played := false #används för att bestämma om det senaste stegljudet som spelades var av höger fot. om sant så var höger senast och då spelas vänster fots ljud nästa gång.
 var left_played := false #används för att bestämma om det senaste stegljudet som spelades var av vänster fot. om sant så var vänster senast och då spelas höger fots ljud nästa gång.
 
-var drop_area := false  #is this used?
-
 var playerfire_scene = preload("res://Scenes/PlayerFire.tscn")  #spelarens vanliga attacks eldkula
 var playerfireextra_scene = preload("res://Scenes/PlayerFireExtra.tscn") #spelarens extraattacks eld
 
@@ -69,13 +67,13 @@ onready var background_music_fade = get_node("/root/MainScene/SoundPlayer") #anv
 
 
 """
-Startfunktion som ser till att allt är återställt då en ny level börjar. backgrundsmusiken 
-tonar in, spelkaraktären är inte skadad och har inga powerups.
+Startfunktion som ser till att allt är återställt då en ny level börjar. (Bakgrundsmusiken 
+tonar in, spelkaraktären är inte skadad och har inga powerups.)
 """
 func _ready() -> void:
 	background_music.playing = true
 	background_music_fade.play("MusicFadeIn")
-	$Camera2D.limit_right = Globals.camera_limit #ser till så att kameran inte går utanvför leveln
+	$Camera2D.limit_right = Globals.camera_limit #ser till så att kameran inte går utanför leveln
 	if Globals.power != "none":
 		power_up(Globals.power)
 	global_position = Vector2(Globals.start_pos)
@@ -89,7 +87,7 @@ func _ready() -> void:
 """
 Funktion som ser till att allt fungerar för spelkaraktären. Gör så att effekter spelar då de ska,
 Globala variablar är uppdaterade (ifall spelaren har en powerup, är skadad och hur spelaren rör sig
-i förhållande till y-axeln. Här uppdateras vilket state karaktären är i.)
+i förhållande till y-axeln.) Här uppdateras vilket state karaktären är i.
 """
 func _physics_process(delta: float) -> void:
 	if Globals.power == "none":
@@ -125,8 +123,8 @@ func _physics_process(delta: float) -> void:
 
 
 """
-bestämmer hur snabbt spelaren kan gå och springa beroende på om den sprintar eller inte och om den
-har en powerup. Ser också till så att karaktären rör sig och vilken hastighet den bör ha, både i x-
+Denna funktion bestämmer hur snabbt spelaren kan gå och springa beroende på om den sprintar eller inte och om den
+har en powerup. Den ser också till så att karaktären rör sig och vilken hastighet den bör ha, både i x-
 och y-led.
 """
 func _left_right_movement(delta) -> void:
@@ -149,9 +147,9 @@ func _left_right_movement(delta) -> void:
 
 
 """
-denna funktion bestämmer vilket håll spelkaraktären ska vändas (vänster/höger). den loggar också det
-senaste hållet spelaren klickade på (vänster/höger). Den sätter också knockback till false då
-knockback ska vara false. funktionen returnerar input_x som sedan används för att spelkaraktären ska
+Denna funktion bestämmer vilket håll spelkaraktären ska vändas (vänster/höger). den loggar också det
+senaste hållet spelaren klickade på (vänster/höger) i last_action_pressed. Den sätter också knockback till false då
+knockback är klart. Funktionen returnerar input_x som sedan används för att spelkaraktären ska
 röra sig åt rätt håll.
 """
 func _get_input_x_update_direction() -> float:
@@ -191,9 +189,9 @@ func _get_input_x_update_direction() -> float:
 
 
 """
-en hjälpfunktion som sätter alla inställningar rätt när de ska ändras till att spelkaraktären är
-vänd mot vänster. den flippar spriten och sätter gunpoint på andra sidan så att den matchar sprites
-när skjutanimationen spelar. spritepositionen ändras också lite för att den alltid ska vara mitt i
+Detta är en hjälpfunktion som sätter alla inställningar rätt när det ska ändras till att spelkaraktären är
+vänd mot vänster. Den flippar spriten och sätter gunpoint på andra sidan så att den matchar spriten
+när skjutanimationen spelar. Spritepositionen ändras också lite för att den alltid ska vara mitt i
 collisionshapen.
 """
 func _sprite_left() -> void:
@@ -203,9 +201,9 @@ func _sprite_left() -> void:
 
 
 """
-en hjälpfunktion som sätter alla inställningar rätt när de ska ändras till att spelkaraktären är
-vänd mot höger. den flippar spriten och sätter gunpoint på andra sidan så att den matchar sprites
-när skjutanimationen spelar. spritepositionen ändras också lite för att den alltid ska vara mitt i
+Detta är en hjälpfunktion som sätter alla inställningar rätt när de ska ändras till att spelkaraktären är
+vänd mot höger. Den flippar spriten och sätter gunpoint på andra sidan så att den matchar spriten
+när skjutanimationen spelar. Spritepositionen ändras också lite för att den alltid ska vara mitt i
 collisionshapen.
 """
 func _sprite_right() -> void:
@@ -215,10 +213,10 @@ func _sprite_right() -> void:
 
 
 """
-state då spelaren står still. 
+_idle_state() är det state då spelaren står still. 
 
-Anropar funktion för rörelse (_left_right_movement(delta)). Anropar funktion (climb()) som kollar
-ifall spelaren börjar klättra. Ändrar state ifall krav för annat state uppfylls. Sätter state till
+Funktionen anropar en annan funktion för rörelse (_left_right_movement(delta)). Den anropar också en funktion (climb()) som kollar
+ifall spelaren börjar klättra. Den ändrar state ifall krav för annat state uppfylls. Funktionen sätter state till
 finished ifall spelaren klarat av level eller spelkaraktären faller ur bild.
 
 Om spelaren skjuter vanlig eller extraattack och den kan skjuta så startars processen här genom
@@ -255,11 +253,11 @@ func _idle_state(delta) -> void:
 
 
 """
-state då spelaren rör på sig på marken. 
+State då spelaren rör på sig på marken. 
 
 Anropar funktion för rörelse (_left_right_movement(delta)). Anropar funktion (climb()) som kollar
 ifall spelaren börjar klättra. Ändrar state ifall krav för annat state uppfylls. Sätter state till
-finished ifall spelaren klarat av level eller spelkaraktären faller ur bild. anropar funktion för
+finished ifall spelaren klarat av level eller spelkaraktären faller ur bild. Anropar funktion för
 att ljud ska spelas eftersom karaktären rör på sig (_walking_sounds($AnimatedSprite.frame)).
 
 Om spelaren skjuter vanlig eller extraattack och den kan skjuta så startars processen här genom
