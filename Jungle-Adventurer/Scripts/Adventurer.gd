@@ -223,6 +223,7 @@ Om spelaren försöker skjuta vanlig eller extraattack och den kan skjuta så st
 att anropa respektive funtion. Annars spelas en idle-animation.
 """
 func _idle_state(delta) -> void:
+	direction.x = _get_input_x_update_direction()
 	_left_right_movement(delta)
 	_climb()
 	
@@ -264,6 +265,7 @@ Om spelaren skjuter vanlig eller extraattack och om den kan skjuta så startars 
 att anropa respektive funtion. annars spelas animation beroende på om spelaren sprintar eller ej
 """
 func _run_state(delta) -> void:
+	direction.x = _get_input_x_update_direction()
 	_left_right_movement(delta)
 	_climb()
 	
@@ -394,7 +396,8 @@ func _climb_state(delta) -> void:
 		direction.y = -1
 	else: #stå still på stegen
 		direction.y = 0
-
+	
+	direction.x = _get_input_x_update_direction()
 	velocity = velocity.move_toward(direction*CLIMB_SPEED, ACCELERATION*delta)
 	velocity = move_and_slide(velocity, Vector2.UP)
 	
